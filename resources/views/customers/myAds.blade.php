@@ -37,206 +37,49 @@
                                 <h6>Title</h6><h6>Status</h6><h6>Actions</h6>
                             </div>
                             <div>
-                                <ul>
-                                    <li>
-                                        <div>
-                                            <div class="ps-posted-ads__title">
-                                                <h6>Title</h6>
-                                                <div>
-                                                    <figure><img src="/images/insights/icon/img-01.jpg" alt="Images Description"></figure>
-                                                    <div class="ps-description">
-                                                        <h5>AED650</h5>
-                                                        <h6>Galaxy Note 8 Urgent Sale</h6>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <div class="ps-posted-ads__status">
-                                                <h6>Status</h6>
-                                                <button class="btn ps-btn ps-featured">Featured</button>
-                                            </div>
-                                            <div class="ps-posted-ads__actions">
-                                                <h6>Actions</h6>
-                                                <span><a href="javascript:void(0);" class="ps-edit"><i class="ti-pencil"></i> Edit</a><span>/</span><a href="javascript:void(0);" class="ps-delete"><i class="ti-trash"></i> Delete</a></span>
-                                            </div>
-                                        </div>
-                                    </li>
-                                    <li>
-                                        <div>
-                                            <div class="ps-posted-ads__title">
-                                                <h6>Title</h6>
-                                                <div>
-                                                    <figure><img src="/images/insights/icon/img-02.jpg" alt="Images Description"></figure>
-                                                    <div class="ps-description">
-                                                        <h5>AED1,149</h5>
-                                                        <h6>Brand New Iphone X For Sale</h6>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <div class="ps-posted-ads__status">
-                                                <h6>Status</h6>
-                                                <button class="btn ps-btn ps-active">Active</button>
-                                            </div>
-                                            <div class="ps-posted-ads__actions">
-                                                <h6>Actions</h6>
-                                                <span><a href="javascript:void(0);" class="ps-edit"><i class="ti-pencil"></i> Edit</a><span>/</span><a href="javascript:void(0);" class="ps-delete"><i class="ti-trash"></i> Delete</a></span>
-                                            </div>
-                                        </div>
-                                    </li>
-                                    <li>
-                                        <div>
-                                            <div class="ps-posted-ads__title">
-                                                <h6>Title</h6>
-                                                <div>
-                                                    <figure><img src="/images/insights/icon/img-03.jpg" alt="Images Description"></figure>
-                                                    <div class="ps-description">
-                                                        <h5>AED1,320</h5>
-                                                        <h6>Brand New Touch Book For Sale</h6>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <div class="ps-posted-ads__status">
-                                                <h6>Status</h6>
-                                                <button class="btn ps-btn ps-inactive">Inactive</button>
-                                            </div>
-                                            <div class="ps-posted-ads__actions">
-                                                <h6>Actions</h6>
-                                                <span><a href="javascript:void(0);" class="ps-edit"><i class="ti-pencil"></i> Edit</a><span>/</span><a href="javascript:void(0);" class="ps-delete"><i class="ti-trash"></i> Delete</a></span>
-                                            </div>
-                                        </div>
-                                    </li>
-                                    <li>
-                                        <div>
-                                            <div class="ps-posted-ads__title">
-                                                <h6>Title</h6>
-                                                <div>
-                                                    <figure><img src="/images/insights/icon/img-04.jpg" alt="Images Description"></figure>
-                                                    <div class="ps-description">
-                                                        <h5>AED1,200</h5>
-                                                        <h6>Mac Air Book Pro, Slightly Used</h6>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <div class="ps-posted-ads__status">
-                                                <h6>Status</h6>
-                                                <button class="btn ps-btn ps-sold">Sold</button>
-                                            </div>
-                                            <div class="ps-posted-ads__actions">
-                                                <h6>Actions</h6>
-                                                <span><a href="javascript:void(0);" class="ps-edit"><i class="ti-pencil"></i> Edit</a><span>/</span><a href="javascript:void(0);" class="ps-delete"><i class="ti-trash"></i> Delete</a></span>
-                                            </div>
-                                        </div>
-                                    </li>
-                                    <li>
-                                        <div>
-                                            <div class="ps-posted-ads__title">
-                                                <h6>Title</h6>
-                                                <div>
-                                                    <figure><img src="/images/insights/icon/img-05.jpg" alt="Images Description"></figure>
-                                                    <div class="ps-description">
-                                                        <h5>AED1,711</h5>
-                                                        <h6>Brand New Touch Book Pro For Sale</h6>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <div class="ps-posted-ads__status">
-                                                <h6>Status</h6>
-                                                <button class="btn ps-btn ps-expired">Expired</button>
-                                            </div>
-                                            <div class="ps-posted-ads__actions">
-                                                <h6>Actions</h6>
-                                                <span><a href="javascript:void(0);" class="ps-edit"><i class="ti-pencil"></i> Edit</a><span>/</span><a href="javascript:void(0);" class="ps-delete"><i class="ti-trash"></i> Delete</a></span>
-                                            </div>
-                                        </div>
-                                    </li>
-                                    <li>
-                                        <div>
-                                            <div class="ps-posted-ads__title">
-                                                <h6>Title</h6>
-                                                <div>
-                                                    <figure><img src="/images/insights/icon/img-06.jpg" alt="Images Description"></figure>
-                                                    <div class="ps-description">
-                                                        <h5>AED1,321</h5>
-                                                        <h6>100% working drone for sale/exchange</h6>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <div class="ps-posted-ads__status">
-                                                <h6>Status</h6>
-                                                <button class="btn ps-btn ps-deleted">Deleted</button>
-                                            </div>
-                                            <div class="ps-posted-ads__actions">
-                                                <h6>Actions</h6>
-                                                <span><a href="javascript:void(0);" class="ps-edit"><i class="ti-pencil"></i> Edit</a><span>/</span><a href="javascript:void(0);" class="ps-delete"><i class="ti-trash"></i> Delete</a></span>
-                                            </div>
-                                        </div>
-                                    </li>
-                                    <li>
-                                        <div>
-                                            <div class="ps-posted-ads__title">
-                                                <h6>Title</h6>
-                                                <div>
-                                                    <figure><img src="/images/insights/icon/img-07.jpg" alt="Images Description"></figure>
-                                                    <div class="ps-description">
-                                                        <h5>AED1,458</h5>
-                                                        <h6>New Skateboard exchange offer</h6>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <div class="ps-posted-ads__status">
-                                                <h6>Status</h6>
-                                                <button class="btn ps-btn ps-active">Active</button>
-                                            </div>
-                                            <div class="ps-posted-ads__actions">
-                                                <h6>Actions</h6>
-                                                <span><a href="javascript:void(0);" class="ps-edit"><i class="ti-pencil"></i> Edit</a><span>/</span><a href="javascript:void(0);" class="ps-delete"><i class="ti-trash"></i> Delete</a></span>
-                                            </div>
-                                        </div>
-                                    </li>
-                                    <li>
-                                        <div>
-                                            <div class="ps-posted-ads__title">
-                                                <h6>Title</h6>
-                                                <div>
-                                                    <figure><img src="/images/insights/icon/img-04.jpg" alt="Images Description"></figure>
-                                                    <div class="ps-description">
-                                                        <h5>AED1,200</h5>
-                                                        <h6>Mac Air Book Pro, Slightly Used</h6>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <div class="ps-posted-ads__status">
-                                                <h6>Status</h6>
-                                                <button class="btn ps-btn ps-sold">Sold</button>
-                                            </div>
-                                            <div class="ps-posted-ads__actions">
-                                                <h6>Actions</h6>
-                                                <span><a href="javascript:void(0);" class="ps-edit"><i class="ti-pencil"></i> Edit</a><span>/</span><a href="javascript:void(0);" class="ps-delete"><i class="ti-trash"></i> Delete</a></span>
-                                            </div>
-                                        </div>
-                                    </li>
-                                    <li>
-                                        <div>
-                                            <div class="ps-posted-ads__title">
-                                                <h6>Title</h6>
-                                                <div>
-                                                    <figure><img src="/images/insights/icon/img-05.jpg" alt="Images Description"></figure>
-                                                    <div class="ps-description">
-                                                        <h5>AED1,711</h5>
-                                                        <h6>Brand New Touch Book Pro For Sale</h6>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <div class="ps-posted-ads__status">
-                                                <h6>Status</h6>
-                                                <button class="btn ps-btn ps-expired">Expired</button>
-                                            </div>
-                                            <div class="ps-posted-ads__actions">
-                                                <h6>Actions</h6>
-                                                <span><a href="javascript:void(0);" class="ps-edit"><i class="ti-pencil"></i> Edit</a><span>/</span><a href="javascript:void(0);" class="ps-delete"><i class="ti-trash"></i> Delete</a></span>
-                                            </div>
-                                        </div>
-                                    </li>
-                                </ul>
+<ul>
+    @foreach($post_ads as $row)
+    <li>
+        <div>
+            <div class="ps-posted-ads__title">
+                <div>
+                    <figure>
+                        <img style="width:50px !important;" src="/upload_image/{{$row->image}}">
+                    </figure>
+                    <div class="ps-description">
+                        <h5>AED {{$row->price}}</h5>
+                        <h6>{{$row->title}}</h6>
+                    </div>
+                </div>
+            </div>
+            <div class="ps-posted-ads__status">
+                @if($row->status == 0)
+                <button class="btn ps-btn ps-active">Active</button>
+                @elseif($row->status == 1)
+                <button class="btn ps-btn ps-deleted">DeActive</button>
+                @elseif($row->status == 2)
+                <button class="btn ps-btn ps-featured">Featured</button>
+                @else 
+                <button class="btn ps-btn ps-sold">Sold</button>
+                @endif
+            </div>
+            <div class="ps-posted-ads__actions">
+            <span>
+                <a href="/customer/edit-post-ads/{{$row->id}}" class="ps-edit"><i class="ti-pencil"></i> Edit</a>
+                <span>/</span>
+                @if($row->status == 0)
+                    <a onclick="Delete({{$row->id}},1)" href="javascript:void(0);" class="ps-delete"><i class="ti-trash"></i> DeActive</a>
+                @elseif($row->status == 1)
+                    <a onclick="Delete({{$row->id}},0)" href="javascript:void(0);" class="ps-delete"><i class="ti-trash"></i> Active</a>
+                @elseif($row->status == 2)
+                    <a onclick="Delete({{$row->id}},0)" href="javascript:void(0);" class="ps-delete"><i class="ti-trash"></i> Active</a>
+                @endif
+            </span>
+            </div>
+        </div>
+    </li>
+    @endforeach
+</ul>
                                 <div class="ps-page">
                                     <div class="ps-button-left">
                                         <button class="btn ps-btn"><span class="lnr lnr-chevron-left"></span></button>
@@ -270,7 +113,25 @@
         </section>
     </main>
 @endsection
-  @section('js')
+@section('js')
 
+<script type="text/javascript">
+$('.my-ads').addClass('active');
 
-    @endsection
+function Delete(id,status){
+    var r = confirm("Are you sure");
+    if (r == true) {
+      $.ajax({
+        url : '/customer/delete-post-ads/'+id+'/'+status,
+        type: "GET",
+        dataType: "JSON",
+        success: function(data)
+        {
+          toastr.success(data, 'Successfully Delete');
+          location.reload();
+        }
+      });
+    } 
+}
+</script>
+@endsection

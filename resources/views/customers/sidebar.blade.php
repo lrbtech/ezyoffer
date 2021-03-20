@@ -22,8 +22,8 @@
                             <ul>
                                 <li><a href="/customer/dashboard" class="ps-user-dhb"><i class="ti-dashboard"></i> <span>Dashboard</span> </a></li>
                                 <li><a href="/customer/profileSetting"><i class="ti-user"></i> <span>Profile Settings</span> </a></li>
-                                <li><a href="/customer/myAds"><i class="ti-align-justify"></i> <span>My Ads</span> </a></li>
-                                <li><a href="/customer/postAds"><i class="ti-settings"></i> <span>Post Ad</span> </a></li>
+                                <li><a href="/customer/my-ads"><i class="ti-align-justify"></i> <span>My Ads</span> </a></li>
+                                <li><a href="/customer/new-post-ads"><i class="ti-settings"></i> <span>Post Ad</span> </a></li>
                                 <li><a href="/customer/chat"><i class="ti-email"></i> <span>Chat</span> </a></li>
                                 <li><a href="/customer/packages" class="ps-active--line"><i class="ti-shopping-cart"></i> <span>Buy / Renew Packages</span> </a></li>
                                 <li><a href="/customer/favorite" class="ps-active--line"><i class="ti-heart"></i> <span>My Favorite</span> </a></li>

@@ -15,9 +15,7 @@ class customerController extends Controller
     public function myAds(){
         return view('customers.myAds');
     }
-    public function postAds(){
-        return view('customers.postAds');
-    }
+    
     public function chat(){
         return view('customers.chat');
     }

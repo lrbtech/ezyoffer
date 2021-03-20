@@ -21,7 +21,7 @@
 	<link rel="stylesheet" href="/css/responsive.css">
     <link href="https://fonts.googleapis.com/css?family=Nanum+Gothic:400,700,800" rel="stylesheet">
     <link rel="stylesheet" href="/fonts/flaticon/flaticon.css">
-   
+    <link rel="stylesheet" type="text/css" href="{{ asset('assets/toastr/toastr.css')}}">
     @yield('css')
 </head>
 <body>
@@ -42,7 +42,7 @@
   @yield('section')
     <!-- MAIN END -->
     <!-- FOOTER START -->
-    <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+<div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
   <div class="modal-dialog" role="document">
     <div class="modal-content">
       <div class="modal-header">
@@ -53,46 +53,88 @@
       </div>
       <div class="modal-body">
            <div class="ps-social-login">
-                                    <h6>Login Via Social</h6>
-                                    <button class="btn ps-facebook-btn ps-btn"><i class="fab fa-facebook-f"></i><span>Login With Facebook <i class="ti-angle-right"></i></span></button>
-                                    <button class="btn ps-twitter-btn ps-btn"><i class="fab fa-twitter"></i><span>Login With Twitter <i class="ti-angle-right"></i></span></button>
-                                    <button class="btn ps-google-plusbtn ps-btn"><i class="fab fa-google-plus-g"></i><span>Login With Google <i class="ti-angle-right"></i></span></button>
-                                </div>
-                                <br>
-                                <br>
+                <h6>Login Via Social</h6>
+                <button class="btn ps-facebook-btn ps-btn"><i class="fab fa-facebook-f"></i><span>Login With Facebook <i class="ti-angle-right"></i></span></button>
+                <button class="btn ps-twitter-btn ps-btn"><i class="fab fa-twitter"></i><span>Login With Twitter <i class="ti-angle-right"></i></span></button>
+                <button class="btn ps-google-plusbtn ps-btn"><i class="fab fa-google-plus-g"></i><span>Login With Google <i class="ti-angle-right"></i></span></button>
+            </div>
+            <br>
+            <br>
             <div class="ps-or">
-                                    <div></div>
-                                    <div>
-                                        <h6>OR</h6>
-                                    </div>
-                                </div>
-                                <br>
-          <div class="ps-gridList__searchArea ps-contact-seller">
-                                    
-                                    <form method="POST" action="{{ route('login') }}">
-                                    @csrf
-                                        <div class="form-group">
-                                            <input id="email" type="email" class="form-control @error('email') is-invalid @enderror" name="email" value="{{ old('email') }}" required autocomplete="email" placeholder="Email*" autofocus>
-                                            @error('email')
-                                                <span class="invalid-feedback" role="alert">
-                                                    <strong>{{ $message }}</strong>
-                                                </span>
-                                            @enderror
-                                        </div>
-                                        <div class="form-group">
-                                            <input placeholder="Password*" id="password" type="password" class="form-control @error('password') is-invalid @enderror" name="password" required autocomplete="current-password">
-                                            @error('password')
-                                                <span class="invalid-feedback" role="alert">
-                                                    <strong>{{ $message }}</strong>
-                                                </span>
-                                            @enderror
-                                        </div>
-                                        <div class="ps-login-btn">
-                                            <button type="submit" class="btn ps-btn"> Login </button>
-                                            <a href="javascript:void(0);">Forgot Your Password?</a>
-                                        </div>
-                                    </form>
-                                </div>
+                <div></div>
+                <div>
+                    <h6>OR</h6>
+                </div>
+            </div>
+            <br>
+            <div class="ps-gridList__searchArea ps-contact-seller">
+                <form method="POST" action="{{ route('login') }}">
+                @csrf
+                    <div class="form-group">
+                        <input id="email" type="email" class="form-control @error('email') is-invalid @enderror" name="email" value="{{ old('email') }}" required autocomplete="email" placeholder="Email*" autofocus>
+                        @error('email')
+                            <span class="invalid-feedback" role="alert">
+                                <strong>{{ $message }}</strong>
+                            </span>
+                        @enderror
+                    </div>
+                    <div class="form-group">
+                        <input placeholder="Password*" id="password" type="password" class="form-control @error('password') is-invalid @enderror" name="password" required autocomplete="current-password">
+                        @error('password')
+                            <span class="invalid-feedback" role="alert">
+                                <strong>{{ $message }}</strong>
+                            </span>
+                        @enderror
+                    </div>
+                    <div class="ps-login-btn">
+                        <button type="submit" class="btn ps-btn"> Login </button>
+                        <a href="javascript:void(0);">Forgot Your Password?</a>
+                    </div>
+                </form>
+            </div>
+      </div>
+      <div class="modal-footer">
+       <div class="">
+           <a href="javascript:void(null)" onclick="loginTOregisterForm()" >Don't have ab account? <span style="color:green">Sign up</span></a>
+       </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+
+<div class="modal fade" id="registerModal" tabindex="-1" role="dialog" aria-labelledby="registerModalLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title text-center" id="registerModalLabel">Login</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+            <div class="ps-gridList__searchArea ps-contact-seller">
+                <form id="fegister_form" method="POST" action="#">
+                @csrf
+                    <div class="form-group">
+                        <input type="text" class="form-control" name="first_name" id="first_name" placeholder="First Name">
+                    </div>
+                    <div class="form-group">
+                        <input type="text" class="form-control" name="last_name" id="last_name" placeholder="Last Name">
+                    </div>
+                    <div class="form-group">
+                        <input type="email" class="form-control" id="email" name="email" placeholder="Email*">
+                    </div>
+                    <div class="form-group">
+                        <input type="password" class="form-control" id="password" name="password" placeholder="Password*">
+                    </div>
+                    <div class="ps-login-btn">
+                        <button type="submit" class="btn ps-btn"> Login </button>
+                        <a href="javascript:void(0);">Forgot Your Password?</a>
+                    </div>
+                </form>
+            </div>
       </div>
       <div class="modal-footer">
        <div class="">
@@ -102,6 +144,8 @@
     </div>
   </div>
 </div>
+
+
     <footer class="ps-main-footer">
         <section class="ps-footer">
             <div class="container">
@@ -165,16 +209,6 @@
         </div>
     </footer>
 
-@parent
-@if($errors->has('email') || $errors->has('password'))
-    <script>
-    $(function() {
-        $('#exampleModal').modal({
-            show: true
-        });
-    });
-    </script>
-@endif
 
     <!-- FOOTER END -->
     <script src="/js/vendor/jquery.min.js"></script>
@@ -186,7 +220,29 @@
     <script src="/js/vendor/jquery-ui.min.js"></script>
     <script src="/js/vendor/jquery.ui.touch-punch.js"></script>
     <script src="/js/main.js"></script>
+    <script src="{{ asset('assets/toastr/toastr.min.js')}}" type="text/javascript"></script>
     @yield('js')
+
+@if($errors->has('email') || $errors->has('password'))
+    <script>
+    $(function() {
+        $('#exampleModal').modal({
+            show: true
+        });
+    });
+    </script>
+@endif
+<script>
+    function loginTOregisterForm(){
+    $('#exampleModal').modal('toggle');
+    showRegisterForm();
+    }
+    function showRegisterForm(){
+
+        $('#registerformCall').click();
+    }
+</script>
+
 </body>
 
 </html>

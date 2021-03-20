@@ -84,7 +84,9 @@
                     <div class="ps-navbar__userbtn">
                         <div class="ps-headeruser">              
                             <ul class="navbar-nav ps-nav">
+                                
                                 <li class="nav-item ps-login--btn"><a href="javascript:void(null)" class="btn ps-btn" data-toggle="modal" data-target="#exampleModal">Login / Register</a></li>
+                                
                                 <li class="nav-item dropdown ps-menuhover ps-userlogo">
                                     <a href="javascript:void(0);" id="navbarDropdown4" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                                         <figure class="d-inline-block">
@@ -97,9 +99,9 @@
                                         <li class="dropdown-divider"></li>
                                         <li class="nav-item"><a class="dropdown-item" href="/customer/profileSetting"><i class="ti-user"></i>Profile Settings</a></li>
                                         <li class="dropdown-divider"></li>
-                                        <li class="nav-item"><a class="dropdown-item" href="/customer/myAds"><i class="ti-align-justify"></i>My Ads</a></li>  
+                                        <li class="nav-item"><a class="dropdown-item" href="/customer/my-ads"><i class="ti-align-justify"></i>My Ads</a></li>  
                                         <li class="dropdown-divider"></li>
-                                        <li class="nav-item"><a class="dropdown-item" href="/customer/postAds"><i class="ti-settings"></i>Post Ads</a></li>  
+                                        <li class="nav-item"><a class="dropdown-item" href="/customer/new-post-ads"><i class="ti-settings"></i>Post Ads</a></li>  
                                         <li class="dropdown-divider"></li>
                                         <li class="nav-item"><a class="dropdown-item" href="/customer/chat"><i class="ti-email"></i>chat</a></li>  
                                         <li class="dropdown-divider"></li>
@@ -122,9 +124,21 @@
                                         <li class="dropdown-divider"></li>
                                         <li class="nav-item"><a class="dropdown-item" href="/customer/accountPrivacy"><i class="ti-bookmark"></i>Account Setting</a></li>  
                                         <li class="dropdown-divider"></li>
-                                        <li class="nav-item"><a class="dropdown-item" href="index.html"><i class="ti-shift-right"></i>Logout</a></li>  
+                                        <li class="nav-item">
+                                        <a class="dropdown-item" href="{{ route('logout') }}" onclick="event.preventDefault();
+                                        document.getElementById('logout-form').submit();">
+                                        <i class="ti-shift-right"></i>
+                                        Log Out
+                                        </a>
+                                        </li> 
+                    
+                                        <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
+                                        @csrf
+                                        </form>
+
                                     </ul>
-                                </li>                             
+                                </li>
+                                                          
                                 <li class="nav-item ps-post--btn"><a href="dashboard-insights.html" class="btn ps-btn">Post Ad</a></li>
                                      <li class="ps-menuhover menu-item-has-children page_item_has_children">
                                     <a href="javascript:void(0);" >English <i class="fas fa-chevron-down"></i></a>

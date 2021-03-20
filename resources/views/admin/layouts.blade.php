@@ -177,6 +177,16 @@
                   
                 </ul>
               </li>
+
+              <li>
+                <a class="bar-icons" href="javascript:void(0)"><i class="pe-7s-id"></i><span>Post Ads</span></a>
+                <ul class="iconbar-mainmenu custom-scrollbar">
+                  <li class="iconbar-header">Post Ads</li>
+
+                  <li class="post-ads"><a class="post-ads" href="/admin/post-ads">All Post Ads</a></li>
+                  
+                </ul>
+              </li>
             
               <li>              
                 <a class="bar-icons" href="javascript:void(0)"><i class="pe-7s-graph3"></i><span>Invoice </span></a>

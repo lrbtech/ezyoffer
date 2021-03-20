@@ -334,10 +334,10 @@ address {
   line-height: 1.4;
   word-spacing: 100vw;
 }
-    </style>
+</style>
 @endsection
 @section('section')
-      <section class="hero-section">
+<section class="hero-section">
   <div class="card-grid ">
     <a class="cards" href="#">
       <div class="card__background" style="background-image: url(https://images.unsplash.com/photo-1557177324-56c542165309?ixlib=rb-1.2.1&auto=format&fit=crop&w=1950&q=80)"></div>
@@ -1396,7 +1396,7 @@ address {
 </div>
      
 
-        <!-- VIDEO END -->
-        <!-- ARTICLES END -->
-    </main>
-    @endsection
+    <!-- VIDEO END -->
+    <!-- ARTICLES END -->
+</main>
+@endsection

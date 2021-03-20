@@ -74,6 +74,11 @@ Route::group(['prefix' => 'admin'],function(){
     Route::get('/all-customer', [App\Http\Controllers\Admin\CustomerController::class, 'allcustomer']);
     Route::POST('/get-all-customer', [App\Http\Controllers\Admin\CustomerController::class, 'getallcustomer']);
     Route::get('/delete-customer/{id}/{status}', [App\Http\Controllers\Admin\CustomerController::class, 'deletecustomer']);
+
+
+    Route::get('/post-ads', [App\Http\Controllers\Admin\PostController::class, 'postads']);
+    Route::POST('/get-post-ads', [App\Http\Controllers\Admin\PostController::class, 'getpostads']);
+    Route::get('/delete-post-ads/{id}/{status}', [App\Http\Controllers\Admin\PostController::class, 'deletepostads']);
 	
 
     Route::get('/change-password', [App\Http\Controllers\Admin\SettingsController::class, 'changepassword']);
@@ -107,11 +112,24 @@ Route::group(['prefix' => 'admin'],function(){
 
 Route::group(['prefix' => 'customer'],function(){
 	Route::get('/dashboard', [App\Http\Controllers\customerController::class, 'dashboard'])->name('customer.dashboard');
+
 	Route::get('/profileSetting', [App\Http\Controllers\customerController::class, 'profileSetting'])->name('customer.profileSetting');
-	Route::get('/myAds', [App\Http\Controllers\customerController::class, 'myAds'])->name('customer.myAds');
-	Route::get('/postAds', [App\Http\Controllers\customerController::class, 'postAds'])->name('customer.postAds');
+
+	Route::get('/my-ads', [App\Http\Controllers\User\PostController::class, 'myads']);
+
+    //post-ads
+    Route::get('/new-post-ads', [App\Http\Controllers\User\PostController::class, 'newpostads']);
+    Route::POST('/save-post-ads', [App\Http\Controllers\User\PostController::class, 'savepostads']);
+    Route::POST('/update-post-ads', [App\Http\Controllers\User\PostController::class, 'updatepostads']);
+    Route::get('/edit-post-ads/{id}', [App\Http\Controllers\User\PostController::class, 'editpostads']);
+    Route::get('/delete-post-ads/{id}/{status}', [App\Http\Controllers\User\PostController::class, 'deletepostads']);
+    Route::get('/delete-post-image/{id}', [App\Http\Controllers\User\PostController::class, 'deletepostimge']);
+
 	Route::get('/chat', [App\Http\Controllers\customerController::class, 'chat'])->name('customer.chat');
+
 	Route::get('/packages', [App\Http\Controllers\customerController::class, 'packages'])->name('customer.packages');
+
 	Route::get('/favorite', [App\Http\Controllers\customerController::class, 'favorite'])->name('customer.favorite');
+
 	Route::get('/accountPrivacy', [App\Http\Controllers\customerController::class, 'accountPrivacy'])->name('customer.accountPrivacy');
 });
