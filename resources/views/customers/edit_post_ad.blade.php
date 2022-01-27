@@ -1,448 +1,349 @@
-@extends('website.layout')
+@extends('customers.layouts')
 @section('css')
-<link rel="stylesheet" href="/css/dashboard.css">
-<link rel="stylesheet" href="/css/dashboard-responsive.css">
-<link rel="stylesheet" href="/css/jquery.mCustomScrollbar.min.css">
-<script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCanHknp355-rJzwBPbz1FZDWs9t9ym_lY&sensor=false&libraries=places"></script>
+<style>
+   .center {
+    display:inline;
+    margin: 3px;
+    padding:5px;
+   }
 
-<style type="text/css">
-    .input-controls {
-      margin-top: 10px;
-      border: 1px solid transparent;
-      border-radius: 2px 0 0 2px;
-      box-sizing: border-box;
-      -moz-box-sizing: border-box;
-      height: 32px;
-      outline: none;
-      box-shadow: 0 2px 6px rgba(0, 0, 0, 0.3);
-    }
-    #searchInput {
-      background-color: #fff;
-      font-family: Roboto;
-      font-size: 15px;
-      font-weight: 300;
-      margin-left: 12px;
-      padding: 0 11px 0 13px;
-      text-overflow: ellipsis;
-      width: 50%;
-    }
-    #searchInput:focus {
-      border-color: #4d90fe;
-    }
-    .hide{
-        
-        visibility: hidden;
-    }
-    .hide{
-    visibility: visible;
-    }
-    
-</style>    
+  .form-input {
+    width:150px;
+    /* padding:3px; */
+    background:#fff;
+    /* border:2px dashed dodgerblue; */
+  }
+  .form-input input {
+    display:none;
+  }
+  .form-input label {
+    display:block;
+    width:150px;
+    height: auto;
+    max-height: 150px;
+    background:#666;
+    border-radius:10px;
+    cursor:pointer;
+  }
+  
+  .form-input img {
+    width:150px;
+    height: 150px;
+    margin: 2px;
+    opacity: .4;
+  }
+
+  .imgRemove{
+    position: relative;
+    bottom: 154px;
+    left: 80%;
+    background-color: transparent;
+    border: none;
+    font-size: 50px;
+    outline: none;
+  }
+  .imgRemove::after{
+    /* content: ' \21BA'; */
+    content: ' \00d7';
+    color: #fff;
+    font-weight: 900;
+    border-radius: 8px;
+    cursor: pointer;
+  }
+</style>
 @endsection
 @section('section')
-<div class="ps-main-banner">
-        <div class="ps-dark-overlay">
-            <div class="container">
-                <div class="ps-banner-content">
-                    <h4>Post New Ad</h4>
-                    <p><a href="index.html">Home</a> <span><i class="ti-angle-right"></i></span> <a href="insights.html">Dashboard</a> <span> <i class="ti-angle-right"></i></span> Post Ad</p>
-                </div>
+         <!-- Page Title -->
+         <section class="page-title style-two" style="background-image: url(/assets/images/background/page-title.jpg);">
+            <div class="auto-container">
+               <div class="content-box centred mr-0">
+                  <div class="title">
+                     <h1>{{$language[236][session()->get('lang')]}}</h1>
+                  </div>
+                  <ul class="bread-crumb clearfix">
+                     <li><a href="/">Home</a></li>
+                     <li>{{$language[236][session()->get('lang')]}}</li>
+                  </ul>
+               </div>
             </div>
-        </div>
-    </div>
-<main class="ps-main">
-        <section class="ps-main-section">
-            <div class="container">
-                <div class="row">
-               @include('customers.sidebar')
-                    <!-- MAIN CONTENT START -->
-<div class="col-lg-8 ps-dashboard-user">
-    <div class="ps-posted-ads ps-profile-setting">
-        <div class="ps-posted-ads__heading">
-            <h5>Edit Ad</h5>
-            <!-- <p>Click “Publish Ad” to Post Ad</p>
-            <button id="post_ad" onclick="Save()" class="btn ps-btn">Publish Ad</button> -->
-        </div>
-        <div class="ps-profile-setting__content">
-<!-- POST NEW AD FORM START -->
-<form class="ps-profile-form" action="#" id="form" method="POST" enctype="multipart/form-data">
-{{ csrf_field() }}
-<input value="{{$post_ad->id}}" type="hidden" name="id" id="id">
-<input value="{{Auth::user()->id}}" type="hidden" name="customer_id" id="customer_id">
-    <div class="ps-profile--row">
-        <div class="form-group">
-            <label>
-                <select name="featured_ad" id="featured_ad" class="form-control">
-                    <option value="" disabled="" hidden="">Featured Ad:</option>
-                    <option {{ ($post_ad->featured_ad == '1' ? ' selected' : '') }} value="1">Yes</option>
-                    <option {{ ($post_ad->featured_ad == '0' ? ' selected' : '') }} value="0">No</option>
-                </select>
-            </label>
-        </div>
-        <div class="form-group">
-            <label>
-                <select name="category" id="category" class="form-control">
-                    <option value="" disabled="" hidden="">Select Category(s)*</option>
-                    @foreach($category as $row)
-                    @if($row->id == $post_ad->category)
-                    <option selected value="{{$row->id}}">{{$row->category}}</option>
-                    @else
-                    <option value="{{$row->id}}">{{$row->category}}</option>
-                    @endif
-                    @endforeach
-                </select>
-            </label>
-        </div>
-        <div class="form-group">
-            <label>
-                <select name="subcategory" id="subcategory"  class="form-control">
-                    <option value="" disabled="" hidden="">Select Sub Category(s)*</option>
-                    @foreach($subcategory as $row)
-                    @if($row->id == $post_ad->subcategory)
-                    <option selected value="{{$row->id}}">{{$row->category}}</option>
-                    @else
-                    <option value="{{$row->id}}">{{$row->category}}</option>
-                    @endif
-                    @endforeach
-                </select>
-            </label>
-        </div>
-        <div class="form-group">
-            <input value="{{$post_ad->title}}" type="text" class="form-control" id="title" name="title" required="" placeholder="Your Ad Title Here*">
-        </div>
-        <div class="form-group">
-            <input value="{{$post_ad->price}}" type="text" class="form-control" id="price" name="price" required="" placeholder="Item/ Product Price?*">
-        </div>
-        <div class="form-group">
-            <input value="{{$post_ad->mobile}}" type="number" class="form-control" id="mobile" name="mobile" required="" placeholder="Mobile Number*">
-        </div>
-        <div class="form-group">
-            <input value="{{$post_ad->email}}" type="email" class="form-control" id="email" name="email" placeholder="Email">
-        </div>
-        <div class="form-group">
-            <input value="{{$post_ad->skype}}" type="text" class="form-control" id="skype" name="skype" placeholder="Skype">
-        </div>
-        <div class="form-group ps-fullwidth">
-            <textarea name="description" id="description" class="form-control" placeholder="Description*">{{$post_ad->description}}</textarea>
-        </div>
-    </div>
+         </section>
+         <!-- End Page Title -->
+         <!-- category-details -->
+         <section id="show_spinner" class="category-details bg-color-2">
+            <div class="auto-container">
+               <div class="row clearfix">
+                  <div class="col-lg-4 col-md-12 col-sm-12 sidebar-side">
+                  @include('customers.menu')
+                  </div>
+                  <div class="col-lg-8 col-md-12 col-sm-12 content-side">
+                     <form id="form" method="POST" class="default-form" enctype="multipart/form-data">
+                     {{csrf_field()}}
+                     <input type="hidden" name="id" value="{{$post_ad->id}}">
+                        <div class="box-section">
+                           <div class="section-single">
+                              <div class="form-group">
+                                 <label>{{$language[215][session()->get('lang')]}}</label>
+                                 <input value="{{$post_ad->title}}" name="title" id="title" type="text" class="form-control" placeholder="{{$language[216][session()->get('lang')]}}">
+                              </div>
+                              <div class="form-group">
+                                 <label>{{$language[217][session()->get('lang')]}} <br><span>({{$language[218][session()->get('lang')]}} )</span> </label>
+                              </div>
+                              <div id="image_view" class="row">
+                                 <div value="1" class="center form-input panel_image">
+                                    <label for="file-ip-1">
+                                    <img id="file-ip-1-preview" src="/upload_image/{{$post_ad->image}}">
+                                    <!-- <button type="button" class="imgRemove" onclick="myImgRemove(1)"></button> -->
+                                    </label>
+                                    <input type="file" name="profile_image" id="file-ip-1" accept=".png,.jpg,.jpeg" onchange="showPreview(event, 1);">
+                                 </div>
+                                 @foreach($post_ad_image as $key => $row)
+                                 <div value="{{$key+2}}" class="center form-input panel_image">
+                                    <label for="file-ip-{{$key+2}}">
+                                    <img id="file-ip-{{$key+2}}-preview" src="/upload_image/{{$row->image}}">
+                                    <button type="button" class="imgRemove" onclick="Delete({{$row->id}})"></button>
+                                    </label>
+                                    <input type="hidden" name="image_id[]" value="{{$row->id}}">
+                                    <input type="file" name="images[]" id="file-ip-{{$key+2}}" accept=".png,.jpg,.jpeg" onchange="showPreview(event, {{$key+2}});">
+                                 </div>
+                                 @endforeach
+                                 <div class="work center form-input">
+                                    <div class="img" style="height:150px !important;background-color:#091a3a !important;">
+                                       <a onclick="AddImages()" class="create-story" href="javascript:void(0)">
+                                          <div class="fas fa-plus"></div>
+                                          <h4 class="story-line">Add More Images</h4>
+                                       </a>
+                                    </div>
+                                 </div>
+                              </div>
+                              <div class="row">
+                                 <a href="javascript:void(0)" id="imagesave" onclick="ImageUpdate()" class="theme-btn-one">{{$language[237][session()->get('lang')]}}</a>
+                              </div>
+                              <div class="form-group">
+                                 <label class="col-form-label">{{$language[219][session()->get('lang')]}}*</label>
+                                 <label>
+                                    <select name="category" id="category" class="form-control select">
+                                       <option value="">{{$language[220][session()->get('lang')]}}*</option>
+                                       @foreach($category as $row)
+                                       @if($row->id == $post_ad->category)
+                                       <option selected value="{{$row->id}}">{{$row->category}}</option>
+                                       @else
+                                       <option value="{{$row->id}}">{{$row->category}}</option>
+                                       @endif
+                                       @endforeach
+                                    </select>
+                                 </label>
+                              </div>
+                              <!-- <div class="form-group">
+                                 <label class="col-form-label">Select Sub Category(s)*</label>
+                                 <label>
+                                    <select name="subcategory" id="subcategory" class="form-control select">
+                                       <option value="" disabled="" selected="" hidden="">Select Sub Category(s)*</option>
+                                       <option value="10">Tablets</option>
+                                    </select>
+                                 </label>
+                              </div> -->
+                              <div class="form-group">
+                                 <label class="col-form-label"> {{$language[221][session()->get('lang')]}}</label>
+                                 <label>
+                                    <select disabled name="post_type" id="post_type" class="form-control select">
+                                        <option value="" selected="">{{$language[222][session()->get('lang')]}}</option>
+                                       <option {{ ($post_ad->post_type == '0' ? ' selected' : '') }} value="0">Normal Ad</option>
+                                       <option {{ ($post_ad->post_type == '1' ? ' selected' : '') }} value="1">Feature Ad</option>
+                                       <option {{ ($post_ad->post_type == '2' ? ' selected' : '') }} value="2">Live Story</option>
+                                    </select>
+                                 </label>
+                              </div>
+                              <div class="form-group">
+                                 <label class="col-form-label">{{$language[223][session()->get('lang')]}}</label>
+                                 <input value="{{$post_ad->price}}" type="number" class="form-control" id="price" name="price" required="" placeholder="{{$language[224][session()->get('lang')]}}">
+                              </div>
+                              <div class="form-group ps-fullwidth">
+                                 <label class="col-form-label">{{$language[225][session()->get('lang')]}}</label>
+                                 <textarea name="description" id="description" class="form-control" placeholder="{{$language[226][session()->get('lang')]}}*" spellcheck="false">{{$post_ad->description}}</textarea>
+                              </div>
+                              <!-- <div class="form-group">
+                                 <label class="col-form-label">Mobile Number</label>
+                                 <input value="{{$post_ad->mobile}}" type="number" class="form-control" id="mobile" name="mobile" placeholder="Mobile Number*">
+                              </div> -->
+                              <!-- <div class="form-group">
+                                 <label>Mobile</label>
+                                 <div class="input-group mb-3">
+                                    <div class="input-group-prepend">
+                                          <span class="input-group-text">+971</span>
+                                    </div>
+                                    <input value="{{$post_ad->mobile}}" type="number" class="form-control" name="mobile" id="mobile" placeholder="Mobile Number">
+                                 </div>
+                                 <span id="mobile_error"></span>
+                              </div>
+                              <div class="form-group">
+                                 <label class="col-form-label">Email</label>
+                                 <input value="{{$post_ad->email}}" type="email" class="form-control" id="email" name="email" placeholder="Email">
+                              </div> -->
+                           </div>
+                        </div>
+                        <div class="box-section">
+                           <div class="section-single">
+                              <ul class="ps-profile-setting__imgs ps-add-feature__content ps-item-mesonry row form-group-new">
+                                 <li class="ps-feature-select col-md-6 ps-ms-item">
+                                    <h5>{{$language[227][session()->get('lang')]}}</h5>
+                                    <label for="item_conditions1">
+                                    <input value="New" id="item_conditions1" type="radio" name="item_conditions" {{ ($post_ad->item_conditions == 'New' ? ' checked' : '') }}>
+                                    <span>New</span>
+                                    </label>
+                                    <label for="item_conditions2">
+                                    <input value="Used (Looks New)" id="item_conditions2" type="radio" name="item_conditions" {{ ($post_ad->item_conditions == 'Used (Looks New)' ? ' checked' : '') }}>
+                                    <span>Used (Looks New)</span>
+                                    </label>
+                                    <label for="item_conditions3">
+                                    <input value="Used (Good)" id="item_conditions3" type="radio" name="item_conditions" {{ ($post_ad->item_conditions == 'Used (Good)' ? ' checked' : '') }}>
+                                    <span>Used (Good)</span>
+                                    </label>
+                                    <label for="item_conditions4">
+                                    <input value="Used (Some Damage)" id="item_conditions4" type="radio" name="item_conditions" {{ ($post_ad->item_conditions == 'Used (Some Damage)' ? ' checked' : '') }}>
+                                    <span>Used (Some Damage)</span>
+                                    </label>
+                                    <label for="item_conditions5">
+                                    <input value="Free" id="item_conditions5" type="radio" name="item_conditions" {{ ($post_ad->item_conditions == 'Free' ? ' checked' : '') }}>
+                                    <span>Free</span>
+                                    </label>                                                                       
+                                 </li>
+                              </ul>
+
+                              <table id="featuresTable" class="table">
+                                    <thead class="thead-primary">
+                                        <tr style="text-align: center;">
+                                             <th style="width: 80%;">{{$language[228][session()->get('lang')]}}</th>
+                                             <th style="width: 20%;padding: .0rem !important;">
+                                                <button type="button" class="btn btn-default" onclick="addRow()" id="addRowBtn"> <i class="fa fa-plus"></i></button>
+                                            </th>
+                                        </tr>
+                                    </thead>
+                                    <tbody id="featuresTabletbody">
+                                    @foreach($post_ad_features as $key => $row)
+                                    <tr value="{{$key+1}}" id="row{{$key+1}}">
+                                        <td>
+                                            <input value="{{$row->features}}" class="form-control" type="text" name="features[]" id="features{{$key+1}}" autocomplete="off"  />
+                                        </td>
+                                        <td align="center">
+                                            <button class="btn btn-default" type="button" onclick="removefeaturesrow({{$key+1}})"><i class="fa fa-trash"></i></button>
+                                        </td>
+                                    </tr>
+                                    @endforeach
+                                    </tbody>
+                                    <tfoot>
+                                    	<tr>
+                                            <td>
+                                            	<button type="button" onclick="addRow()" class="theme-btn-one"><span class="icon-label"><i class="fa fa-plus"></i> </span><span class="btn-text">{{$language[229][session()->get('lang')]}}</span></button>
+                                            </td>
+                                            <td></td>
+                                        </tr>
+
+                                    </tfoot>
+                                </table>
 
 
-<!-- POST NEW AD FORM END -->
-<div class="ps-profile-map ps-fullwidth">
-    <div class="col-sm-12">
-        <div class="form-group">
-            <label>Enter a location</label>
-            <input id="searchInput" class="input-controls form-control" type="text" placeholder="Enter a location">
-            <input value="{{$post_ad->address}}" type="hidden" name="address" id="address">
-            <input value="{{$post_ad->latitude}}" type="hidden" name="latitude" id="latitude">
-            <input value="{{$post_ad->longitude}}" type="hidden" name="longitude" id="longitude">
-        </div>
-    </div>
-    <div class="col-sm-12">
-        <div class="map" id="map" style="width: 100%; height: 300px;"></div>
-    </div>
-</div>
-<!-- ADD FEATURES START -->
-<div class="ps-add-feature">
-    <div class="ps-add-feature__heading">
-        <h5>Add Features</h5> 
-        <a data-toggle="collapse" href="#collapseFeature" role="button" aria-expanded="false" aria-controls="collapseFeature"><i class="ti-angle-down"></i></a>   
-    </div>
-    <div class="collapse show" id="collapseFeature">
-        <ul class="ps-profile-setting__imgs ps-add-feature__content ps-item-mesonry row " style="position: relative; height: 718px;">
-            <li class="ps-feature-select col-md-6 ps-ms-item" style="position: absolute; left: 0px; top: 0px;">
-                <h5>Printable:</h5>
-                <input {{ ($post_ad->printable == '0' ? ' checked' : '') }} value="0" id="feature1" type="radio" name="printable">
-                <label for="feature1">
-                    <span> No</span>                          
-                </label>
-                <input {{ ($post_ad->printable == '1' ? ' checked' : '') }} value="1" id="feature2" type="radio" name="printable">
-                <label for="feature2">
-                    <span>Yes</span>
-                </label>
-            </li>
-            <li class="ps-feature-select col-md-6 ps-ms-item" style="position: absolute; left: 328px; top: 0px;">
-                <h5>Paper Quality:</h5>
-                <input {{ ($post_ad->paper_quality == 'Premium Quality' ? ' checked' : '') }} value="Premium Quality" id="feature3" type="radio" name="paper_quality">
-                <label for="feature3">
-                    <span>Premium Quality</span>
-                </label>
-                <input {{ ($post_ad->paper_quality == 'Best Quality' ? ' checked' : '') }} value="Best Quality" id="feature4" type="radio" name="paper_quality">
-                <label for="feature4">
-                    <span>Best Quality</span>
-                </label>
-                <input {{ ($post_ad->paper_quality == 'Regular Quality' ? ' checked' : '') }} value="Regular Quality" id="feature5" type="radio" name="paper_quality">
-                <label for="feature5">
-                    <span>Regular Quality</span>
-                </label>
-            </li>
-            <li class="ps-feature-select ps-paper-color col-md-6 ps-ms-item" style="position: absolute; left: 0px; top: 97px;">
-                <h5>Paper Color:</h5>
-                <input {{ ($post_ad->paper_color == 'Black' ? ' checked' : '') }} value="Black" id="feature6" type="radio" name="paper_color">
-                <label for="feature6">
-                    <span class="ps-black">Black</span>
-                </label>
-                <input {{ ($post_ad->paper_color == 'Off White' ? ' checked' : '') }} value="Off White" id="feature7" type="radio" name="paper_color">
-                <label for="feature7">
-                    <span class="ps-off-white">Off White</span>
-                </label>
-                <input {{ ($post_ad->paper_color == 'Yellow' ? ' checked' : '') }} value="Yellow" id="feature8" type="radio" name="paper_color">
-                <label for="feature8">
-                    <span class="ps-yellow">Yellow</span>
-                </label>
-                <input {{ ($post_ad->paper_color == 'Orange' ? ' checked' : '') }} value="Orange" id="feature9" type="radio" name="paper_color">
-                <label for="feature9">
-                    <span class="ps-orange">Orange</span>
-                </label>
-                <input {{ ($post_ad->paper_color == 'Blue' ? ' checked' : '') }} value="Blue" id="feature10" type="radio" name="paper_color">
-                <label for="feature10">
-                    <span class="ps-blue">Blue</span>
-                </label>
-                <input {{ ($post_ad->paper_color == 'Pink' ? ' checked' : '') }} value="Pink" id="feature11" type="radio" name="paper_color">
-                <label for="feature11">
-                    <span class="ps-pink">Pink</span>
-                </label>
-                <input {{ ($post_ad->paper_color == 'Other' ? ' checked' : '') }} value="Other" id="feature12" type="radio" name="paper_color">
-                <label for="feature12">
-                    <span>Other</span>
-                </label>
-                <input value="{{$post_ad->paper_other}}" name="paper_other" id="paper_other" type="text" class="form-control" placeholder="Add Color Name">
-            </li>
-            <li class="ps-feature-select col-md-6 ps-ms-item" style="position: absolute; left: 328px; top: 126px;">
-                <h5>Soft Copy:</h5>
-                <input {{ ($post_ad->soft_copy == '2' ? ' checked' : '') }} value="2" id="feature13" type="radio" name="soft_copy">
-                <label for="feature13">
-                    <span>Availability On Demand</span>
-                </label>
-                <input {{ ($post_ad->soft_copy == '0' ? ' checked' : '') }} value="1" id="feature14" type="radio" name="soft_copy">
-                <label for="feature14">
-                    <span>Yes</span>
-                </label>
-                <input {{ ($post_ad->soft_copy == '1' ? ' checked' : '') }} value="0" id="feature15" type="radio" name="soft_copy">
-                <label for="feature15">
-                    <span>No</span>
-                </label>
-            </li>
-            <li class="ps-feature-select col-md-6 ps-ms-item" style="position: absolute; left: 328px; top: 252px;">
-                <h5>Color/ B&W:</h5>
-                <input {{ ($post_ad->color_b_w == 'B&W Single Side' ? ' checked' : '') }} value="B&W Single Side" id="feature16" type="radio" name="color_b_w">
-                <label for="feature16">
-                    <span>B&W Single Side</span>
-                </label>
-                <input {{ ($post_ad->color_b_w == 'B&W Double Side' ? ' checked' : '') }} value="B&W Double Side" id="feature17" type="radio" name="color_b_w">
-                <label for="feature17">
-                    <span>B&W Double Side</span>
-                </label>
-                <input {{ ($post_ad->color_b_w == 'Color Single Side' ? ' checked' : '') }} value="Color Single Side" id="feature18" type="radio" name="color_b_w">
-                <label for="feature18">
-                    <span>Color Single Side</span>
-                </label>
-                <input {{ ($post_ad->color_b_w == 'Color Double Side' ? ' checked' : '') }} value="Color Double Side" id="feature19" type="radio" name="color_b_w">
-                <label for="feature19">
-                    <span>Color Double Side</span>
-                </label>
-            </li>
-            <li class="ps-feature-select col-md-6 ps-ms-item" style="position: absolute; left: 0px; top: 398px;">
-                <h5>Spring Bind:</h5>
-                <input {{ ($post_ad->spring_bind == '0' ? ' checked' : '') }} value="0" id="feature20" type="radio" name="spring_bind">
-                <label for="feature20">
-                    <span>No</span>
-                </label>
-                <input {{ ($post_ad->spring_bind == '1' ? ' checked' : '') }} value="1" id="feature21" type="radio" name="spring_bind">
-                <label for="feature21">
-                    <span>Yes</span>
-                </label>
-            </li>
-            <li class="ps-feature-select col-md-6 ps-ms-item" style="position: absolute; left: 328px; top: 407px;">
-                <h5>Door Step Delivery:</h5>
-                <input {{ ($post_ad->door_step_delivery == '0' ? ' checked' : '') }} value="0" id="feature22" type="radio" name="door_step_delivery">
-                <label for="feature22">
-                    <span>No</span>
-                </label>
-                <input {{ ($post_ad->door_step_delivery == '1' ? ' checked' : '') }} value="1" id="feature23" type="radio" name="door_step_delivery">
-                <label for="feature23">
-                    <span>Yes</span>
-                </label>
-            </li>
-            <li class="ps-feature-select col-md-6 ps-ms-item" style="position: absolute; left: 0px; top: 495px;">
-                <h5>Laminated:</h5>
-                <input {{ ($post_ad->laminated == '0' ? ' checked' : '') }} value="0" id="feature24" type="radio" name="laminated">
-                <label for="feature24">
-                    <span>No</span>
-                </label>
-                <input {{ ($post_ad->laminated == '1' ? ' checked' : '') }} value="1" id="feature25" type="radio" name="laminated">
-                <label for="feature25">
-                    <span>Yes</span>
-                </label>
-            </li>
-            <li class="ps-feature-select col-md-6 ps-ms-item" style="position: absolute; left: 328px; top: 504px;">
-                <h5>Color:</h5>
-                <input {{ ($post_ad->color == 'RGB' ? ' checked' : '') }} value="RGB" id="feature26" type="radio" name="color">
-                <label for="feature26">
-                    <span>RGB</span>
-                </label>
-                <input {{ ($post_ad->color == 'CMYK' ? ' checked' : '') }} value="CMYK" id="feature27" type="radio" name="color">
-                <label for="feature27">
-                    <span>CMYK</span>
-                </label>
-                <input {{ ($post_ad->color == 'B&W' ? ' checked' : '') }} value="B&W" id="feature28" type="radio" name="color">
-                <label for="feature28">
-                    <span>&W</span>
-                </label>
-                <input {{ ($post_ad->color == 'Others' ? ' checked' : '') }} value="Others" id="feature29" type="radio" name="color">
-                <label for="feature29">
-                    <span>Others</span>
-                </label>
-                <input value="{{$post_ad->other_color}}" name="other_color" id="other_color" type="text" class="form-control" placeholder="Mention Here">
-            </li>
-        </ul>
-    </div>
-</div>
-<!-- ADD FEATURES END -->
-<div class="ps-url">
-    <div class="ps-url__input">
-        <input value="{{$post_ad->video_link}}" name="video_link" id="video_link" type="text" class="form-control" placeholder="Ad Video Link(URL)">
-    </div>
-</div>
-<div class="ps-profile-setting__upload">
-    <h5>Profile Image</h5>
-    <div class="ps-url">
-        <div class="ps-url__input">
-            <input name="profile_image" id="profile_image" type="file" class="form-control" placeholder="Ad Images">
-        </div>
-        <img style="width: 80px;" src="/upload_image/{{$post_ad->image}}">
-    </div>
-</div>
-
-<div class="ps-profile-setting__upload">
-    <h5>Upload Mulitiple Images</h5>
-    <div class="ps-url">
-        <div class="ps-url__input">
-            <input multiple name="images[]" id="images" type="file" class="form-control" placeholder="Ad Images">
-        </div>
-    </div>
-</div>
-
-</form>
-<!-- PROFILE SETTINGS START -->
-<div class="ps-profile-setting__upload">
-<h5>View Images</h5>
-<form class="ps-profile-setting__imgs ps-x-axis mCustomScrollbar _mCS_1">
-	<div id="mCSB_1" class="mCustomScrollBox mCS-light mCSB_horizontal mCSB_inside" style="max-height: none;" tabindex="0"><div id="mCSB_1_container" class="mCSB_container" style="position: relative; top: 0px; left: 0px; width: 758px;" dir="ltr">
-		@foreach($post_ad_image as $row)
-	        <label>
-	            <span>
-	                <img style="width: 150px !important;" src="/upload_image/{{$row->image}}" class="mCS_img_loaded">
-	                <a onclick="Delete({{$row->id}})" href="javascript:void(0);" class="ps-trash">
-	                	<span><i class="ti-trash"></i></span>
-	                </a>
-	                <!-- <span class="ps-tick"><span>
-	                	<i class="fas fa-check"></i></span>
-	                </span> -->
-	            </span>
-	        </label>
-	    @endforeach
-	    </div>
-	</div>
- </form>
-</div>
-<!-- PROFILE SETTINGS END -->
-                                
-            <div class="ps-profile-setting__save">
-                <button id="save" onclick="Save()" class="btn ps-btn">Save Changes</button>
-                <p>Click “Save Changes” to update</p>
+                           </div>
+                        </div>
+                        <div class="box-section">
+                           <div class="section-single">
+                              <div class="form-group">
+                                 <label class="col-form-label">{{$language[230][session()->get('lang')]}}*</label>
+                                 <textarea class="form-control" name="address" id="address">{{$post_ad->address}}</textarea>
+                              </div>
+                              <div class="form-group">
+                                 <label class="col-form-label">{{$language[231][session()->get('lang')]}}*</label>
+                                 <label>
+                                    <select name="city" id="city" class="form-control select">
+                                        <option value="">{{$language[232][session()->get('lang')]}}</option>
+                                        @foreach($city as $row)
+                                        @if($row->id == $post_ad->city)
+                                        <option selected value="{{$row->id}}">{{$row->city}}</option>
+                                        @else
+                                        <option value="{{$row->id}}">{{$row->city}}</option>
+                                        @endif
+                                        @endforeach
+                                    </select>
+                                 </label>
+                              </div>
+                              <div class="form-group">
+                                 <label class="col-form-label">{{$language[233][session()->get('lang')]}}</label>
+                                 <label>
+                                    <select name="area" id="area" class="form-control select">
+                                        <option value="">{{$language[234][session()->get('lang')]}}</option>
+                                       @foreach($area as $row)
+                                       @if($row->id == $post_ad->area)
+                                       <option selected value="{{$row->id}}">{{$row->city}}</option>
+                                       @else
+                                       <option value="{{$row->id}}">{{$row->city}}</option>
+                                       @endif
+                                       @endforeach
+                                    </select>
+                                 </label>
+                              </div>
+                              <div class="ps-profile-map ps-fullwidth">
+                                 <div class="col-sm-12">
+                                    <div class="form-group">
+                                        <!-- <label>Enter a location</label>
+                                          <input id="searchInput" class="input-controls form-control" type="text" placeholder="Enter a location"> -->
+                                        <!-- <input type="hidden" name="address" id="address"> -->
+                                        <input value="{{$post_ad->latitude}}" type="hidden" name="latitude" id="latitude">
+                                        <input value="{{$post_ad->longitude}}" type="hidden" name="longitude" id="longitude">
+                                    </div>
+                                 </div>
+                                 <div class="col-sm-12">
+                                    <!-- <div class="map" id="map" style="width: 100%; height: 300px;">
+                                       </div> -->
+                                    <iframe id="map" src="http://maps.google.com/maps?q=abu dhabi&amp;z=16&amp;output=embed" style="width: 100%; height: 300px;border:0;" frameborder="0" allowfullscreen=""></iframe>
+                                 </div>
+                              </div>
+                           </div>
+                        </div>
+                        <button id="save" onclick="Save()" class="theme-btn-one">{{$language[238][session()->get('lang')]}}</button>
+                     </form>
+                  </div>
+               </div>
             </div>
-        </div>
-    </div>
-</div>
-
-<!-- End MAIN CONTENT START -->
-              
-        </section>
-    </main>
+         </section>
+         <!-- category-details end -->
 @endsection
 @section('js')
-<script src="/js/infobox/data.json"></script>
-<script src="/js/infobox/mapclustering.js"></script>
-<script src="/js/vendor/markerclusterer.min.js"></script>
-<script src="/js/vendor/mapclustering.js"></script>
-<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBJ3q6w3hiHe_MIbB1Jy31bGOwL8LYlwJw"></script>
-<script src="/js/vendor/gmap3.min.js"></script>
+<script type="text/javascript">
+$('.sidebar_post_ad').addClass('active');
 
-<script src="/js/vendor/masonry.pkgd.min.js"></script>
-<script src="/js/vendor/jquery.mCustomScrollbar.concat.min.js"></script>
+$('#city').change(function(){
+  var id = $('#city').val();
+  $.ajax({
+    url : '/get-area/'+id,
+    type: "GET",
+    success: function(data)
+    {
+        $('#area').html(data);
+    }
+  });
+});
 
-<script>
-/* script */
-function initialize() {
-   var latlng = new google.maps.LatLng(24.453884,54.3773438);
-    var map = new google.maps.Map(document.getElementById('map'), {
-      center: latlng,
-      zoom: 13
-    });
-    var marker = new google.maps.Marker({
-      map: map,
-      position: latlng,
-      draggable: true,
-      anchorPoint: new google.maps.Point(0, -29)
-   });
-    var input = document.getElementById('searchInput');
-    map.controls[google.maps.ControlPosition.TOP_LEFT].push(input);
-    var geocoder = new google.maps.Geocoder();
-    var autocomplete = new google.maps.places.Autocomplete(input);
-    autocomplete.bindTo('bounds', map);
-    var infowindow = new google.maps.InfoWindow();   
-    autocomplete.addListener('place_changed', function() {
-        infowindow.close();
-        marker.setVisible(false);
-        var place = autocomplete.getPlace();
-        if (!place.geometry) {
-            window.alert("Autocomplete's returned place contains no geometry");
-            return;
-        }
-  
-        // If the place has a geometry, then present it on a map.
-        if (place.geometry.viewport) {
-            map.fitBounds(place.geometry.viewport);
-        } else {
-            map.setCenter(place.geometry.location);
-            map.setZoom(17);
-        }
-       
-        marker.setPosition(place.geometry.location);
-        marker.setVisible(true);          
-    
-        bindDataToForm(place.formatted_address,place.geometry.location.lat(),place.geometry.location.lng());
-        infowindow.setContent(place.formatted_address);
-        infowindow.open(map, marker);
-       
-    });
-    // this function will work on marker move event into map 
-    google.maps.event.addListener(marker, 'dragend', function() {
-        geocoder.geocode({'latLng': marker.getPosition()}, function(results, status) {
-        if (status == google.maps.GeocoderStatus.OK) {
-          if (results[0]) {        
-              bindDataToForm(results[0].formatted_address,marker.getPosition().lat(),marker.getPosition().lng());
-              infowindow.setContent(results[0].formatted_address);
-              infowindow.open(map, marker);
-          }
-        }
-        });
-    });
-}
-function bindDataToForm(address,lat,lng){
-   document.getElementById('address').value = address;
-   document.getElementById('latitude').value = lat;
-   document.getElementById('longitude').value = lng;
-}
-google.maps.event.addDomListener(window, 'load', initialize);
-</script>
+$('#area').change(function(){
+  var city = $('#city').val();
+  var area = $('#area').val();
+  $.ajax({
+    url : '/get-city-name/'+city+'/'+area,
+    type: "GET",
+    success: function(data)
+    {
+        $('#map').attr("src", "http://maps.google.com/maps?q="+data.city + data.area+"&z=16&output=embed");
+    }
+  });
+});
 
-<script>
-$('.new-post-ads').addClass('active');
+var spinner = new jQuerySpinner({
+   parentId: 'show_spinner'
+});
 
 function Save(){
+    spinner.show();
+    $(".text-danger").remove();
+    $('.form-group').removeClass('has-error').removeClass('has-success');
+    $("#save").attr("disabled", true);
     var formData = new FormData($('#form')[0]);
     // var description = tinyMCE.get('description').getContent();
     // formData.append('description', description);
@@ -455,20 +356,98 @@ function Save(){
         dataType: "JSON",
         success: function(data)
         {                
-          $("#form")[0].reset();
-          toastr.success(data, 'Successfully Save');
-          window.location = "/customer/my-ads";
+            if(data.status == 1){
+               Swal.fire({
+                  title: data.message,
+                  icon: "error",
+               }).then(function() {
+                  $("#save").attr("disabled", false);
+                  spinner.hide();
+               });
+            }  
+            else{                
+               Swal.fire({
+                  title: data.message,
+                  icon: "success",
+               }).then(function() {
+                  window.location = "/customer/my-ads";
+                  $("#save").attr("disabled", false);
+                  spinner.hide();
+               });
+            }
         },error: function (data) {
           var errorData = data.responseJSON.errors;
             $.each(errorData, function(i, obj) {
-            toastr.error(obj[0]);
-          });
-        }
+                //toastr.error(obj[0]);
+                if(i == 'mobile'){
+                    $("#mobile_error").after('<p class="text-danger">'+obj[0]+'</p>');
+                    $('#mobile').closest('.form-group').addClass('has-error');
+                }
+                else{
+                    $("#"+i).after('<p class="text-danger">'+obj[0]+'</p>');
+                    $('#'+i).closest('.form-group').addClass('has-error');
+                }
+            });
+            $("#save").attr("disabled", false);
+            spinner.hide();
+         }
+    });
+}
+
+var spinner1 = new jQuerySpinner({
+   parentId: 'image_view'
+});
+
+function ImageUpdate(){
+    spinner1.show();
+    $("#imagesave").attr("disabled", true);
+    var formData = new FormData($('#form')[0]);
+    $.ajax({
+        url : '/customer/update-post-ads-image',
+        type: "POST",
+        data: formData,
+        contentType: false,
+        processData: false,
+        dataType: "JSON",
+        success: function(data)
+        {                
+            if(data.status == 1){
+               Swal.fire({
+                  title: data.message,
+                  icon: "error",
+               }).then(function() {
+                  $("#imagesave").attr("disabled", false);
+                  spinner1.hide();
+               });
+            }  
+            else if(data.status == 2){
+               toastr.error(data.message);
+               $("#imagesave").attr("disabled", false);
+               spinner1.hide();
+            } 
+            else{                
+               Swal.fire({
+                  title: data.message,
+                  icon: "success",
+               }).then(function() {
+                  location.reload();
+                  $("#imagesave").attr("disabled", false);
+                  spinner1.hide();
+               });
+            }
+        },error: function (data) {
+          var errorData = data.responseJSON.errors;
+            $.each(errorData, function(i, obj) {
+               toastr.error(obj[0]);
+            });
+            $("#imagesave").attr("disabled", false);
+            spinner1.hide();
+         }
     });
 }
 
 function Delete(id){
-    var r = confirm("Are you sure");
+    var r = confirm("Are you sure Completely delete from our site");
     if (r == true) {
       $.ajax({
         url : '/customer/delete-post-image/'+id,
@@ -482,6 +461,124 @@ function Delete(id){
       });
     } 
 }
-</script>
 
+$('#category').change(function(){
+  var id = $('#category').val();
+  $.ajax({
+    url : '/get-sub-category/'+id,
+    type: "GET",
+    success: function(data)
+    {
+        $('#subcategory').html(data);
+    }
+  });
+});
+
+
+function addRow() {
+	var tableLength = $("#featuresTable tbody tr").length;
+	var count;
+	if(tableLength > 0) {		
+		count = $("#featuresTable tbody tr:last").attr('value');
+		count = Number(count) + 1;
+	} else {
+		count = 1;
+	}
+
+
+var tr = '<tr value="'+count+'" id="row'+count+'">'+
+  	'<td>'+
+		'<input class="form-control" type="text" name="features[]" id="features'+count+'" autocomplete="off"  />'+
+	'</td>'+
+	'<td align="center">'+
+		'<button class="btn btn-default" type="button" onclick="removefeaturesrow('+count+')"><i class="fa fa-trash"></i></button>'+
+	'</td>'+
+'</tr>';
+
+if(tableLength > 0) {							
+	$("#featuresTable tbody tr:last").after(tr);
+} else {				
+	$("#featuresTable tbody").append(tr);
+}		
+// $("#features"+count).focus();
+
+} // /add row
+
+
+function removefeaturesrow(row = null)
+{
+	if(confirm('Are you sure delete this row?'))
+	{
+	   var tableFeaturesLength = $("#featuresTable tbody tr").length;
+		if(tableFeaturesLength > '1') {
+			$("#row"+row).remove();
+			var previous_row = row - 1;
+			var next_row = row + 1;
+			$("#features"+previous_row).focus();		
+			$("#features"+next_row).focus();		
+		}
+	}
+}
+
+var city = $('#city').val();
+var area = $('#area').val();
+$.ajax({
+    url : '/get-city-name/'+city+'/'+area,
+    type: "GET",
+    success: function(data)
+    {
+        $('#map').attr("src", "http://maps.google.com/maps?q="+data.city + data.area+"&z=16&output=embed");
+    }
+});
+
+function showPreview(event, number){
+   if(event.target.files.length > 0){
+      let src = URL.createObjectURL(event.target.files[0]);
+      let preview = document.getElementById("file-ip-"+number+"-preview");
+      preview.src = src;
+      preview.style.display = "block";
+   } 
+}
+// function myImgRemove(number) {
+//    document.getElementById("file-ip-"+number+"-preview").src = "https://i.ibb.co/ZVFsg37/default.png";
+//    document.getElementById("file-ip-"+number).value = null;
+// }
+
+function AddImages() {
+
+var tableLength = $("#image_view .panel_image").length;
+var count;
+if(tableLength > 0) {		
+   count = $("#image_view .panel_image:last").attr('value');
+   count = Number(count) + 1;
+} else {
+   count = 1;
+}
+var tr =
+'<div value="'+count+'" id="imagerows'+count+'" class="center form-input panel_image">'+
+   '<label for="file-ip-'+count+'">'+
+   '<img id="file-ip-'+count+'-preview" src="https://i.ibb.co/ZVFsg37/default.png">'+
+   '<button type="button" class="imgRemove" onclick="removeImageRows('+count+')"></button>'+
+   '</label>'+
+   '<input type="hidden" name="image_id[]">'+
+   '<input type="file" name="images[]" id="file-ip-'+count+'" accept=".png,.jpg,.jpeg" onchange="showPreview(event, '+count+');">'+
+'</div>';
+
+if(tableLength > 0) {	
+   $("#image_view .panel_image:last").after(tr);
+} else {	
+   $("#image_view .panel_image").append(tr);
+}	 
+
+} // /add row
+
+
+function removeImageRows(row)
+{
+   if(confirm('Are you sure delete this row?'))
+   {
+      $("#imagerows"+row).remove();
+   }
+}
+</script>
 @endsection

@@ -41,7 +41,7 @@
     width: 120px;
     height: 120px;
     border-radius: 50%;
-    background-color: #23316a;
+    background-color: #fff;
     margin: 0 auto;
 }
 </style>
@@ -54,7 +54,7 @@
 				<form method="POST" action="{{ route('admin.login.submit') }}" class="login100-form validate-form">
 				@csrf
 					<span class="login100-form-logo">
-                           <img src="/assets/images/logo2.png" alt="wellwell" width="100px">
+                           <img src="/images/logo.png" alt="wellwell" width="100px">
 						{{-- <i class="zmdi zmdi-landscape"></i> --}}
 					</span>
 

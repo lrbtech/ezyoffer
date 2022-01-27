@@ -1,158 +1,247 @@
-  @extends('website.layout')
-   @section('css')
-   <link rel="stylesheet" href="/css/dashboard.css">
-<link rel="stylesheet" href="/css/dashboard-responsive.css">
-
-   @endsection
+@extends('customers.layouts')
+@section('css')
+@endsection
 @section('section')
 
-<div class="ps-main-banner">
-        <div class="ps-dark-overlay">
-            <div class="container">
-                <div class="ps-banner-content">
-                    <h4>Profile Settings</h4>
-                    <p><a href="index.html">Home</a> <span><i class="ti-angle-right"></i></span> <a href="insights.html">Dashboard</a> <span> <i class="ti-angle-right"></i></span> Profile Settings</p>
-                </div>
-            </div>
-        </div>
-    </div>
-<main class="ps-main">
-        <section class="ps-main-section">
-            <div class="container">
-                <div class="row">
-               @include('customers.sidebar')
-                    <!-- MAIN CONTENT START -->
-                 <div class="col-lg-8 ps-dashboard-user">
-                        <div class="ps-posted-ads ps-profile-setting">
-                            <div class="ps-posted-ads__heading">
-                                <h5>Profile Settings</h5>
-                                <p>Click “Save Changes” to update</p>
-                                <button class="btn ps-btn">Save Changes</button>
-                            </div>
-                            <div class="ps-profile-setting__content">
-                                <form class="ps-profile-form">
-                                    <div class="ps-profile--row">
-                                        <div class="form-group">
-                                            <input type="text" class="form-control" id="formGroupExampleInput1" required="" placeholder="First Name*">
-                                        </div>
-                                        <div class="form-group">
-                                            <input type="text" class="form-control" id="formGroupExampleInput2" required="" placeholder="Last Name*">
-                                        </div>
-                                        <div class="form-group">
-                                            <label>
-                                                <select class="form-control">
-                                                    <option value="" disabled="" selected="" hidden="">Select Gender:</option>
-                                                    <option value="">Male</option>
-                                                    <option value="">Female</option>
-                                                    <option value="">Other</option>
-                                                </select>
-                                            </label>
-                                        </div>
-                                        <div class="form-group">
-                                            <input type="text" class="form-control ps-taken" required="" id="formGroupExampleInput3" placeholder="Username*">
-                                            <em>Already taken  :(</em>
-                                        </div>
-                                        <div class="form-group">
-                                            <input type="number" class="form-control" id="formGroupExampleInput4" required="" placeholder="Mobile Number*">
-                                        </div>
-                                        <div class="form-group">
-                                            <input type="email" class="form-control" id="formGroupExampleInput5" placeholder="Email">
-                                        </div>
-                                  
-                                        <div class="form-group">
-                                            <input type="number" class="form-control" id="formGroupExampleInput7" placeholder="Whatsapp">
-                                        </div>
-                                     
-                                      
-                                      
-                                    </div>
-                                </form>
-                                {{-- <div class="ps-profile-setting__upload">
-                                    <h5>Profile Settings</h5>
-                                    <div class="ps-profile-setting__uploadarea">
-                                        <label for="filepf">
-                                            <span class="btn ps-btn">Select File</span>
-                                            <input type="file" name="file" id="filepf" class="d-none">
-                                        </label>
-                                        <!-- <button class="btn ps-btn">Select File</button> -->
-                                        <p class="ps-drop">Drop files here to upload</p>
-                                        <div></div>
-                                        <p class="ps-loading">Uploading</p>
-                                        <svg>
-                                            <rect height="60px" width="100%" rx="6px" stroke-width="2" stroke-dasharray="12 12"></rect>
-                                        </svg>
-                                    </div>
-                                    <form class="ps-profile-setting__imgs ps-x-axis mCustomScrollbar _mCS_1"><div id="mCSB_1" class="mCustomScrollBox mCS-light mCSB_horizontal mCSB_inside" style="max-height: none;" tabindex="0"><div id="mCSB_1_container" class="mCSB_container" style="position: relative; top: 0px; left: 0px; width: 758px;" dir="ltr">
-                                        <input id="radio1" type="radio" name="radio" style="">
-                                        <label for="radio1">
-                                            <span>
-                                                <img src="images/profile-setting/img-01.jpg" alt="Image Description" class="mCS_img_loaded">
-                                                <a class="ps-trash" href="javascript:void(0);"><span><i class="ti-trash"></i></span></a>
-                                                <span class="ps-tick"><span><i class="fas fa-check"></i></span></span>
-                                            </span>
-                                        </label>
-                                        <input id="radio2" type="radio" name="radio" style="">
-                                        <label for="radio2">
-                                            <span>
-                                                <img src="images/profile-setting/img-02.jpg" alt="Image Description" class="mCS_img_loaded">
-                                                <a class="ps-trash" href="javascript:void(0);"><span><i class="ti-trash"></i></span></a> 
-                                                <span class="ps-tick"><span><i class="fas fa-check"></i></span></span>  
-                                            </span>
-                                        </label>
-                                        <input id="radio3" type="radio" name="radio" style="">
-                                        <label for="radio3">
-                                            <span>
-                                                <img src="images/profile-setting/img-03.jpg" alt="Image Description" class="mCS_img_loaded">
-                                                <a class="ps-trash" href="javascript:void(0);"><span><i class="ti-trash"></i></span></a>  
-                                                <span class="ps-tick"><span><i class="fas fa-check"></i></span></span> 
-                                            </span>
-                                        </label>
-                                        <input id="radio4" type="radio" name="radio" style="">
-                                        <label for="radio4">
-                                            <span>
-                                                <img src="images/profile-setting/img-04.jpg" alt="Image Description" class="mCS_img_loaded">
-                                                <a class="ps-trash" href="javascript:void(0);"><span><i class="ti-trash"></i></span></a> 
-                                                <span class="ps-tick"><span><i class="fas fa-check"></i></span></span>  
-                                            </span>
-                                        </label>
-                                        <input id="radio5" type="radio" name="radio" style="">
-                                        <label for="radio5">
-                                            <span>
-                                                <img src="images/profile-setting/img-05.jpg" alt="Image Description" class="mCS_img_loaded">
-                                                <a class="ps-trash" href="javascript:void(0);"><span><i class="ti-trash"></i></span></a>   
-                                                <span class="ps-tick"><span><i class="fas fa-check"></i></span></span>
-                                            </span>
-                                        </label>
-                                        <input id="radio6" type="radio" name="radio" style="">
-                                        <label for="radio6">
-                                            <span>
-                                                <img src="images/profile-setting/img-05.jpg" alt="Image Description" class="mCS_img_loaded">
-                                                <a class="ps-trash" href="javascript:void(0);"><span><i class="ti-trash"></i></span></a>   
-                                                <span class="ps-tick"><span><i class="fas fa-check"></i></span></span>
-                                            </span>
-                                        </label>
-                                    </div><div id="mCSB_1_scrollbar_horizontal" class="mCSB_scrollTools mCSB_1_scrollbar mCS-light mCSB_scrollTools_horizontal" style="display: block;"><div class="mCSB_draggerContainer"><div id="mCSB_1_dragger_horizontal" class="mCSB_dragger" style="position: absolute; min-width: 30px; display: block; width: 520px; max-width: 618px; left: 0px;"><div class="mCSB_dragger_bar"></div></div><div class="mCSB_draggerRail"></div></div></div></div></form>
-                                </div> --}}
-                                <div class="ps-profile-setting__save">
-                                    <button class="btn ps-btn">Save Changes</button>
-                                    <p>Click “Save Changes” to update</p>
-                                </div>
-                            </div>
-                        </div>
+        <!-- Page Title -->
+        <section class="page-title style-two" style="background-image: url(/assets/images/background/page-title.jpg);">
+            <div class="auto-container">
+                <div class="content-box centred mr-0">
+                    <div class="title">
+                        <h1>{{$language[200][session()->get('lang')]}}</h1>
                     </div>
-                    <!-- MAIN CONTENT END -->
+                    <ul class="bread-crumb clearfix">
+                        <li><a href="/">Home</a></li>
+                        <li>{{$language[200][session()->get('lang')]}}</li>
+                    </ul>
                 </div>
             </div>
         </section>
-    </main>
-@endsection
-  @section('js')
+        <!-- End Page Title -->
 
-<script src="/js/infobox/data.json"></script>
-<script src="/js/infobox/mapclustering.js"></script>
-<script src="/js/vendor/markerclusterer.min.js"></script>
-<script src="/js/vendor/mapclustering.js"></script>
-<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBJ3q6w3hiHe_MIbB1Jy31bGOwL8LYlwJw"></script>
-<script src="/js/vendor/gmap3.min.js"></script>
-<script src="/js/vendor/jquery.mCustomScrollbar.concat.min.js"></script>
-    @endsection
+
+        <!-- category-details -->
+        <section class="category-details bg-color-2">
+            <div class="auto-container">
+                <div class="row clearfix">
+                    <div class="col-lg-4 col-md-12 col-sm-12 sidebar-side">
+                    @include('customers.menu')
+                    </div>
+                    <div class="col-lg-8 col-md-12 col-sm-12 content-side">
+<form id="form" method="POST" class="default-form">
+{{csrf_field()}}
+<input type="hidden" name="id" value="{{$user->id}}">
+<div class="box-section">
+    <div class="user-pro-section">
+        <div class="profile-details section-single">
+            <h2 class="title-in-customer">{{$language[201][session()->get('lang')]}}</h2>
+            <div class="row">
+                <div class="form-group col-md-6">
+                    <label>{{$language[202][session()->get('lang')]}}*</label>
+                    <input type="text" class="form-control" id="first_name" name="first_name" value="{{$user->first_name}}" required="" placeholder="First Name*">
+                </div>
+                <div class="form-group col-md-6">
+                    <label>{{$language[203][session()->get('lang')]}}*</label>
+                    <input type="text" class="form-control" id="last_name" name="last_name" value="{{$user->last_name}}" required="" placeholder="Last Name*">
+                </div>
+            </div>
+            <!-- <div class="form-group">
+                <label>Mobile Number*</label>
+                <input type="number" class="form-control" id="mobile" name="mobile" value="{{$user->mobile}}" required="" placeholder="Mobile Number*">
+            </div> -->
+            <div class="form-group">
+                <label>{{$language[204][session()->get('lang')]}}</label>
+                <div class="input-group mb-3">
+                    <div class="input-group-prepend">
+                        <!-- <span class="input-group-text">+971</span> -->
+                        <input style="width:100px;border: 1px solid #e6e8e8;padding: 10px 10px;font-size: 15px;color: #808288;" value="{{$user->country_code}}" name="country_code" id="country_code">
+                    </div>
+                    <input value="{{$user->mobile}}" type="number" class="form-control" name="mobile" id="mobile" placeholder="Mobile Number">
+                </div>
+                <span id="mobile_error"></span>
+            </div>
+            <div class="form-group">
+                <label>{{$language[205][session()->get('lang')]}}</label>
+                <input readonly type="email" class="form-control" id="email" name="email" value="{{$user->email}}" placeholder="Email">
+            </div>
+
+            <div class="form-group">
+                <label>{{$language[206][session()->get('lang')]}}</label>
+                <select onclick="OpenStore()" name="user_type" id="user_type" class="select">
+                <option {{ ($user->user_type == '0' ? ' selected' : '') }} value="0">One Item Seller</option>
+                <option {{ ($user->user_type == '1' ? ' selected' : '') }} value="1">Multiple Item Seller</option>
+                <option {{ ($user->user_type == '2' ? ' selected' : '') }} value="2">Seller / Buyer</option>
+                <!-- @if(!empty($used_package))
+                @if($used_package->store_available == '1')
+                <option {{ ($user->user_type == '1' ? ' selected' : '') }} value="1">Exclusive Shops</option>
+                @endif 
+                @endif  -->
+                </select>
+            </div>
+        </div>
+        <!-- <div class="change-password section-single">
+            <h2 class="title-in-customer">Change password</h2>
+            <div class="form-group">
+                <label>Old Password</label>
+                <input type="password" class="form-control">
+            </div>
+            <div class="form-group">
+                <label>New password</label>
+                <input type="password" class="form-control">
+            </div>
+            <div class="form-group">
+                <label>Confirm password</label>
+                <input type="password" class="form-control">
+            </div>
+        </div> -->
+
+        <div class="preferences-settings section-single">
+            <h2 class="title-in-customer">{{$language[207][session()->get('lang')]}}</h2>
+            <div>
+                <div id="profile-container">
+                    @if($user->profile_image != '')
+                    <img id="profileImage" style="width: 80px;" src="/upload_profile_image/{{$user->profile_image}}">
+                    @else 
+                    <image id="profileImage" src="/assets/images/icons/user-icon.png" />
+                    @endif
+                </div>
+                <input id="imageUpload" type="file" name="profile_image" placeholder="Photo" required="" capture>
+            </div>
+        </div> 
+      
+        <div id="view_store" class="preferences-settings section-single">
+            <h2 class="title-in-customer">{{$language[208][session()->get('lang')]}}</h2>
+            <div class="form-group">
+                <label>{{$language[209][session()->get('lang')]}}</label>
+                <textarea class="form-control" id="description" name="description">{{$user->description}}</textarea>
+            </div>
+            <div class="form-group">
+                <label>{{$language[210][session()->get('lang')]}}</label>
+                <textarea class="form-control" id="address" name="address">{{$user->address}}</textarea>
+            </div>
+            <div class="row">
+                <div class="form-group col-md-6">
+                    <label>{{$language[211][session()->get('lang')]}}</label>
+                    <select id="city" name="city" class="select">
+                    <option value="">SELECT</option>
+                    @foreach($city as $row)
+                    @if($row->id == $user->city)
+                    <option selected value="{{$row->id}}">{{$row->city}}</option>
+                    @else
+                    <option value="{{$row->id}}">{{$row->city}}</option>
+                    @endif
+                    @endforeach
+                    </select>
+                </div>
+                <div class="form-group col-md-6">
+                    <label>{{$language[212][session()->get('lang')]}}</label>
+                    <select id="area" name="area" class="select">
+                    <option value="">SELECT</option>
+                    @foreach($area as $row)
+                    @if($row->id == $user->area)
+                    <option selected value="{{$row->id}}">{{$row->city}}</option>
+                    @else
+                    <option value="{{$row->id}}">{{$row->city}}</option>
+                    @endif
+                    @endforeach
+                    </select>
+                </div>
+            </div>
+        </div>  
+        
+        <!-- <div class="preferences-settings section-single">
+            <h2 class="title-in-customer">Preferences Settings</h2>
+            <div class="checkbox">
+                <label><input type="checkbox" name="logged"> Comments are enabled on my ads </label>
+                <label><input type="checkbox" name="receive"> I want to receive newsletter.</label>
+                <label><input type="checkbox" name="want"> I want to receive advice on buying and selling. </label>
+            </div>
+        </div>     -->
+        <button type="button" onclick="Save()" id="save" class="theme-btn-one">{{$language[213][session()->get('lang')]}}</button>
+        <!-- <a href="#" class="theme-btn-one color-2">Cancle</a> -->
+    </div>
+</div>
+</form>
+
+
+
+                    </div>
+                </div>
+            </div>
+        </section>
+        <!-- category-details end -->
+
+
+@endsection
+@section('js')
+<script type="text/javascript">
+$('.sidebar_settings').addClass('active');
+
+function Save(){
+    $(".text-danger").remove();
+    $('.form-group').removeClass('has-error').removeClass('has-success');
+    $("#save").attr("disabled", true);
+    var formData = new FormData($('#form')[0]);
+    // var description = tinyMCE.get('description').getContent();
+    // formData.append('description', description);
+    $.ajax({
+        url : '/customer/update-profile-settings',
+        type: "POST",
+        data: formData,
+        contentType: false,
+        processData: false,
+        dataType: "JSON",
+        success: function(data)
+        {                
+            Swal.fire({
+                text: 'Successfully Update',
+                icon: 'success',
+                }).then((result) => {
+                if (result.isConfirmed) {
+                    $("#form")[0].reset();
+                    location.reload();
+                    $("#save").attr("disabled", false);
+                }
+            }) 
+        },error: function (data) {
+            var errorData = data.responseJSON.errors;
+            $.each(errorData, function(i, obj) {
+                if(i == 'mobile'){
+                    $("#mobile_error").after('<p class="text-danger">'+obj[0]+'</p>');
+                    $('#mobile').closest('.form-group').addClass('has-error');
+                }
+                else{
+                    $("#"+i).after('<p class="text-danger">'+obj[0]+'</p>');
+                    $('#'+i).closest('.form-group').addClass('has-error');
+                }
+            });
+            $("#save").attr("disabled", false);
+        }
+    });
+}
+
+$('#city').change(function(){
+  var id = $('#city').val();
+  $.ajax({
+    url : '/get-area/'+id,
+    type: "GET",
+    success: function(data)
+    {
+        $('#area').html(data);
+    }
+  });
+});
+
+// $('#view_store').hide();
+// OpenStore();
+// function OpenStore(){
+//     var user_type = $('#user_type').val();
+//     if(user_type == '1'){
+//         $('#view_store').show();
+//     }
+//     else{
+//         $('#view_store').hide();
+//     }
+// }
+</script>
+@endsection

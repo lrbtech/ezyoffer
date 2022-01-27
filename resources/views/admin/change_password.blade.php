@@ -37,7 +37,7 @@
               <div class="col-sm-12">
                 <div class="card">
                 <div class="card-header">
-                    <h5>Change</h5><span>Password </span>
+                    <h5>Change <span>Password </span></h5>
                   </div>
                   <div class="card-body megaoptions-border-space-sm">
                   

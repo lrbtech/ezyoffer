@@ -44,6 +44,7 @@
                             <tr>
                                 <th>#</th>
                                 <th>SubCategory Name</th>
+                                <th>Post Count</th>
                                 <th>Image</th>
                                 <th>Status</th>
                                 <th>Action</th>
@@ -54,6 +55,9 @@
                         <tr>
                             <td>{{$key + 1}}</td>
                             <td>{{$row->category}}</td>
+                            <td>
+                            {{ \App\Http\Controllers\Admin\CategoryController::subcategorypostcount($row->id) }}
+                            </td>
                             <td>
                                 <img style="width: 100px;height: 100px;" src="/upload_files/{{$row->image}}">
                             </td>

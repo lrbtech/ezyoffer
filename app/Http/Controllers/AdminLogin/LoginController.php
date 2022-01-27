@@ -4,9 +4,12 @@ namespace App\Http\Controllers\AdminLogin;
 
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use App\Models\User;
+use App\Models\post_ad;
+use App\Models\used_package;
 use Auth;
-
-
+use DB;
+use Mail;
 class LoginController extends Controller
 {
     public function __construct()
@@ -31,6 +34,26 @@ class LoginController extends Controller
       // Attempt to log the user in
       if (Auth::guard('admin')->attempt(['email' => $request->email, 'password' => $request->password], $request->remember)) {
         // if successful, then redirect to their intended location
+
+        // $today = date('Y-m-d');
+        // $user_package = User::where('package_status',0)->get();
+        // if(count($user_package) > 0){
+        //     foreach($user_package as $row){
+        //         $package = used_package::find($row->package_id);
+        //         if( strtotime($today) > strtotime($package->expire_date) ){
+        //             $user = User::find($row->id);
+        //             $user->package_status = 1;
+        //             $user->save();
+        //             $post_ad = post_ad::where('customer_id',$row->id)->where('live_ads',1)->get();
+        //             foreach($post_ad as $post){
+        //                 $update_post = post_ad::find($post->id);
+        //                 $update_post->live_ads = 0;
+        //                 $update_post->save();
+        //             }
+        //         }
+        //     }
+        // }
+
         return redirect()->intended(route('admin.dashboard'));
       }
 
@@ -42,4 +65,6 @@ class LoginController extends Controller
       Auth::guard('admin')->logout();
       return redirect('/admin/login');
     }
+
+
 }

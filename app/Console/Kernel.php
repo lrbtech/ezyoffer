@@ -4,6 +4,12 @@ namespace App\Console;
 
 use Illuminate\Console\Scheduling\Schedule;
 use Illuminate\Foundation\Console\Kernel as ConsoleKernel;
+use App\Models\User;
+use App\Models\post_ad;
+use App\Models\used_package;
+use Auth;
+use DB;
+use Mail;
 
 class Kernel extends ConsoleKernel
 {
@@ -13,7 +19,7 @@ class Kernel extends ConsoleKernel
      * @var array
      */
     protected $commands = [
-        //
+        Commands\DemoCron::class,
     ];
 
     /**
@@ -24,7 +30,14 @@ class Kernel extends ConsoleKernel
      */
     protected function schedule(Schedule $schedule)
     {
-        // $schedule->command('inspire')->hourly();
+        // $schedule->command('minute:statusupdate')->everyMinute()->withoutOverlapping();
+        // ;
+        $schedule->command('demo:cron')
+                 ->everyMinute();
+        // $schedule->call(function () {
+        //     // DB::table('users')->whereYear('last_login_at','<',date('Y')-1)->delete();
+        //     \Log::info("Cron is working fine!");
+        // })->everyMinute();
     }
 
     /**

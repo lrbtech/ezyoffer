@@ -10,8 +10,8 @@
             <div class="page-header">
               <div class="row">
                 <div class="col-lg-6 main-header">
-                  <h2>Category <span> </span></h2>
-                  <h6 class="mb-0">Admin Panel</h6>
+                  <h2>{{$language[82][Auth::guard('admin')->user()->lang]}}</h2>
+                  <h6 class="mb-0">{{$language[0][Auth::guard('admin')->user()->lang]}}</h6>
                 </div>
                 <!-- <div class="col-lg-6 breadcrumb-right">     
                   <ol class="breadcrumb">
@@ -34,7 +34,7 @@
                     <!-- <h5>Zero Configuration</h5><span>DataTables has most features enabled by default, so all you need to do to use it with your own tables is to call the construction function:<code>$().DataTable();</code>.</span><span>Searching, ordering and paging goodness will be immediately added to the table, as shown in this example.</span> -->
                     <button id="add_new" style="width: 200px;" type="button" class="btn btn-primary add-task-btn btn-block my-1">
                     <i class="bx bx-plus"></i>
-                    <span>New Category</span>
+                    <span>{{$language[83][Auth::guard('admin')->user()->lang]}}</span>
                     </button>
                   </div>
                   <div class="card-body">
@@ -43,10 +43,12 @@
                         <thead>
                             <tr>
                                 <th>#</th>
-                                <th>Category Name</th>
-                                <th>Image</th>
-                                <th>Status</th>
-                                <th>Action</th>
+                                <th>{{$language[84][Auth::guard('admin')->user()->lang]}}</th>
+                                <th>{{$language[85][Auth::guard('admin')->user()->lang]}}</th>
+                                <th>{{$language[86][Auth::guard('admin')->user()->lang]}}</th>
+                                <!-- <th>Banner Image</th> -->
+                                <th>{{$language[87][Auth::guard('admin')->user()->lang]}}</th>
+                                <th>{{$language[88][Auth::guard('admin')->user()->lang]}}</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -57,8 +59,14 @@
                               <a href="/admin/subcategory/{{$row->id}}">{{$row->category}}</a>
                             </td>
                             <td>
-                                <img style="width: 100px;height: 100px;" src="/upload_files/{{$row->image}}">
+                            {{ \App\Http\Controllers\Admin\CategoryController::categorypostcount($row->id) }}
                             </td>
+                            <td>
+                                <img style="height: 100px;" src="/upload_files/{{$row->image}}">
+                            </td>
+                            <!-- <td>
+                                <img style="height: 100px;" src="/upload_files/{{$row->banner_image}}">
+                            </td> -->
                             <td>
                             @if($row->status == 0)
                             Active
@@ -117,6 +125,11 @@
             <input autocomplete="off" type="file" id="image" name="image" class="form-control">
         </div>
 
+        <!-- <div class="form-group">
+            <label class="col-form-label">Banner Image</label>
+            <input autocomplete="off" type="file" id="banner_image" name="banner_image" class="form-control">
+        </div> -->
+
         </form>
         </div>
         <div class="modal-footer">
@@ -148,24 +161,24 @@ function Save(){
   var formData = new FormData($('#form')[0]);
   if(action_type == 1){
     $.ajax({
-        url : '/admin/save-category',
-        type: "POST",
-        data: formData,
-        contentType: false,
-        processData: false,
-        dataType: "JSON",
-        success: function(data)
-        {                
-            $("#form")[0].reset();
-            $('#popup_modal').modal('hide');
-            location.reload();
-            toastr.success(data, 'Successfully Save');
-        },error: function (data) {
-            var errorData = data.responseJSON.errors;
-            $.each(errorData, function(i, obj) {
-            toastr.error(obj[0]);
-      });
-    }
+      url : '/admin/save-category',
+      type: "POST",
+      data: formData,
+      contentType: false,
+      processData: false,
+      dataType: "JSON",
+      success: function(data)
+      {                
+        $("#form")[0].reset();
+        $('#popup_modal').modal('hide');
+        location.reload();
+        toastr.success(data, 'Successfully Save');
+      },error: function (data) {
+        var errorData = data.responseJSON.errors;
+        $.each(errorData, function(i, obj) {
+          toastr.error(obj[0]);
+        });
+      }
     });
   }else{
     $.ajax({
@@ -178,10 +191,10 @@ function Save(){
       success: function(data)
       {
         console.log(data);
-          $("#form")[0].reset();
-           $('#popup_modal').modal('hide');
-           location.reload();
-           toastr.success(data, 'Successfully Update');
+        $("#form")[0].reset();
+        $('#popup_modal').modal('hide');
+        location.reload();
+        toastr.success(data, 'Successfully Update');
       },error: function (data) {
         var errorData = data.responseJSON.errors;
         $.each(errorData, function(i, obj) {

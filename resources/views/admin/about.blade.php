@@ -44,25 +44,7 @@
                 <?php echo $settings->about_us; ?>
 
                 </textarea>
-                </div>
-
-                <div class="col-sm-12 col-md-12">
-                  <div class="form-group">
-                    <label class="form-label">Upload About1 Image</label>
-                    <input class="form-control" type="file" id="about1_image" name="about1_image">
-                    <img style="width:100px;height:100px;" src="/upload_files/{{$settings->about1_image}}">
-                  </div>
-                </div>
-
-                <div class="col-sm-12 col-md-12">
-                  <div class="form-group">
-                    <label class="form-label">Upload About2 Image</label>
-                    <input class="form-control" type="file" id="about2_image" name="about2_image">
-                    <img style="width:100px;height:100px;" src="/upload_files/{{$settings->about2_image}}">
-                  </div>
-                </div>
-
-                
+                </div>                
 
                 <div class="col-md-12 text-right">
                   <br><br><br>

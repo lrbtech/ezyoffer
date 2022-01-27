@@ -1,124 +1,282 @@
-  @extends('website.layout')
-   @section('css')
-   <link rel="stylesheet" href="/css/dashboard.css">
-<link rel="stylesheet" href="/css/dashboard-responsive.css">
-   @endsection
+@extends('customers.layouts')
+@section('css')
+@endsection
 @section('section')
 
- <div class="ps-main-banner">
-        <div class="ps-dark-overlay">
-            <div class="container">
-                <div class="ps-banner-content">
-                    <h4>Payments</h4>
-                    <p><a href="index.html">Home</a> <span><i class="ti-angle-right"></i></span> <a href="insights.html">Dashboard</a> <span><i class="ti-angle-right"></i></span> Payments</p>
+        <!-- Page Title -->
+        <section class="page-title style-two" style="background-image: url(/assets/images/background/page-title.jpg);">
+            <div class="auto-container">
+                <div class="content-box centred mr-0">
+                    <div class="title">
+                        <h1>Packages</h1>
+                    </div>
+                    <ul class="bread-crumb clearfix">
+                        <li><a href="/">Home</a></li>
+                        <li>Packages</li>
+                    </ul>
+                </div>
+            </div>
+        </section>
+        <!-- End Page Title -->
+
+
+        <!-- category-details -->
+        <section class="category-details bg-color-2">
+            <div class="auto-container">
+                <div class="row clearfix">
+                    <div class="col-lg-4 col-md-12 col-sm-12 sidebar-side">
+                    @include('customers.menu')
+                    </div>
+                    <div class="col-lg-8 col-md-12 col-sm-12 content-side">
+                        @if(!empty($used_package))
+                        <div class="row clearfix newrow">
+                           <a href="javascript:void(0);" class="col-md-12 db-list db-list-1">
+                              <div class="ps-package__expire">
+                                    <h6>Current Package Expire in : {{date('d-m-Y',strtotime($used_package->expire_date))}}</h6>
+                                    <span class="current-plans">{{$used_package->package_name}}</span>
+                                </div>
+                              <span class="ps-icon"><i class="fas fa-clock"></i></span>
+                           </a>
+                        </div>
+                        @endif
+                        <h3 class="title-in-customer">Choose Pakage</h3>
+
+
+<div class="row clearfix">
+@foreach($package as $row)
+    @if(!empty($used_package))
+    @if($used_package->package_id == $row->id)
+        @if(Auth::user()->package_status == 1)
+        <div class="col-lg-4 col-md-6 col-sm-12 pricing-block">
+            <div class="pricing-block-one active">
+                <div class="pricing-table">
+                    <div class="teble-header">
+                        <p>{{$row->package_name}}</p>
+                        <h2>{{$row->price}} <sup>AED</sup> 
+                        <span> {{$row->duration}} / 
+                        @if($row->duration_period == 1)
+                        Month
+                        @else 
+                        Days
+                        @endif
+                        </span>
+                        </h2>
+                    </div>
+                    <div class="table-content">
+                        <ul class="list clearfix">
+                            <li>Unlimited Posts</li>
+                            <li>{{$row->no_of_feautured_ads}} Featured Ads</li>
+                            <li>{{$row->no_of_live_story}} Live Ads</li>
+                            <li>Store Available 
+                            @if($row->store_available == 1)
+                            Yes
+                            @else 
+                            No
+                            @endif
+                            </li>
+                            <li>Chat Option Included</li>
+                            <li>24/7 Fully Support</li>
+                        </ul>
+                    </div>
+                    <div class="table-footer">
+                        <a href="#">Activated</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+        @else 
+        <div class="col-lg-4 col-md-6 col-sm-12 pricing-block">
+            <div class="pricing-block-one">
+                <div class="pricing-table">
+                    <div class="teble-header">
+                        <p>{{$row->package_name}}</p>
+                        <h2>{{$row->price}} <sup>AED</sup> 
+                        <span> {{$row->duration}} / 
+                        @if($row->duration_period == 1)
+                        Month
+                        @else 
+                        Days
+                        @endif
+                        </span>
+                        </h2>
+                    </div>
+                    <div class="table-content">
+                        <ul class="list clearfix">
+                            <li>Unlimited Posts</li>
+                            <li>{{$row->no_of_feautured_ads}} Featured Ads</li>
+                            <li>{{$row->no_of_live_story}} Live Ads</li>
+                            <li>Store Available 
+                            @if($row->store_available == 1)
+                            Yes
+                            @else 
+                            No
+                            @endif
+                            </li>
+                            <li>Chat Option Included</li>
+                            <li>24/7 Fully Support</li>
+                        </ul>
+                    </div>
+                    <div class="table-footer">
+                        <a onclick="ActivatePlan('{{$row->id}}')" href="#">Renew Now</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+        @endif
+    @else
+        @if($row->price >= $used_package->price)
+        <div class="col-lg-4 col-md-6 col-sm-12 pricing-block">
+            <div class="pricing-block-one">
+                <div class="pricing-table">
+                    <div class="teble-header">
+                        <p>{{$row->package_name}}</p>
+                        <h2>{{$row->price}} <sup>AED</sup> 
+                        <span> {{$row->duration}} / 
+                        @if($row->duration_period == 1)
+                        Month
+                        @else 
+                        Days
+                        @endif
+                        </span>
+                        </h2>
+                    </div>
+                    <div class="table-content">
+                        <ul class="list clearfix">
+                            <li>Unlimited Posts</li>
+                            <li>{{$row->no_of_feautured_ads}} Featured Ads</li>
+                            <li>{{$row->no_of_live_story}} Live Ads</li>
+                            <li>Store Available 
+                            @if($row->store_available == 1)
+                            Yes
+                            @else 
+                            No
+                            @endif
+                            </li>
+                            <li>Chat Option Included</li>
+                            <li>24/7 Fully Support</li>
+                        </ul>
+                    </div>
+                    <div class="table-footer">
+                        <a onclick="ActivatePlan('{{$row->id}}')" href="#">Purchase Now</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+        @else 
+        <div class="col-lg-4 col-md-6 col-sm-12 pricing-block">
+            <div class="pricing-block-one">
+                <div class="pricing-table">
+                    <div class="teble-header">
+                        <p>{{$row->package_name}}</p>
+                        <h2>{{$row->price}} <sup>AED</sup> 
+                        <span> {{$row->duration}} / 
+                        @if($row->duration_period == 1)
+                        Month
+                        @else 
+                        Days
+                        @endif
+                        </span>
+                        </h2>
+                    </div>
+                    <div class="table-content">
+                        <ul class="list clearfix">
+                            <li>Unlimited Posts</li>
+                            <li>{{$row->no_of_feautured_ads}} Featured Ads</li>
+                            <li>{{$row->no_of_live_story}} Live Ads</li>
+                            <li>Store Available 
+                            @if($row->store_available == 1)
+                            Yes
+                            @else 
+                            No
+                            @endif
+                            </li>
+                            <li>Chat Option Included</li>
+                            <li>24/7 Fully Support</li>
+                        </ul>
+                    </div>
+                    <div class="table-footer">
+                        <a href="#">Purchase Now</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+        @endif
+    @endif
+    @else
+    <div class="col-lg-4 col-md-6 col-sm-12 pricing-block">
+        <div class="pricing-block-one">
+            <div class="pricing-table">
+                <div class="teble-header">
+                    <p>{{$row->package_name}}</p>
+                    <h2>{{$row->price}} <sup>AED</sup> 
+                    <span> {{$row->duration}} / 
+                    @if($row->duration_period == 1)
+                    Month
+                    @else 
+                    Days
+                    @endif
+                    </span>
+                    </h2>
+                </div>
+                <div class="table-content">
+                    <ul class="list clearfix">
+                        <li>Unlimited Posts</li>
+                        <li>{{$row->no_of_feautured_ads}} Featured Ads</li>
+                        <li>{{$row->no_of_live_story}} Live Ads</li>
+                        <li>Store Available 
+                        @if($row->store_available == 1)
+                        Yes
+                        @else 
+                        No
+                        @endif
+                        </li>
+                        <li>Chat Option Included</li>
+                        <li>24/7 Fully Support</li>
+                    </ul>
+                </div>
+                <div class="table-footer">
+                    <a onclick="ActivatePlan('{{$row->id}}')" href="#">Purchase Now</a>
                 </div>
             </div>
         </div>
     </div>
-<main class="ps-main">
-        <section class="ps-main-section">
-            <div class="container">
-                <div class="row">
-               @include('customers.sidebar')
-                    <!-- MAIN CONTENT START -->
-               <div class="col-lg-8 ps-dashboard-user">
-                        <div class="ps-posted-ads">
-                            <div class="ps-posted-ads__heading">
-                                <h5>Buy New Pacakge</h5>
-                            </div>
-                            <div class="ps-current-package">
-                                <div class="ps-package ps-buy-package">
-                                    <div class="ps-package__expire">
-                                        <h6>Current Package Expire in:</h6>
-                                        <em>Basic Plan</em>
-                                        <span><i class="ti-time"></i></span>
-                                    </div>
-                                    <div class="ps-buy-package__time">
-                                        <div class="ps-package__time ps-days">
-                                            <h5>159</h5>
-                                            <span>Days</span>
-                                        </div>
-                                        <div class="ps-package__time ps-hours">
-                                            <h5>7</h5>
-                                            <span>Hours</span>
-                                        </div>
-                                        <div class="ps-package__time ps-minutes">
-                                            <h5>6</h5>
-                                            <span>Minutes</span>
-                                        </div>
-                                        <div class="ps-package__time ps-seconds">
-                                            <h5>26</h5>
-                                            <span>Seconds</span>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="ps-buy-package__description">
-                                    <p>Consectetur adipisicing elit sed do eiusmod tempor incididunt ut labore et dolore magna aliquat enimi ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequate duis aute irure dolor in reprehenderit in voluptate velit esse.</p>
-                                </div>
-                                <div class="ps-package-plan row no-gutters">
-                                    <div class="col-md-6 col-lg-4">
-                                        <div class="ps-package-plan__basic">
-                                            <div class="ps-package-plan__heading">
-                                                <h3><sup>AED</sup>37<sub>.25</sub></h3>
-                                                <h6>Basic Plan</h6>
-                                                <p>/Month</p>
-                                            </div>
-                                            <ul>
-                                                <li><h6>10 <span>Montly Posts</span></h6></li>
-                                                <li><h6>05 <span>Featured Posts</span></h6></li>
-                                                <li><h6>05 <span>Regular Posts</span></h6></li>
-                                                <li><h6>Chat <span>Option Included</span></h6></li>
-                                                <li><h6>24/7 <span>Fully Support</span></h6></li>
-                                            </ul>
-                                            <button class="btn ps-btn">Renew Now</button>
-                                        </div>
-                                    </div>
-                                    <div class="col-md-6 col-lg-4">
-                                        <div class="ps-package-plan__basic ps-feature-package">
-                                            <div class="ps-package-plan__heading">
-                                                <h3><sup>AED</sup>79<sub>.00</sub></h3>
-                                                <h6>Standard</h6>
-                                                <p>/Month</p>
-                                            </div>
-                                            <ul>
-                                                <li><h6>30 <span>Montly Posts</span></h6></li>
-                                                <li><h6>20 <span>Featured Posts</span></h6></li>
-                                                <li><h6>10 <span>Regular Posts</span></h6></li>
-                                                <li><h6>Chat <span>Option Included</span></h6></li>
-                                                <li><h6>24/7 <span>Fully Support</span></h6></li>
-                                            </ul>
-                                            <button class="btn ps-btn">Buy Now</button>
-                                            <span class="ps-star"><i class="fas fa-star"></i></span>
-                                        </div>
-                                    </div>
-                                    <div class="col-md-6 col-lg-4">
-                                        <div class="ps-package-plan__basic">
-                                            <div class="ps-package-plan__heading">
-                                                <h3><sup>AED</sup>190<sub>.00</sub></h3>
-                                                <h6>Extended</h6>
-                                                <p>/Month</p>
-                                            </div>
-                                            <ul>
-                                                <li><h6>50 <span>Montly Posts</span></h6></li>
-                                                <li><h6>30 <span>Featured Posts</span></h6></li>
-                                                <li><h6>20 <span>Regular Posts</span></h6></li>
-                                                <li><h6>Chat <span>Option Included</span></h6></li>
-                                                <li><h6>24/7 <span>Fully Support</span></h6></li>
-                                            </ul>
-                                            <button class="btn ps-btn">Buy Now</button>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
+    @endif
+@endforeach
+</div>
+
+
+
                     </div>
-                    <!-- MAIN CONTENT END -->
                 </div>
             </div>
         </section>
-    </main>
+        <!-- category-details end -->
+
+
 @endsection
-  @section('js')
+@section('js')
+<script type="text/javascript">
+$('.sidebar_packages').addClass('active');
 
-
-    @endsection
+function ActivatePlan(package_id){
+    var r = confirm("Are you sure");
+    if (r == true) {
+      $.ajax({
+        url : '/customer/apply-package/'+package_id,
+        type: "GET",
+        dataType: "JSON",
+        success: function(data)
+        {
+            Swal.fire({
+                title: "Your Package",
+                text: 'Successfully Activated',
+                icon: "success",
+            }).then(function() {
+                location.reload();
+            });
+        }
+      });
+    } 
+}
+</script>
+@endsection

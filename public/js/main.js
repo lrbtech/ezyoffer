@@ -76,25 +76,25 @@ jQuery(document).on('ready', function() {
 	}
 	/* OWL CAROUSAL ONE END */
 	/* OWL CAROUSAL TWO START */
-	var owlTwo = document.querySelector('#owl-two')
-	if (owlTwo !== null) {
-	  $('#owl-two').owlCarousel({
-		  loop:true,
-		  margin:30,
-		  dots:true,
-		  items: 4,
-		  autoplay:false,
-		  autoplayTimeout: 5500,
-		  autoplaySpeed: 2000,
-		  autoplayHoverPause:true,
-		  responsive:{
-			  0:{items:1},
-			  480:{items:2},
-			  768:{items:3},
-			  1000:{items:4}
-		  }
-	  })
-	}
+	// var owlTwo = document.querySelector('#owl-two')
+	// if (owlTwo !== null) {
+	//   $('#owl-two').owlCarousel({
+	// 	  loop:true,
+	// 	  margin:30,
+	// 	  dots:true,
+	// 	  items: 4,
+	// 	  autoplay:false,
+	// 	  autoplayTimeout: 5500,
+	// 	  autoplaySpeed: 2000,
+	// 	  autoplayHoverPause:true,
+	// 	  responsive:{
+	// 		  0:{items:1},
+	// 		  480:{items:2},
+	// 		  768:{items:3},
+	// 		  1000:{items:4}
+	// 	  }
+	//   })
+	// }
 	/* OWL CAROUSAL TWO END */
 	/* OWL CAROUSAL THREE START */
 	var owlThree = document.querySelector('#owl-three')
@@ -133,20 +133,21 @@ jQuery(document).on('ready', function() {
 	}
 	/* OWL CAROUSAL FOUR END */
 	/* OWL CAROUSAL FIVE START */
-	var owlFive = document.querySelector('#owl-five')
-	if (owlFive !== null) {
-	  $('#owl-five').owlCarousel({
-		loop:true,
-		margin:30,
-		dots:false,
-		autoWidth: true,
-		autoHeight: true,
-		autoplay:true,
-		autoplayTimeout: 5500,
-		autoplaySpeed: 2000,
-		autoplayHoverPause:true,
-	  })
-	}
+	// var owlFive = document.querySelector('#owl-five')
+
+	// if (owlFive !== null) {
+	//   $('#owl-five').owlCarousel({
+	// 	loop:true,
+	// 	margin:30,
+	// 	dots:false,
+	// 	autoWidth: true,
+	// 	autoHeight: true,
+	// 	autoplay:true,
+	// 	autoplayTimeout: 5500,
+	// 	autoplaySpeed: 2000,
+	// 	autoplayHoverPause:true,
+	//   })
+	// }
 	/* OWL CAROUSAL FIVE END */
 	/* VIDEO POPUP START */
 	/* AFTER CLOSE VIDEO STOP */

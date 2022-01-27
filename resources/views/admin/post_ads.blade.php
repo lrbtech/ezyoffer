@@ -2,6 +2,7 @@
 @section('extra-css')
 <link rel="stylesheet" type="text/css" href="/assets/app-assets/css/datatables.css">
 <link rel="stylesheet" type="text/css" href="/assets/app-assets/css/pe7-icon.css">
+<link rel="stylesheet" type="text/css" href="/assets/app-assets/css/select2.css">
 @endsection
 @section('section')        
         <!-- Right sidebar Ends-->
@@ -10,8 +11,8 @@
             <div class="page-header">
               <div class="row">
                 <div class="col-lg-6 main-header">
-                  <h2>Ad  <span>Posts  </span></h2> 
-                  <h6 class="mb-0">Admin Panel</h6>
+                  <h2>{{$language[52][Auth::guard('admin')->user()->lang]}}</h2> 
+                  <h6 class="mb-0">{{$language[0][Auth::guard('admin')->user()->lang]}}</h6>
                 </div>
                 <!-- <div class="col-lg-6 breadcrumb-right">     
                   <ol class="breadcrumb">
@@ -30,21 +31,71 @@
               <!-- Zero Configuration  Starts-->
               <div class="col-sm-12">
                 <div class="card">
+                <form target="_blank" action="#" method="POST" enctype="multipart/form-data">
+                  {{ csrf_field() }}
                   <div class="card-header">
+                      <div class="row">
+                        <div class="form-group col-md-3">
+                            <label>{{$language[53][Auth::guard('admin')->user()->lang]}}</label>
+                            <input autocomplete="off" type="date" id="from_date" name="from_date" class="form-control">
+                        </div>
 
+                        <div class="form-group col-md-3">
+                            <label>{{$language[54][Auth::guard('admin')->user()->lang]}}</label>
+                            <input autocomplete="off" type="date" id="to_date" name="to_date" class="form-control">
+                        </div>
+
+                        <div class="form-group col-md-3">
+                          <label>{{$language[55][Auth::guard('admin')->user()->lang]}}</label>
+                          <select id="user_id" name="user_id" class="js-example-basic-single col-sm-12 select2-hidden-accessible" tabindex="-1" aria-hidden="true">
+                            <option value="user">Select All User</option>
+                            <option value="admin">Admin</option>
+                            @foreach($user as $row)
+                            <option value="{{$row->id}}">{{$row->first_name}} {{$row->last_name}}</option>
+                            @endforeach
+                          </select>
+                        </div>
+
+                        <div class="form-group col-md-3">
+                          <label>{{$language[56][Auth::guard('admin')->user()->lang]}}</label>
+                          <select id="category" name="category" class="js-example-basic-single col-sm-12 select2-hidden-accessible" tabindex="-1" aria-hidden="true">
+                            <option value="category">Select All Category</option>
+                            @foreach($category as $row)
+                            <option value="{{$row->id}}">{{$row->category}}</option>
+                            @endforeach
+                          </select>
+                        </div>
+
+                        <div class="form-group col-md-2">
+                            <label>{{$language[57][Auth::guard('admin')->user()->lang]}}</label>
+                            <input autocomplete="off" type="number" id="from_range" name="from_range" class="form-control">
+                        </div>
+
+                        <div class="form-group col-md-2">
+                            <label>{{$language[58][Auth::guard('admin')->user()->lang]}}</label>
+                            <input autocomplete="off" type="number" id="to_range" name="to_range" class="form-control">
+                        </div>
+
+                        <div class="form-group col-md-3">
+                          <button style="margin-top:30px;" id="search" class="btn btn-primary btn-block mr-10" type="button">{{$language[59][Auth::guard('admin')->user()->lang]}}</button>
+                        </div>
+                      </div>
+                    
                   </div>
+                  </form>
                   <div class="card-body">
                     <div class="table-responsive">
                       <table class="display" id="datatable">
                         <thead>
                           <tr>
-                            <th>#</th>
-                            <th>Customer Details</th>
-                            <th>Category</th>
-                            <th>Post Details</th>
-                            <th>Image</th>
-                            <th>Status</th>
-                            <th>Action</th>
+                            <th>{{$language[44][Auth::guard('admin')->user()->lang]}}</th>
+                            <th>{{$language[45][Auth::guard('admin')->user()->lang]}}</th>
+                            <th>{{$language[46][Auth::guard('admin')->user()->lang]}}</th>
+                            <th>{{$language[47][Auth::guard('admin')->user()->lang]}}</th>
+                            <th>{{$language[48][Auth::guard('admin')->user()->lang]}}</th>
+                            <th>{{$language[49][Auth::guard('admin')->user()->lang]}}</th>
+                            <th>{{$language[50][Auth::guard('admin')->user()->lang]}}</th>
+                            <th>{{$language[51][Auth::guard('admin')->user()->lang]}}</th>
                           </tr>
                         </thead>
                         <tbody>
@@ -70,29 +121,86 @@
   <script src="/assets/app-assets/js/datatable/datatables/jquery.dataTables.min.js"></script>
   <script src="/assets/app-assets/js/datatable/datatables/datatable.custom.js"></script>
   <script src="/assets/app-assets/js/chat-menu.js"></script>
+  <script src="/assets/app-assets/js/select2/select2.full.min.js"></script>
+  <script src="/assets/app-assets/js/select2/select2-custom.js"></script>
 
   <script type="text/javascript">
-$('.all-customer').addClass('active');
+$('.post-ads').addClass('active');
 
+var $this = $(".iconsidebar-menu");
+if ($this.hasClass('iconbar-second-close')) {
+  //$this.removeClass();
+  $this.removeClass('iconbar-second-close').addClass('iconsidebar-menu');
+} else if ($this.hasClass('iconbar-mainmenu-close')) {
+  $this.removeClass('iconbar-mainmenu-close').addClass('iconbar-second-close');
+} else {
+  $this.addClass('iconbar-mainmenu-close');
+}
+
+$(document).ready(function() {
+    $('.js-example-basic-single').select2();
+});
+
+function search_url(){
+  var from_date = $('#from_date').val();
+  var to_date = $('#to_date').val();
+  var from_range = $('#from_range').val();
+  var to_range = $('#to_range').val();
+  var fdate;
+  var tdate;
+  var frange;
+  var trange;
+  if(from_date!=""){
+    fdate = from_date;
+  }else{
+    fdate = '1';
+  }
+  if(to_date!=""){
+    tdate = to_date;
+  }else{
+    tdate = '1';
+  }
+  if(from_range!=""){
+    frange = from_range;
+  }else{
+    frange = 'from_range';
+  }
+  if(to_range!=""){
+    trange = to_range;
+  }else{
+    trange = 'to_range';
+  }
+  var user_id = $('#user_id').val();
+  var category = $('#category').val();
+  return '/admin/get-post-ads/'+fdate+'/'+tdate+'/'+user_id+'/'+category+'/'+frange+'/'+trange;
+}
 var orderPageTable = $('#datatable').DataTable({
     "processing": true,
     "serverSide": true,
     //"pageLength": 50,
     "ajax":{
-        "url": "/admin/get-post-ads",
+        "url": search_url(),
         "dataType": "json",
         "type": "POST",
         "data":{ _token: "{{csrf_token()}}"}
     },
     "columns": [
-        { data: 'DT_RowIndex', name: 'DT_RowIndex'},
-        { data: 'customer', customer: 'name'},
+        //{ data: 'DT_RowIndex', name: 'DT_RowIndex'},
+        { data: 'date', name: 'date'},
+        { data: 'customer', name: 'customer'},
         { data: 'category', name: 'category' },
         { data: 'post_details', name: 'post_details' },
         { data: 'post_image', name: 'post_image' },
+        { data: 'post_type', name: 'post_type' },
         { data: 'status', name: 'status' },
         { data: 'action', name: 'action' },
     ]
+});
+
+$('#search').click(function(){
+    var new_url = search_url();
+    orderPageTable.ajax.url(new_url).load(null, false);
+    //orderPageTable.draw();
 });
 
 function Delete(id,status){
@@ -105,7 +213,9 @@ function Delete(id,status){
         success: function(data)
         {
           toastr.success(data, 'Successfully Delete');
-          location.reload();
+          // location.reload();
+          var new_url = search_url();
+          orderPageTable.ajax.url(new_url).load(null, false);
         }
       });
     } 

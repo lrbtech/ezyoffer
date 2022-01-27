@@ -1,259 +1,460 @@
-  @extends('website.layout')
-   @section('css')
-   <link rel="stylesheet" href="/css/dashboard.css">
-<link rel="stylesheet" href="/css/dashboard-responsive.css">
-<link rel="stylesheet" href="/css/jquery.mCustomScrollbar.min.css">
-   @endsection
+@extends('customers.layouts')
+@section('css')
+<link href="/assets/css/chat-final.css" rel="stylesheet">
+<style>
+.discussions {
+    overflow: scroll !important;
+}
+
+/* .chat .header-chat .right {
+    position: relative !important;
+    right: 0px !important;
+    background: #789fd3;
+    color: #ffffff;
+    padding: 3px 7px;
+    border-radius: 4px;
+} */
+</style>
+<style>
+@media only screen and (max-width: 768px) {
+    .attach-icon {
+        right: 65px !important;
+        font-size: 24px !important;
+    }
+}
+</style>
+<style type="text/css">
+.message-seller-pop textarea{
+    position: relative;
+    display: block;
+    width: 100%;
+    height: 145px;
+    border: 1px solid #e6e8e8;
+    border-radius: 30px;
+    font-size: 15px;
+    color: #808288;
+    padding: 10px 30px;
+    transition: all 500ms ease;
+    margin: 20px 0;
+}
+
+.message-seller-pop input[type='text'] {
+    position: relative;
+    width: 100%;
+    height: 50px;
+    border: 1px solid #e6ebeb;
+    border-radius: 30px;
+    padding: 10px 30px;
+    font-size: 15px;
+    font-weight: 500;
+    color: #848484;
+    transition: all 500ms ease;
+}
+
+.offers-label{
+    text-align: center;
+    display: block;
+    color: #091a3a;
+    font-weight: 800;
+    margin-top: 15px;
+    margin-bottom: 17px;
+}
+
+.buttonDownload {
+	display: inline-block;
+	position: relative;
+	padding: 10px 25px;
+  
+	background-color: #4CC713;
+	color: white;
+  
+	font-family: sans-serif;
+	text-decoration: none;
+	font-size: 0.9em;
+	text-align: center;
+	text-indent: 15px;
+}
+
+.buttonDownload:hover {
+	background-color: #333;
+	color: white;
+}
+
+.buttonDownload:before, .buttonDownload:after {
+	content: ' ';
+	display: block;
+	position: absolute;
+	left: 15px;
+	top: 52%;
+}
+
+/* Download box shape  */
+.buttonDownload:before {
+	width: 10px;
+	height: 2px;
+	border-style: solid;
+	border-width: 0 2px 2px;
+}
+
+/* Download arrow shape */
+.buttonDownload:after {
+	width: 0;
+	height: 0;
+	margin-left: 3px;
+	margin-top: -7px;
+  
+	border-style: solid;
+	border-width: 4px 4px 0 4px;
+	border-color: transparent;
+	border-top-color: inherit;
+	
+	animation: downloadArrow 2s linear infinite;
+	animation-play-state: paused;
+}
+
+.buttonDownload:hover:before {
+	border-color: #4CC713;
+}
+
+.buttonDownload:hover:after {
+	border-top-color: #4CC713;
+	animation-play-state: running;
+}
+
+/* keyframes for the download icon anim */
+@keyframes downloadArrow {
+	/* 0% and 0.001% keyframes used as a hackish way of having the button frozen on a nice looking frame by default */
+	0% {
+		margin-top: -7px;
+		opacity: 1;
+	}
+	
+	0.001% {
+		margin-top: -15px;
+		opacity: 0;
+	}
+	
+	50% {
+		opacity: 1;
+	}
+	
+	100% {
+		margin-top: 0;
+		opacity: 0;
+	}
+}
+
+</style>
+@endsection
 @section('section')
-<div class="ps-main-banner">
-        <div class="ps-dark-overlay">
-            <div class="container">
-                <div class="ps-banner-content">
-                    <h4>Offers &amp; Messages</h4>
-                    <p><a href="index.html">Home</a> <span><i class="ti-angle-right"></i></span> <a href="insights.html">Dashboard</a> <span> <i class="ti-angle-right"></i></span> Offers &amp; Messages</p>
+        <!-- Page Title -->
+        <section class="page-title style-two" style="background-image: url(/assets/images/background/page-title.jpg);">
+            <div class="auto-container">
+                <div class="content-box centred mr-0">
+                    <div class="title">
+                        <h1>{{$language[140][session()->get('lang')]}}</h1>
+                    </div>
+                    <ul class="bread-crumb clearfix">
+                        <li><a href="/">Home</a></li>
+                        <li>{{$language[140][session()->get('lang')]}}</li>
+                    </ul>
                 </div>
             </div>
-        </div>
+        </section>
+        <!-- End Page Title -->
+
+
+<!-- category-details -->
+<section class="category-details bg-color-2">
+    <div class="auto-container">
+    <div class="row clearfix">
+    <div class="col-lg-3 col-md-12 col-sm-12 sidebar-side">
+        @include('customers.menu')
     </div>
-<main class="ps-main">
-        <section class="ps-main-section">
-            <div class="container">
-                <div class="row">
-               @include('customers.sidebar')
-                    <!-- MAIN CONTENT START -->
-                    <div class="col-lg-8 ps-dashboard-user">
-                        <div class="ps-posted-ads ps-messages">
-                            <div class="ps-posted-ads__heading">
-                                <h5>Offers/Messages</h5>
-                            </div>
-                            <div class="ps-messages__description">
-                                <p>Select Your Product to See Their Messages:</p>
-                                <div class="ps-user-product">
-                                    <a class="ps-product-collapse" data-toggle="collapse" href="#collapsenew1" role="button" aria-expanded="false">
-                                        <img src="/images/messages/icon/img-01.jpg" alt="Image Description">
-                                        <span class="ps-messages__text">
-                                            <span>Smart Wrist Watch Pro, Slightly Used</span>
-                                            <em>AED690</em>
-                                        </span>
-                                        <i class="ti-angle-down"></i>
-                                    </a>
-                                    <div class="ps-profile-setting__imgs ps-message-product collapse" id="collapsenew1">
-                                        <div class="ps-y-axis mCustomScrollbar _mCS_1 mCS_no_scrollbar"><div id="mCSB_1" class="mCustomScrollBox mCS-light mCSB_vertical mCSB_inside" style="max-height: 0px;" tabindex="0"><div id="mCSB_1_container" class="mCSB_container mCS_y_hidden mCS_no_scrollbar_y" style="position:relative; top:0; left:0;" dir="ltr">
-                                            <input type="radio" name="product-input" id="product1">
-                                            <label class="ps-product-dot">
-                                                <img src="/images/messages/icon/img-02.jpg" alt="Image Description" class="mCS_img_loaded">
-                                                <span class="ps-messages__text">
-                                                    <span>Brand New Iphone X For Sale</span>
-                                                    <em>AED1,149</em>
-                                                </span>
-                                            </label>
-                                            <input type="radio" name="product-input" id="product2">
-                                            <label class="ps-product-dot">
-                                                <img src="/images/messages/icon/img-01.jpg" alt="Image Description" class="mCS_img_loaded">
-                                                <span class="ps-messages__text">
-                                                    <span>Smart Wrist Watch Pro, Slightly Used</span>
-                                                    <em>AED690</em>
-                                                </span>                                            
-                                            </label>
-                                            <input type="radio" name="product-input" id="product3">
-                                            <label>
-                                                <img src="/images/messages/icon/img-03.jpg" alt="Image Description" class="mCS_img_loaded">
-                                                <span class="ps-messages__text">
-                                                    <span>Brand New Touch Book For Sale</span>
-                                                    <em>AED1,320</em>
-                                                </span>
-                                            </label>
-                                            <input type="radio" name="product-input" id="product4">
-                                            <label>
-                                                <img src="/images/messages/icon/img-04.jpg" alt="Image Description" class="mCS_img_loaded">
-                                                <span class="ps-messages__text">
-                                                    <span>Smart Wrist Watch Pro, Slightly Used</span>
-                                                    <em>AED690</em>
-                                                </span>
-                                            </label>
-                                            <input type="radio" name="product-input" id="product5">
-                                            <label>
-                                                <img src="/images/messages/icon/img-05.jpg" alt="Image Description" class="mCS_img_loaded">
-                                                <span class="ps-messages__text">
-                                                    <span>100% working drone for sale/exchange</span>
-                                                    <em>AED1,458</em>
-                                                </span>
-                                            </label>
-                                            <input type="radio" name="product-input" id="product6">
-                                            <label>
-                                                <img src="/images/messages/icon/img-05.jpg" alt="Image Description" class="mCS_img_loaded">
-                                                <span class="ps-messages__text">
-                                                    <span>100% working drone for sale/exchange</span>
-                                                    <em>AED1,458</em>
-                                                </span>
-                                            </label>
-                                            <input type="radio" name="product-input" id="product7">
-                                            <label>
-                                                <img src="/images/messages/icon/img-05.jpg" alt="Image Description" class="mCS_img_loaded">
-                                                <span class="ps-messages__text">
-                                                    <span>100% working drone for sale/exchange</span>
-                                                    <em>AED1,458</em>
-                                                </span>
-                                            </label>
-                                        </div><div id="mCSB_1_scrollbar_vertical" class="mCSB_scrollTools mCSB_1_scrollbar mCS-light mCSB_scrollTools_vertical" style="display: none;"><div class="mCSB_draggerContainer"><div id="mCSB_1_dragger_vertical" class="mCSB_dragger" style="position: absolute; min-height: 30px; top: 0px;"><div class="mCSB_dragger_bar" style="line-height: 30px;"></div></div><div class="mCSB_draggerRail"></div></div></div></div></div>                                   
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="ps-messages__content">
-                                <!-- USER AREA START -->
-                                <ul class="ps-y-axis mCustomScrollbar _mCS_2"><div id="mCSB_2" class="mCustomScrollBox mCS-light mCSB_vertical mCSB_inside" tabindex="0" style="max-height: none;"><div id="mCSB_2_container" class="mCSB_container" style="position:relative; top:0; left:0;" dir="ltr">
-                                    <li>
-                                        <a href="javascript:void(0);" class="ps-dot">
-                                        <img src="/images/user-icon/img-06.jpg" alt="Image Description" class="mCS_img_loaded">
-                                        <span class="ps-messages__text">
-                                            <span>Jacquelyn Hagemeier</span>
-                                            <em>Jun 27, 2019</em>
-                                        </span>
-                                        </a>
-                                    </li>
-                                    <li>
-                                        <a href="javascript:void(0);" class="ps-dot">
-                                        <img src="/images/user-icon/img-01.jpg" alt="Image Description" class="mCS_img_loaded">
-                                        <span class="ps-messages__text">
-                                            <span>Otelia Izquierdo</span>
-                                            <em>Jun 27, 2019</em>
-                                        </span>
-                                        </a>
-                                    </li>
-                                    <li>
-                                        <a href="javascript:void(0);" class="ps-dot">
-                                        <img src="/images/user-icon/img-12.jpg" alt="Image Description" class="mCS_img_loaded">
-                                        <span class="ps-messages__text">
-                                            <span>Abdul Winsett</span>
-                                            <em>Jun 27, 2019</em>
-                                        </span>
-                                        </a>
-                                    </li>
-                                    <li>
-                                        <a href="javascript:void(0);">
-                                        <img src="/images/user-icon/img-09.jpg" alt="Image Description" class="mCS_img_loaded">
-                                        <span class="ps-messages__text">
-                                            <span>Amee Kinkead</span>
-                                            <em>Jun 27, 2019</em>
-                                        </span>
-                                        </a>
-                                    </li>
-                                    <li>
-                                        <a href="javascript:void(0);">
-                                        <img src="/images/user-icon/img-04.jpg" alt="Image Description" class="mCS_img_loaded">
-                                        <span class="ps-messages__text">
-                                            <span>Lyle Ruybal</span>
-                                            <em>Jun 27, 2019</em>
-                                        </span>
-                                        </a>
-                                    </li>
-                                    <li>
-                                        <a href="javascript:void(0);">
-                                        <img src="/images/user-icon/img-13.jpg" alt="Image Description" class="mCS_img_loaded">
-                                        <span class="ps-messages__text">
-                                            <span>Gordon Prow</span>
-                                            <em>Jun 27, 2019</em>
-                                        </span>
-                                        </a>
-                                    </li>
-                                    <li>
-                                        <a href="javascript:void(0);">
-                                        <img src="/images/user-icon/img-08.jpg" alt="Image Description" class="mCS_img_loaded">
-                                        <span class="ps-messages__text">
-                                            <span>Selina Charlebois</span>
-                                            <em>Jun 27, 2019</em>
-                                        </span>
-                                        </a>
-                                    </li>
-                                    <li>
-                                        <a href="javascript:void(0);">
-                                        <img src="/images/user-icon/img-14.jpg" alt="Image Description" class="mCS_img_loaded">
-                                        <span class="ps-messages__text">
-                                            <span>Selina Charlebois</span>
-                                            <em>Jun 27, 2019</em>
-                                        </span>
-                                        </a>
-                                    </li>
-                                    <li>
-                                        <a href="javascript:void(0);">
-                                        <img src="/images/user-icon/img-14.jpg" alt="Image Description" class="mCS_img_loaded">
-                                        <span class="ps-messages__text">
-                                            <span>Selina Charlebois</span>
-                                            <em>Jun 27, 2019</em>
-                                        </span>
-                                        </a>
-                                    </li>
-                                    <li>
-                                        <a href="javascript:void(0);">
-                                        <img src="/images/user-icon/img-14.jpg" alt="Image Description" class="mCS_img_loaded">
-                                        <span class="ps-messages__text">
-                                            <span>Selina Charlebois</span>
-                                            <em>Jun 27, 2019</em>
-                                        </span>
-                                        </a>
-                                    </li>
-                                </div><div id="mCSB_2_scrollbar_vertical" class="mCSB_scrollTools mCSB_2_scrollbar mCS-light mCSB_scrollTools_vertical" style="display: block;"><div class="mCSB_draggerContainer"><div id="mCSB_2_dragger_vertical" class="mCSB_dragger" style="position: absolute; min-height: 30px; display: block; height: 561px; max-height: 660px; top: 0px;"><div class="mCSB_dragger_bar" style="line-height: 30px;"></div></div><div class="mCSB_draggerRail"></div></div></div></div></ul>
-                                <!-- USER AREA END -->
-                                <div class="ps-messages__user">
-                                    <div class="ps-messages__user__heading">
-                                        <a href="javascript:void(0);"><i class="ti-arrow-left"></i></a>
-                                        <img src="/images/user-icon/img-09.jpg" alt="Image Description">
-                                        <span class="ps-messages__text">
-                                            <span>Amee Kinkead</span>
-                                            <em>Last Online: Aug 08, 2019</em>
-                                        </span>
-                                        <a href="javascript:void(0);"><i class="ti-trash"></i></a> 
-                                    </div>
-                                    <!-- MESSAGE AREA START -->
-                                    <div class="ps-messages__area ps-y-axis mCustomScrollbar _mCS_3"><div id="mCSB_3" class="mCustomScrollBox mCS-light mCSB_vertical mCSB_inside" tabindex="0" style="max-height: 401px;"><div id="mCSB_3_container" class="mCSB_container" style="position:relative; top:0; left:0;" dir="ltr">
-                                        <div class="ps-messages__area__right">
-                                            <p>Nostrud exercitation ullam aeco laboris nisi utae commodo consequat duis aute.</p>
-                                            <p>Nostrud exercitation ullam aeco laboris nisi utae commodo consequat duis aute.</p>
-                                            <p>Nostrud exercitation ullam aeco laboris nisi utae commodo consequat duis aute.</p>
-                                            <p><a href="https://themeforest.net/" class="linkified" target="_blank">https://themeforest.net/</a></p>
-                                            <p>It that ok?</p>
-                                            <p>Ullam aeco laboris nisi utaeisea commodo</p>
-                                            <span>Jun 28, 2019 09:30 <i class="fas fa-check"></i></span>
-                                        </div>
-                                        <div class="ps-messages__area__left">
-                                            <p>Consectetur adipisicing elied diod taempor incint labore dolore ainare Ut enim ad minim veni ame quis nostrud exercitation ullamco laboris.</p>
-                                            <p>Consectetur adipisicing elied diod taempor incint labore dolore ainare Ut enim ad minim veni ame quis nostrud exercitation ullamco laboris.</p>
-                                            <p>Consectetur adipisicing elied diod taempor incint labore dolore ainare Ut enim ad minim veni ame quis nostrud exercitation ullamco laboris.</p>
-                                            <span>Jun 27,2019 14:11</span>
-                                        </div>
-                                    </div><div id="mCSB_3_scrollbar_vertical" class="mCSB_scrollTools mCSB_3_scrollbar mCS-light mCSB_scrollTools_vertical" style="display: block;"><div class="mCSB_draggerContainer"><div id="mCSB_3_dragger_vertical" class="mCSB_dragger" style="position: absolute; min-height: 30px; display: block; height: 210px; max-height: 391px; top: 0px;"><div class="mCSB_dragger_bar" style="line-height: 30px;"></div></div><div class="mCSB_draggerRail"></div></div></div></div></div>
-                                    <div class="ps-text__area">
-                                        <textarea class="form-control" placeholder="Type Message Here"></textarea>
-                                        <div class="ps-emoji">
-                                            <a href="javascript:void(0);">
-                                                <img src="/images/messages/img-01.png" alt="Image Description">
-                                                <span><i class="fas fa-angle-right"></i></span>
-                                            </a>
-                                            <button class="btn ps-btn">Send</button>
-                                        </div>
-                                    </div>
-                                    <!-- MESSAGE AREA END -->
-                                </div>
-                            </div>
-                            <div class="ps-no-ads">
-                                <div>
-                                    <figure><img src="/images/messages/img-02.png" alt="Image Description"></figure>
-                                    <h5>No Offer/Messages Found :(</h5>
-                                    <h6>Click “Post Ad” button below to post your free ad</h6>
-                                    <button class="btn ps-btn">Post Ad</button>
-                                </div>
-                            </div>
+    <div class="col-lg-9 col-md-12 col-sm-12 content-side">
+        <div class="row contain-chat clearfix">
+            <div class="discussions col-md-5">
+                <div class="discussion search">
+                    <div class="searchbar">
+                        <i class="fa fa-search" aria-hidden="true"></i>
+                        <input autocomplete="off" id="search_input" type="text" placeholder="Search..."></input>
+                    </div>
+                </div>
+                <!-- <div style="height:650px !important;overflow:scroll !important;"> -->
+                <!-- <div class="discussion message-active">
+                    <div class="photo" style="background-image: url(https://images.unsplash.com/photo-1438761681033-6461ffad8d80?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=1050&q=80);">
+                        <div class="online"></div>
+                    </div>
+                    <div class="desc-contact">
+                        <p class="name">Megan Leib</p>
+                        <p class="message">9 pm at the bar if possible 😳</p>
+                    </div>
+                    <div class="timer">12 sec</div>
+                </div> -->
+                @if(count($datas) > 0)
+                @foreach($datas as $row)
+                    {{ \App\Http\Controllers\User\ChatController::chatuserslist($row['id'],$row['post_id']) }}
+                @endforeach
+                @endif
+
+                <!-- </div> -->
+            </div>
+            <div id="viewchat" class="chat col-md-7">
+            {{--<div class="header-chat">
+                <i class="icon fas fa-user" aria-hidden="true"></i>
+                <p class="name">Megan Leib</p>
+                <b class="right">Negotiate: 400 AED</b>
+                </div>
+                <div id="new_chat" style="height:600px;overflow:scroll;" class="messages-chat">
+                    <div class="message">
+                        <div class="photo" style="background-image: url(https://images.unsplash.com/photo-1438761681033-6461ffad8d80?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=1050&q=80);">
+                            <div class="online"></div>
+                        </div>
+                        <p class="text"> Hi, how are you ? </p>
+                    </div>
+                    <p class="time"> 15h04</p>
+
+                    <div class="message">
+                        <div class="photo" style="background-image: url(https://images.unsplash.com/photo-1438761681033-6461ffad8d80?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=1050&q=80);">
+                            <div class="online"></div>
+                        </div>
+                        <p class="text"> Hi, how are you ? </p>
+                    </div>
+                    <p class="time"> 15h04</p>
+
+                    <div class="message text-only">
+                        <div class="response">
+                            <p class="text"> Hey Megan ! It's been a while 😃</p>
                         </div>
                     </div>
 
-                    <!-- End MAIN CONTENT START -->
-              
-        </section>
-    </main>
+                    <div class="message text-only">
+                        <div class="response">
+                            <p class="text"> When can we meet ?</p>
+                        </div>
+                    </div>
+
+                    <div class="message text-only">
+                        <div class="response">
+                            <p class="text"> When can we meet ?</p>
+                        </div>
+                    </div>
+                    <p class="response-time time"> 15h04</p>
+
+                    <div class="message">
+                        <div class="photo" style="background-image: url(https://images.unsplash.com/photo-1438761681033-6461ffad8d80?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=1050&q=80);">
+                            <div class="online"></div>
+                        </div>
+                        <p class="text"> 9 pm at the bar if possible 😳</p>
+                    </div>
+                    <p class="time"> 15h09</p>
+
+                    <div class="message">
+                        <div class="photo" style="background-image: url(https://images.unsplash.com/photo-1438761681033-6461ffad8d80?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=1050&q=80);">
+                            <div class="online"></div>
+                        </div>
+                        <p class="text"> 9 pm at the bar if possible 😳</p>
+                    </div>
+                    <p class="time"> 15h09</p>
+
+                    <div class="message">
+                        <div class="photo" style="background-image: url(https://images.unsplash.com/photo-1438761681033-6461ffad8d80?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=1050&q=80);">
+                            <div class="online"></div>
+                        </div>
+                        <p class="text"> 9 pm at the bar if possible 😳</p>
+                    </div>
+                    <p class="time"> 15h09</p>
+
+                </div>
+                <div class="footer-chat">
+                    <input type="text" class="write-message" placeholder="Type your message here"></input>
+                    <i class="icon send fas fa-paper-plane clickable" aria-hidden="true"></i>
+                    <!-- <i class="fas fa-paperclip clickable attach-icon" aria-hidden="true"></i>
+                    <i class="fas fa-cog clickable settings-icon" aria-hidden="true"></i> -->
+                </div>--}}
+            </div>
+        </div>
+    </div>
+    </div>
+    </div>
+</section>
+
+<div id="documentmodal" class="modal fade" role="dialog">
+  <div style="max-width:500px !important;" class="modal-dialog modal-sm">
+
+    <!-- Modal content-->
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal">&times;</button>
+        <h4 class="modal-title">Upload Document</h4>
+      </div>
+      <div class="modal-body">
+        <div class="col-lg-12 col-md-12 col-sm-12 column">
+            <form method="POST" id="upload_form" class="message-seller-pop">
+            {{csrf_field()}}
+                <div class="form-group">
+                    <label>Upload Files (Support Files .jpeg,.jpg,.png,.pdf,.docx)</label><br>
+                    <input accept=".jpeg,.jpg,.png,.pdf,.docx" type="file" name="upload_files" id="upload_files">                       
+                </div> 
+            </form>
+        </div>
+      </div>
+      <div style="display:block;" class="modal-footer">
+        <button onclick="UploadDocument()" style="float:left;" type="button" class="theme-btn-one">Upload</button>
+        <button id="modal-close-btn" style="float:right;" type="button" class="theme-btn-one" data-dismiss="modal">Close</button>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+
 @endsection
-  @section('js')
-<script src="/js/vendor/masonry.pkgd.min.js"></script>
-<script src="/js/vendor/jquery.mCustomScrollbar.concat.min.js"></script>
-<script src="/js/vendor/linkify.min.js"></script>
-<script src="/js/vendor/linkify-jquery.min.js"></script>
-    @endsection
+@section('js')
+<script src="/assets/js/chat.js"></script>
+
+<script type="text/javascript">
+$('.sidebar_chat').addClass('active');
+
+var user=0;
+var post=0;
+function viewChat(user_id,post_id)
+{
+    $('.chatclass').removeClass('message-active');
+    $('#'+user_id+post_id).addClass('message-active');
+    $.ajax({
+        url : '/customer/get-chat/'+user_id+'/'+post_id,
+        type: "GET",
+        success: function(data)
+        {
+            $('#viewchat').html(data.html);
+            user = user_id;
+            post = post_id;
+            var element = document.getElementById("new_chat");
+            element.scrollTop = element.scrollHeight;
+        }
+    });
+}
+
+setInterval(function(){
+    $.ajax({
+        url : '/customer/get-new-chat-count/'+user+'/'+post,
+        type: "GET",
+        success: function(data)
+        {
+            if(data > 0){
+                reloadChat(user,post);
+            }
+        }
+    });
+},1000);
+
+// setInterval(function(){
+//     $(".timer").blink();
+// },1000);
+
+function reloadChat(user_id,post_id)
+{
+    $.ajax({
+        url : '/customer/reload-chat/'+user_id+'/'+post_id,
+        type: "GET",
+        success: function(data)
+        {
+            $('#new_chat').html(data.html);
+            var element = document.getElementById("new_chat");
+            element.scrollTop = element.scrollHeight;
+        }
+    });
+}
+
+document.onkeyup = function (e) {
+	e = e || window.event;//Get event
+
+	if (e.which == 13) {
+	  e.preventDefault();
+	  SendChat();
+ 	} 
+};
+
+function SendChat(){
+    $.ajax({
+        url : '/customer/save-chat-customer',
+        type: "POST",
+        data: {'msg':$('#msg').val(),'to_id':$('#to_id').val(),'post_id':$('#post_id').val(), '_token': $('input[name=_token]').val()},
+        dataType: "JSON",
+        success: function(data)
+        {        
+            // Swal.fire({
+            //     title: "Chat Send Successfully",
+            //     icon: "success",
+            // }).then(function() {
+            //     $("#msg").val('');
+            //     viewChat(data.user_id,data.post_id);   
+            // });   
+            $("#msg").val('');
+            viewChat(data.user_id,data.post_id); 
+        },
+        error: function (data, errorThrown) {
+            var errorData = data.responseJSON.errors;
+            $.each(errorData, function(i, obj) {
+                toastr.error(obj[0]);
+            });
+        }
+    });
+}
+
+function UploadDocument(){
+    var formData = new FormData($('#upload_form')[0]);
+    var to_id = $('#to_id').val();
+    var post_id = $('#post_id').val();
+    formData.append('to_id', to_id);
+    formData.append('post_id', post_id);
+    $.ajax({
+        url : '/customer/chat-upload-document',
+        type: "POST",
+        // data: {'upload_files':$('#upload_files').val(),'to_id':$('#to_id').val(),'post_id':$('#post_id').val(), '_token': $('input[name=_token]').val()},
+        data: formData,
+        contentType: false,
+        processData: false,
+        dataType: "JSON",
+        success: function(data)
+        {
+            $('#modal-close-btn').click();
+            Swal.fire({
+                title: "Upload File Successfully",
+                icon: "success",
+            }).then(function() {
+                //$('#documentmodal').modal('hide');
+                viewChat(data.user_id,data.post_id); 
+            });   
+            //$("#msg").val('');
+            //viewChat(data.user_id,data.post_id); 
+        },
+        error: function (data, errorThrown) {
+            var errorData = data.responseJSON.errors;
+            $.each(errorData, function(i, obj) {
+                toastr.error(obj[0]);
+            });
+        }
+    });
+}
+
+$("#search_text").on("keyup", function() {
+    var value = $(this).val().toLowerCase();
+    $(".message1").filter(function() {
+        $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
+    });
+    $(".time").filter(function() {
+        $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
+    });
+});
+
+$("#search_input").on("keyup", function() {
+    var value = $(this).val().toLowerCase();
+    $(".chatclass").filter(function() {
+        $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
+    });
+});
+
+</script>
+@endsection

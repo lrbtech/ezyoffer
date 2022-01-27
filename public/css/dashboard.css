@@ -1875,7 +1875,7 @@ nav {
   .ps-gridList__ad a {
     border: 1px solid #ddd;
     padding: 9px;
-    border-radius: 6px; }
+    border-radius: 6px;width: 100%; }
   .ps-gridList__ad span {
     font: 400 0.75rem/1.833333em "Open Sans", sans-serif;
     padding-top: 4px;
@@ -4590,6 +4590,19 @@ nav {
       background: #ff5851;
       border-radius: 50%;
       right: 19px; }
+
+.ps-messages__content .ps-green {
+  position: relative; }
+  .ps-messages__content .ps-green .ps-messages__text span {
+    font-weight: 700; }
+  .ps-messages__content .ps-green:after {
+    content: '';
+    position: absolute;
+    width: 6px;
+    height: 6px;
+    background: #0c8536;
+    border-radius: 50%;
+    right: 19px; }
 
 .ps-messages__user {
   flex: 0 0 60.9%;

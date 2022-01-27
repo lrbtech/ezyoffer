@@ -1,1402 +1,575 @@
-@extends('website.layout')
+@extends('website.layouts')
 @section('css')
- <style>
-        .form-search-wrap {
-    background: rgba(255,255,255,.3);
-    border-radius: 7px;
-    padding: 20px;
-}
-.rounded {
-    border-radius: 0.25rem!important;
-}
-.form-control {
-    height: 43px;
-    border-radius: 0;
-    font-family: nanum gothic,-apple-system,BlinkMacSystemFont,segoe ui,Roboto,helvetica neue,Arial,sans-serif,apple color emoji,segoe ui emoji,segoe ui symbol,noto color emoji;
-}
-[data-aos^=fade][data-aos^=fade].aos-animate {
-    opacity: 1;
-    transform: translate(0);
-}
-body[data-aos-duration="800"] [data-aos] {
-    transition-duration: .8s;
-}
-.listing-item {
-    position: relative;
-    overflow: hidden;
-    border-radius: 4px;
-}
-.listing-item .listing-item-content {
-    position: absolute;
-    bottom: 20px;
-    padding-left: 20px;
-    padding-right: 20px;
-    z-index: 2;
-    width: 100%;
-}
-.listing-item .bookmark {
-    position: absolute;
-    right: 20px;
-    bottom: 0;
-    width: 40px;
-    height: 40px;
-    border-radius: 50%;
-    display: inline-block;
-    background: rgba(255,255,255,.3);
-    -webkit-transition: .3s all ease;
-    -o-transition: .3s all ease;
-    transition: .3s all ease;
-}
-.listing-item .listing-item-content .category {
-    font-size: 12px;
-    display: inline-block;
-    padding: 5px 30px;
-    background: #30e3ca;
-    border-radius: 30px;
-    color: #fff;
-}
-.pl-3, .px-3 {
-    padding-left: 1rem!important;
-}
-.listing-item .listing-item-content h2, .listing-item .listing-item-content h2 a {
-    color: #fff;
-}
-.listing-item .listing-item-content h2 {
-    font-size: 20px;
-}
-.listing-item .listing-item-content .address {
-    color: rgba(255,255,255,.8);
-    font-size: 14px;
-}
-.listing-item .listing-item-content h2, .listing-item .listing-item-content h2 a {
-    color: #fff;
-}
-.listing-item:after {
-    position: absolute;
-    content: "";
-    left: 0;
-    right: 0;
-    bottom: 0;
-    top: 0;
-    z-index: 1;
-    background: rgba(0,0,0,.4);
-}
-.bg-light {
-    background: #ccc;
-}
-.border-primary {
-    position: relative;
-}
-.text-left {
-    text-align: left!important;
-}
-.border-primary {
-    border-color: #30e3ca!important;
-}
-.border-primary h2 {
-    font-weight: 700!important;
-}
-.border-primary:after {
-    position: absolute;
-    content: "";
-    bottom: 0;
-    width: 80px;
-    height: 3px;
-    background: #30e3ca;
-}
-.listing {
-    -webkit-box-shadow: 0 2px 20px -2px rgb(0 0 0 / 10%);
-    box-shadow: 0 2px 20px -2px rgb(0 0 0 / 10%);
-    margin-bottom: 30px;
-    border-radius: 7px;
-    position: relative;
-    background: #fff;
-}
-/* @media (min-width: 992px)
-.listing {
-    border-top-right-radius: 7px;
-    border-bottom-right-radius: 7px;
-} */
-.listing .img {
-    background-size: cover;
-    background-position: center;
-    background-repeat: no-repeat;
-    position: relative;
-    margin-right: 10px;
-    border-top-left-radius: 7px;
-    border-bottom-left-radius: 7px;
-    -webkit-box-flex: 0;
-    -ms-flex: 0 0 230px;
-    flex: 0 0 230px;
-}
-.listing .lh-content {
-    padding: 20px;
-    position: relative;
-    width: 100%;
-}
-.listing .category {
-    font-size: 11px;
-    display: inline-block;
-    padding: 5px 20px;
-    background: #e9ecef;
-    border-radius: 30px;
-    margin-bottom: 20px;
-    color: #000;
-    font-weight: 700;
-}
-.listing .lh-content .bookmark {
-    position: absolute;
-    right: 20px;
-    top: 20px;
-    width: 30px;
-    height: 30px;
-    border-radius: 50%;
-    display: inline-block;
-    background: rgba(0,0,0,.03);
-    -webkit-transition: .3s all ease;
-    -o-transition: .3s all ease;
-    transition: .3s all ease;
-    font-size: 16px;
-}
-.listing .lh-content .bookmark span {
-    position: absolute;
-    left: 50%;
-    top: 50%;
-    -webkit-transform: translate(-50%,-50%);
-    -ms-transform: translate(-50%,-50%);
-    transform: translate(-50%,-50%);
-}
-.icon-heart:before {
-    content: "\f004";
-}
-.listing h3 {
-    font-size: 16px!important;
-}
-.listing address, .listing .review {
-    font-size: 13px;
-}
-address {
-    margin-bottom: 1rem;
-    font-style: normal;
-    line-height: inherit;
-}
-.mb-0, .my-0 {
-    margin-bottom: 0!important;
-}
-.listing .lh-content .bookmark {
-    position: absolute;
-    right: 20px;
-    top: 20px;
-    width: 30px;
-    height: 30px;
-    border-radius: 50%;
-    display: inline-block;
-    background: rgba(0,0,0,.03);
-    -webkit-transition: .3s all ease;
-    -o-transition: .3s all ease;
-    transition: .3s all ease;
-    font-size: 16px;
-}
-[class^=icon-], [class*=" icon-"] {
-    font-family: icomoon!important;
-    speak: none;
-    font-style: normal;
-    font-weight: 400;
-    font-variant: normal;
-    text-transform: none;
-    line-height: 1;
-    -webkit-font-smoothing: antialiased;
-    -moz-osx-font-smoothing: grayscale;
-}
-.text-warning {
-    color: #f89d13!important;
-}
-[class^=icon-], [class*=" icon-"] {
-    font-family: icomoon!important;
-    speak: none;
-    font-style: normal;
-    font-weight: 400;
-    font-variant: normal;
-    text-transform: none;
-    line-height: 1;
-    -webkit-font-smoothing: antialiased;
-    -moz-osx-font-smoothing: grayscale;
-}
-
-.owlthree-item:after {
-    position: absolute;
-    content: "";
-    left: 0;
-    right: 0;
-    bottom: 0;
-    top: 0;
-    z-index: 1;
-    background: rgba(0,0,0,.4);
-    padding: 5px;
-}
- :root{
-  --background-dark: #2d3548;
-  --text-light: rgba(255,255,255,0.6);
-  --text-lighter: rgba(255,255,255,0.9);
-  --spacing-s: 8px;
-  --spacing-m: 16px;
-  --spacing-l: 24px;
-  --spacing-xl: 32px;
-  --spacing-xxl: 64px;
-  --width-container: 1200px;
-}
-
-.hero-section{
-  align-items: flex-start;
-  background-image: linear-gradient(15deg, #333 0%, #ffffff 190%);
-  display: flex;
-  min-height: 100%;
-  justify-content: center;
-  padding: var(--spacing-xxl) var(--spacing-l);
-}
-
-.card-grid{
-  display: grid;
-  grid-template-columns: repeat(1, 1fr);
-  grid-column-gap: var(--spacing-l);
-  grid-row-gap: var(--spacing-l);
-  max-width: var(--width-container);
-  width: 100%;
-}
-
-@media(min-width: 540px){
-  .card-grid{
-    grid-template-columns: repeat(2, 1fr); 
+<style>
+@media only screen and (max-width: 1024px) {
+  .left-ad {
+    display:none;
   }
-}
-
-@media(min-width: 960px){
-  .card-grid{
-    grid-template-columns: repeat(6, 1fr); 
+  .right-ad {
+    display:none;
   }
-}
-
-.cards{
-  list-style: none;
-  position: relative;
-}
-
-.cards:before{
-  content: '';
-  display: block;
-  padding-bottom: 150%;
-  width: 100%;
-}
-
-.card__background{
-  background-size: cover;
-  background-position: center;
-  border-radius: var(--spacing-l);
-  bottom: 0;
-  filter: brightness(0.75) saturate(1.2) contrast(0.85);
-  left: 0;
-  position: absolute;
-  right: 0;
-  top: 0;
-  transform-origin: center;
-  trsnsform: scale(1) translateZ(0);
-  transition: 
-    filter 200ms linear,
-    transform 200ms linear;
-}
-
-.cards:hover .card__background{
-  transform: scale(1.05) translateZ(0);
-}
-
-.card-grid:hover > .cards:not(:hover) .card__background{
-  filter: brightness(0.5) saturate(0) contrast(1.2) blur(20px);
-}
-
-.card__content{
-  left: 0;
-  padding: var(--spacing-l);
-  position: absolute;
-  top: 0;
-}
-
-.card__category{
-  color: var(--text-light);
-  font-size: 0.9rem;
-  margin-bottom: var(--spacing-s);
-  text-transform: uppercase;
-}
-
-.card__heading{
-  color: var(--text-lighter);
-  font-size: 1.2rem;
-  text-shadow: 2px 2px 20px rgba(0,0,0,0.2);
-  line-height: 1.4;
-  word-spacing: 100vw;
 }
 </style>
 @endsection
 @section('section')
-<section class="hero-section">
-  <div class="card-grid ">
-    <a class="cards" href="#">
-      <div class="card__background" style="background-image: url(https://images.unsplash.com/photo-1557177324-56c542165309?ixlib=rb-1.2.1&auto=format&fit=crop&w=1950&q=80)"></div>
-      <div class="card__content">
-        <p class="card__category">Category</p>
-        <h3 class="card__heading">Example Card Heading</h3>
-      </div>
-    </a>
-    <a class="cards" href="#">
-      <div class="card__background" style="background-image: url(https://images.unsplash.com/photo-1557187666-4fd70cf76254?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=800&q=60)"></div>
-      <div class="card__content">
-        <p class="card__category">Category</p>
-        <h3 class="card__heading">Example Card Heading</h3>
-      </div>
-    </a>
-    <a class="cards" href="#">
-      <div class="card__background" style="background-image: url(https://images.unsplash.com/photo-1556680262-9990363a3e6d?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=800&q=60)"></div>
-      <div class="card__content">
-        <p class="card__category">Category</p>
-        <h3 class="card__heading">Example Card Heading</h3>
-      </div>
-    </a>
-      <a class="cards" href="#">
-      <div class="card__background" style="background-image: url(https://images.unsplash.com/photo-1557177324-56c542165309?ixlib=rb-1.2.1&auto=format&fit=crop&w=1950&q=80)"></div>
-      <div class="card__content">
-        <p class="card__category">Category</p>
-        <h3 class="card__heading">Example Card Heading</h3>
-      </div>
-    </a>
-    <a class="cards" href="#">
-      <div class="card__background" style="background-image: url(https://images.unsplash.com/photo-1557004396-66e4174d7bf6?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=800&q=60)"></div>
-      <div class="card__content">
-        <p class="card__category">Category</p>
-        <h3 class="card__heading">Example Card Heading</h3>
-      </div>
-    </a>
-       <a class="cards" href="#">
-      <div class="card__background" style="background-image: url(https://images.unsplash.com/photo-1557187666-4fd70cf76254?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=800&q=60)"></div>
-      <div class="card__content">
-        <p class="card__category">Category</p>
-        <h3 class="card__heading">Example Card Heading</h3>
-      </div>
-    </a>
-  <div>
+<!-- banner-section -->
+<section class="banner-section centred" style="background-image: url(/assets/images/banner/banner-new.jpg);">
+    <div class="overlay"></div>
+    <div class="auto-container">
+        <div class="row clearfix">
+            <div class="col-lg-10 col-md-12 col-sm-12 offset-lg-1 content-column">
+                <div class="content-box">
+                    <div class="hero-content-wrap">
+                        <div class="hero-content">
+                            <style>
+                                .typed-cursor{
+                                    padding-left:15px !important;
+                                }
+                            </style>
+                            <h1>
+                                {{$language[155][session()->get('lang')]}} 
+                                <span class="text-slider-items">
+                                {{$language[156][session()->get('lang')]}} , 
+                                {{$language[157][session()->get('lang')]}} , 
+                                {{$language[158][session()->get('lang')]}} , 
+                                </span>
+                            </h1>
+                            <strong style="left:15px !important;" class="text-slider"></strong>
+                        </div>
+                    </div>
+                    <div class="form-inner">
+                        <form method="get" id="form">
+                            <div class="input-inner clearfix">
+                                <div class="form-group">
+                                    <i onclick="SearchPost()" class="icon-2"></i>
+                                    <input name="title" id="title" autocomplete="off" type="search" placeholder="{{$language[169][session()->get('lang')]}}" required="">
+                                </div>
+                                <div class="form-group">
+                                    <i class="icon-3"></i>
+                                    <select name="city" id="city" class="wide">
+                                        <option value="">{{$language[170][session()->get('lang')]}}</option>
+                                        @foreach($city as $row)
+                                        <option value="{{$row->id}}">{{$row->city}}</option>
+                                        @endforeach
+                                    </select>
+                                </div>
+                                <div class="form-group">
+                                    <i class="icon-4"></i>
+                                    <select name="category" id="category" class="wide">
+                                    <option value="">{{$language[171][session()->get('lang')]}}</option>
+                                    @foreach($category_all as $row)
+                                    <option value="{{$row->id}}">{{$row->category}}</option>
+                                    @endforeach
+                                    </select>
+                                </div>
+                                <div class="btn-box">
+                                    <button onclick="SearchPost()" id="search" type="button" class="theme-btn-one"><i class="icon-2"></i>{{$language[172][session()->get('lang')]}}</button>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div> 
+    </div>
 </section>
-<div class="ps-main-banner">
-        <div id="owl-first" class="owl-carousel owl-theme">
-            <div class="item">
-                <div class="ps-banner-img">
-                    <figure><img src="images/home-big-banner2.jpg" alt="Image Description"></figure>
+<!-- banner-section end -->
+
+<div class="left-ad" style="float:left;margin-top:200px;padding-left:20px;">
+    <img src="https://via.placeholder.com/160x600">
+</div>
+<div class="right-ad" style="float:right;margin-top:200px;padding-right:20px;">
+    <img src="https://via.placeholder.com/160x600">
+</div>
+
+<section class="ftco-section">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-12 text-center">
+                <div style="margin-bottom:-30px;" class="sec-title">
+                    <span>{{$language[159][session()->get('lang')]}}</span>
+                    <h2>{{$language[160][session()->get('lang')]}}</h2>
                 </div>
             </div>
-            {{-- <div class="item">
-                <div class="ps-banner-img">
-                    <figure><img src="images/banner2.jpg" alt="Image Description"></figure>
+            <div class="col-md-12">
+                {{ csrf_field() }}
+                <div id="story_data" class="row featured-story">
+                    @if(Auth::check())
+                    <div style="margin: 30px 0;" class="col-md-6 col-lg-3">
+                        <div class="work add-stroy">
+                            <div class="img d-flex align-items-end justify-content-center" style="background-color: #091a3a">
+                                <a class="create-story" href="/customer/new-post-ads">
+                                    <div class="fas fa-plus"></div>
+                                    <h4 class="story-line">{{$language[161][session()->get('lang')]}}</h4>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                    @else 
+                    <div style="margin: 30px 0;" class="col-md-6 col-lg-3">
+                        <div class="work add-stroy">
+                            <div class="img d-flex align-items-end justify-content-center" style="background-color: #091a3a">
+                                <a class="create-story" href="/login">
+                                    <div class="fas fa-plus"></div>
+                                    <h4 class="story-line">{{$language[161][session()->get('lang')]}}</h4>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                    @endif
+                    <?php //$x=0; ?>
+                    @foreach($live_story as $row)
+                    <?php //if($x < 3) { ?>
+                    <div style="margin: 30px 0;" class="col-md-3">
+                        <div class="work" onclick="viewstory({{$row->id}})">
+                            <div class="img d-flex align-items-end justify-content-center" style="background-image: url(/upload_image/{{$row->image}});">
+                                <div class="profile-story">
+                                    @if($row->profile_image != '')
+                                    <img style="height:40px;" src="/upload_profile_image/{{$row->profile_image}}" alt="">
+                                    @else
+                                    <img src="/assets/images/icons/user-icon.png" alt="">
+                                    @endif
+                                    <h4>{{$row->first_name}} {{$row->last_name}}</h4>
+                                </div>
+                                <div class="text w-100">
+                                    <span class="cat">{{ \App\Http\Controllers\HomeController::viewcategoryname($row->category) }}</span>
+                                    <h3><a href="#">{{$row->title}}</a></h3>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <?php //}else{?>
+                    <!--
+                    <div style="margin: 30px 0;" class="col-md-3 hidden-my-mobile">
+                        <div class="work" onclick="viewstory({{$row->id}})">
+                            <div class="img d-flex align-items-end justify-content-center" style="background-image: url(/upload_image/{{$row->image}});">
+                                <div class="profile-story">
+                                    @if($row->profile_image != '')
+                                    <img style="height:40px;" src="/upload_profile_image/{{$row->profile_image}}" alt="">
+                                    @else
+                                    <img src="/assets/images/icons/user-icon.png" alt="">
+                                    @endif
+                                    <h4>{{$row->first_name}} {{$row->last_name}}</h4>
+                                </div>
+                                <div class="text w-100">
+                                    <span class="cat">{{ \App\Http\Controllers\HomeController::viewcategoryname($row->category) }}</span>
+                                    <h3><a href="#">{{$row->title}}</a></h3>
+                                </div>
+                            </div>
+                        </div>
+                    </div> -->
+                    <?php //} ?>
+                    <?php //$x++; ?> 
+                    @endforeach
+                    
+                </div>
+
+
+                <!-- <div class="row featured-story hidden-my-mobile">
+                    <div class="col-md-3">
+                        <div class="work" data-toggle="modal" data-target="#exampleModal">
+                            <div class="img d-flex align-items-end justify-content-center" style="background-image: url(/assets/images/story/work-1.jpg);">
+                                <div class="profile-story">
+                                    <img src="/assets/images/icons/user-icon.png">
+                                    <h4>Naveen</h4>
+                                </div>
+                                <div class="text w-100">
+                                    <span class="cat">Furnitures</span>
+                                    <h3><a href="#">House Hold Products Purchase Online Imediate</a></h3>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-3">
+                        <div class="work" data-toggle="modal" data-target="#exampleModal">
+                            <div class="img d-flex align-items-end justify-content-center" style="background-image: url(/assets/images/story/work-2.jpg);">
+                                <div class="profile-story">
+                                    <img src="/assets/images/icons/user-icon.png">
+                                    <h4>Naveen</h4>
+                                </div>
+                                <div class="text w-100">
+                                    <span class="cat">Furnitures</span>
+                                    <h3><a href="#">House Hold Products Purchase Online</a></h3>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-3">
+                        <div class="work" data-toggle="modal" data-target="#exampleModal">
+                            <div class="img d-flex align-items-end justify-content-center" style="background-image: url(/assets/images/story/work-3.jpg);">
+                                <div class="profile-story">
+                                    <img src="/assets/images/icons/user-icon.png">
+                                    <h4>Naveen</h4>
+                                </div>                                        
+                                <div class="text w-100">
+                                    <span class="cat">Furnitures</span>
+                                    <h3><a href="#">House Hold Products Purchase Online</a></h3>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-3">
+                        <div class="work" data-toggle="modal" data-target="#exampleModal">
+                            <div class="img d-flex align-items-end justify-content-center" style="background-image: url(/assets/images/story/work-4.jpg);">
+                                <div class="profile-story">
+                                    <img src="/assets/images/icons/user-icon.png">
+                                    <h4>Naveen</h4>
+                                </div>                                        
+                                <div class="text w-100">
+                                    <span class="cat">Furnitures</span>
+                                    <h3><a href="#">House Hold Products Purchase Online</a></h3>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div> -->
+
+                <div class="text-center" style="width: 100%">
+                    <div class="more-btn">
+                        <a href="/search-post/0/0/0/0/0" class="theme-btn-one">{{$language[162][session()->get('lang')]}}</a>
+                    </div>
                 </div>
             </div>
-            <div class="item">
-                <div class="ps-banner-img">
-                    <figure><img src="images/banner3.jpg" alt="Image Description"></figure>
-                </div>
-            </div>
-            <div class="item">
-                <div class="ps-banner-img">
-                    <figure><img src="images/banner4.jpg" alt="Image Description"></figure>
-                </div>
-            </div>
-            <div class="item">
-                <div class="ps-banner-img">
-                    <figure><img src="images/banner5.jpg" alt="Image Description"></figure>
-                </div>
-            </div>
-            <div class="item">
-                <div class="ps-banner-img">
-                    <figure><img src="images/banner6.jpg" alt="Image Description"></figure>
-                </div>
-            </div> --}}
         </div>
-        <div class="container">
-            <div class="row justify-content-center">
-                <div class="col-sm-10">
-                    <div class="ps-main-banner-content">
-                        <div class="ps-main-banner-text animate" data-animate="fadeInLeft">
-                            <h1><span>Search, Sell & Buy</span> That's <span>All We Do</span></h1>
-                            <p>Consectetur adipisicing eliteiuim seteiusmod tempor incididunt utnae labore etnalom magna aliqua udiminimate</p>        
-                        </div>
-                        {{-- <form class="ps-form animate" data-animate="fadeInRight">
-                            <div class="ps-form__input"><input class="form-control" placeholder="What Are You Looking For?"></div>
-                            <div>
-                                <div class="ps-geo-location ps-location">
-                                    <input type="text" class="form-control" placeholder="Location*">
-                                    <a href="javascript:void(0);" class="ps-location-icon ps-index-icon"><i class="ti-target"></i></a>
-                                    <a href="javascript:void(0);" class="ps-arrow-icon ps-index-icon"><i class="ti-angle-down"></i></a>
-                                    <div class="ps-distance">
-                                        <div class="ps-distance__description">
-                                            <label for="amountfour">Distance:</label>
-                                            <input type="text" id="amountfour" readonly>
-                                        </div>                                           
-                                        <div id="slider-range-min"></div>
-                                    </div>
-                                </div>                                  
-                                <button class="btn ps-btn">Search Now</button>
-                            </div>
-                        </form> --}}
-<div class="form-search-wrap aos-init aos-animate" data-aos="fade-up" data-aos-delay="200">
-<form method="post"></form>
-<div class="row align-items-center">
-<div class="col-lg-12 mb-4 mb-xl-0 col-xl-4">
-<input type="text" class="form-control rounded" placeholder="What are you looking for?">
-</div>
-<div class="col-lg-12 mb-4 mb-xl-0 col-xl-3">
-<div class="wrap-icon">
-<span class="icon icon-room"></span>
-<input type="text" class="form-control rounded" placeholder="Location">
-</div>
-</div>
-<div class="col-lg-12 mb-4 mb-xl-0 col-xl-3">
-<div class="select-wrap">
-<span class="icon"><span class="icon-keyboard_arrow_down"></span></span>
-<select class="form-control rounded" name="" id="">
-<option value="">All Categories</option>
-<option value="">Real Estate</option>
-<option value="">Books &amp; Magazines</option>
-<option value="">Furniture</option>
-<option value="">Electronics</option>
-<option value="">Cars &amp; Vehicles</option>
-<option value="">Others</option>
-</select>
-</div>
-</div>
-<div class="col-lg-12 col-xl-2 ml-auto text-right">
-<input type="submit" class="btn btn-primary btn-block rounded" value="Search">
-</div>
-</div>
-</form>
-</div>
-                        <div class="ps-banner-down-content">
-                            <h6 class="animate" data-animate="fadeInTop">Start With Top Searched Categories:</h6>
-                            <figure class="animate" data-animate="swing">
-                                <img src="images/arrowcurve.png" alt="Image Description">
-                            </figure>
-                            <div class="ps-banner--line animate" data-animate="fadeInBottom">
-                                <div class="ps-banner__line"></div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>             
+    </div>
+</section>
+
+
+
+<!-- feature-section -->
+<section class="feature-section sec-pad">
+    <div class="pattern-layer" style="background-image: url(/assets/images/shape/shape-3.png);"></div>
+    <div class="auto-container">
+        <div class="sec-title centred">
+            <span>{{$language[163][session()->get('lang')]}}</span>
+            <h2>{{$language[164][session()->get('lang')]}}</h2>
         </div>
-        {{-- <div id="owl-one" class="ps-slider owl-carousel owl-theme">
-            <div class="item">
-                <div class="ps-slider--category">
-                    <div class="ps-slider--circle">
-                        <figure><img src="images/phone.png" alt="Image Description"></figure>
-                        <div></div>
-                    </div>
-                    <div class="ps-category__title">
-                        <h6>Mobiles/Tablets</h6>
-                        <p>35523 Items</p>
-                    </div>
-                </div>
-            </div>
-            <div class="item">
-                <div class="ps-slider--category">
-                    <div class="ps-slider--circle">
-                        <figure><img src="images/car.png" alt="Image Description"></figure>
-                        <div></div>
-                    </div>
-                    <div class="ps-category__title">
-                        <h6>Vehicles</h6>
-                        <p>122563 Items</p>
-                    </div>
-                </div>
-            </div>
-            <div class="item">
-                <div class="ps-slider--category">
-                    <div class="ps-slider--circle">
-                        <figure><img src="images/home.png" alt="Image Description"></figure>
-                        <div></div>
-                    </div>
-                    <div class="ps-category__title">
-                        <h6>Property for Sale</h6>
-                        <p>52257 Items</p>
-                    </div>
-                </div>
-            </div>
-            <div class="item">
-                <div class="ps-slider--category">
-                    <div class="ps-slider--circle">
-                        <figure><img src="images/rent.png" alt="Image Description"></figure>
-                        <div></div>
-                    </div>
-                    <div class="ps-category__title">
-                        <h6>Property For Rent</h6>
-                        <p>15523 Items</p>
-                    </div>
-                </div>
-            </div>
-            <div class="item">
-                <div class="ps-slider--category">
-                    <div class="ps-slider--circle">
-                        <figure><img src="images/oven.jpg" alt="Image Description"></figure>
-                        <div></div>
-                    </div>
-                    <div class="ps-category__title">
-                        <h6>Home Electronics</h6>
-                        <p>122563 Items</p>
-                    </div>
-                </div>
-            </div>
-            <div class="item">
-                <div class="ps-slider--category">
-                    <div class="ps-slider--circle">
-                        <figure><img src="images/bike.png" alt="Image Description"></figure>
-                        <div></div>
-                    </div>
-                    <div class="ps-category__title">
-                        <h6>Bikes And Scooters</h6>
-                        <p>4593 Items</p>
-                    </div>
-                </div>
-            </div>
-        </div> --}}
-    </div>
-  <main class="ps-main">    
-      
-                {{-- <div class="ps-center-content">
-            
-                    <div id="owl-three" class="ps-featured--cards owl-carousel owl-theme">
-                        <div class="item owlthree-item">
-                        <a class="cards" href="#">
-      <div class="card__background" style="background-image: url(https://images.unsplash.com/photo-1557177324-56c542165309?ixlib=rb-1.2.1&auto=format&fit=crop&w=1950&q=80)"></div>
-      <div class="card__content">
-        <p class="card__category">Category</p>
-        <h3 class="card__heading">Example Card Heading</h3>
-      </div>
-    </a>
-                        </div>
-                        <div class="item owlthree-item">
-                             <a class="cards" href="#">
-      <div class="card__background" style="background-image: url(https://images.unsplash.com/photo-1557177324-56c542165309?ixlib=rb-1.2.1&auto=format&fit=crop&w=1950&q=80)"></div>
-      <div class="card__content">
-        <p class="card__category">Category</p>
-        <h3 class="card__heading">Example Card Heading</h3>
-      </div>
-    </a>
-                        </div>
-                        <div class="item owlthree-item">
-                            <div class="cards">
-                                <figure>
-                                    <img src="images/featured/img-03.jpg" class="card-img-top" alt="Image Description">
-                                    <div></div>
-                                </figure>
-                                <span class="ps-tag">Featured</span>
-                                <span class="ps-tag--arrow"></span>
-                                <div class="card-body">
-                                    <h6>$1,200</h6>
-                                    <p class="card-text">Mac Air Book Pro, Slightly Used</p>
-                                    <span class="d-block"><i class="ti-layers"></i> <a href="javascript:void(0);">Electronics</a></span>
-                                    <span><i class="ti-time"></i> <span>Jun 27, 2019</span></span>
-                                    <figure><img src="images/user-icon/img-03.jpg" alt="Image Description"></figure>
-                                </div>
-                                <ul class="list-group">
-                                    <li class="list-group-item"><span><i class="ti-map"></i> <a href="javascript:void(0);">Manchester, UK</a></span><a href="javascript:void(0);"><i class="far fa-heart"></i></a></li>
-                                </ul>
-                            </div>
-                        </div>
-                        <div class="item owlthree-item">
-                            <div class="card">
-                                <figure>
-                                    <img src="images/featured/img-04.jpg" class="card-img-top" alt="Image Description">
-                                    <div></div>
-                                </figure>
-                                <span class="ps-tag">Featured</span>
-                                <span class="ps-tag--arrow"></span>
-                                <div class="card-body">
-                                    <h6>$1,149</h6>
-                                    <p class="card-text">Brand New Touch Book For Sale</p>
-                                    <span class="d-block"><i class="ti-layers"></i> <a href="javascript:void(0);">Electronics</a></span>
-                                    <span><i class="ti-time"></i> <span>Jun 27, 2019</span></span>
-                                    <figure><img src="images/user-icon/img-04.jpg" alt="Image Description"></figure>
-                                </div>
-                                <ul class="list-group">
-                                    <li class="list-group-item"><span><i class="ti-map"></i> <a href="javascript:void(0);">Manchester, UK</a></span><a href="javascript:void(0);"><i class="far fa-heart"></i></a></li>
-                                </ul>
-                            </div>
-                        </div>
-                        <div class="item">
-                            <div class="card">
-                                <figure>
-                                    <img src="images/featured/img-01.jpg" class="card-img-top" alt="Image Description">
-                                    <div></div>
-                                </figure>
-                                <span class="ps-tag">Featured</span>
-                                <span class="ps-tag--arrow"></span>
-                                <div class="card-body">
-                                    <h6>$1,149</h6>
-                                    <p class="card-text">Brand New Iphone X For Sale</p>
-                                    <span class="d-block"><i class="ti-layers"></i> <a href="javascript:void(0);">Electronics</a></span>
-                                    <span><i class="ti-time"></i> <span>Jun 27, 2019</span></span>
-                                    <figure><img src="images/user-icon/img-01.jpg" alt="Image Description"></figure>
-                                </div>
-                                <ul class="list-group">
-                                    <li class="list-group-item"><span><i class="ti-map"></i> <a href="javascript:void(0);">Manchester, UK</a></span><a href="javascript:void(0);"><i class="far fa-heart"></i></a></li>
-                                </ul>
-                            </div>
-                        </div>
-                        <div class="item">
-                            <div class="card">
-                                <figure>
-                                    <img src="images/featured/img-02.jpg" class="card-img-top" alt="Image Description">
-                                    <div></div>
-                                </figure>
-                                <span class="ps-tag">Featured</span>
-                                <span class="ps-tag--arrow"></span>
-                                <div class="card-body">
-                                    <h6>$650</h6>
-                                    <p class="card-text">Galaxy Note 8 Urgent Sale</p>
-                                    <span class="d-block"><i class="ti-layers"></i> <a href="javascript:void(0);">Electronics</a></span>
-                                    <span><i class="ti-time"></i> <span>Jun 27, 2019</span></span>
-                                    <figure><img src="images/user-icon/img-02.png" alt="Image Description"></figure>
-                                </div>
-                                <ul class="list-group">
-                                    <li class="list-group-item"><span><i class="ti-map"></i> <a href="javascript:void(0);">Manchester, UK</a></span><a href="javascript:void(0);"><i class="far fa-heart"></i></a></li>
-                                </ul>
-                            </div>
-                        </div>
-                        <div class="item">
-                            <div class="card">
-                                <figure>
-                                    <img src="images/featured/img-03.jpg" class="card-img-top" alt="Image Description">
-                                    <div></div>
-                                </figure>
-                                <span class="ps-tag">Featured</span>
-                                <span class="ps-tag--arrow"></span>
-                                <div class="card-body">
-                                    <h6>$1,200</h6>
-                                    <p class="card-text">Mac Air Book Pro, Slightly Used</p>
-                                    <span class="d-block"><i class="ti-layers"></i> <a href="javascript:void(0);">Electronics</a></span>
-                                    <span><i class="ti-time"></i> <span>Jun 27, 2019</span></span>
-                                    <figure><img src="images/user-icon/img-03.jpg" alt="Image Description"></figure>
-                                </div>
-                                <ul class="list-group">
-                                    <li class="list-group-item"><span><i class="ti-map"></i> <a href="javascript:void(0);">Manchester, UK</a></span><a href="javascript:void(0);"><i class="far fa-heart"></i></a></li>
-                                </ul>
-                            </div>
-                        </div>
-                        <div class="item">
-                            <div class="card">
-                                <figure>
-                                    <img src="images/featured/img-04.jpg" class="card-img-top" alt="Image Description">
-                                    <div></div>
-                                </figure>
-                                <span class="ps-tag">Featured</span>
-                                <span class="ps-tag--arrow"></span>
-                                <div class="card-body">
-                                    <h6>$1,149</h6>
-                                    <p class="card-text">Brand New Touch Book For Sale</p>
-                                    <span class="d-block"><i class="ti-layers"></i> <a href="javascript:void(0);">Electronics</a></span>
-                                    <span><i class="ti-time"></i> <span>Jun 27, 2019</span></span>
-                                    <figure><img src="images/user-icon/img-04.jpg" alt="Image Description"></figure>
-                                </div>
-                                <ul class="list-group">
-                                    <li class="list-group-item"><span><i class="ti-map"></i> <a href="javascript:void(0);">Manchester, UK</a></span><a href="javascript:void(0);"><i class="far fa-heart"></i></a></li>
-                                </ul>
-                            </div>
-                        </div>
-                    </div>
-                </div> --}}
-       
-     
-        <!-- INTRO START -->
-        
-        {{-- <section class="ps-main-section ps-intro">
-            <div class="container">
-                <div class="row">
-                    <div class="col-12 col-xl-6">
-                        <div class="ps-intro__img animate" data-animate="fadeInLeft">
-                            <figure>
-                                <img src="images/buildings.png" alt="Imgae Description">
-                            </figure>
-                        </div>
-                    </div>
-                    <div class="col-12 col-xl-6">
-                        <div class="ps-intro__description animate" data-animate="fadeInRight">
-                            <h2><span>Best Platform For</span> Buying & Selling</h2>
-                            <p>Consectetur adipisicing eliteiuim lokat seteiusmod tempor incididunt utnae labore etnalom magnate aliqua udiminimate losiame pistu.</p>
-                            <div class="ps-intro__btn">
-                                <button class="btn ps-btn ps-intro__btn--fill">Find Out More</button>
-                                <button class="btn ps-btn ps-intro__btn--outline ps-outline-btn">Our Team</button>
-                            </div>
-                        </div>
-                    </div> 
-                </div>
-            </div>     
-        </section> --}}
-        <!-- INTRO END -->
-        <!-- HOW IT WORKS START -->
-        {{-- <section class="ps-main-section ps-howitworks">
-            <div class="container">
-                <div class="ps-center-content">
-                    <div class="row">
-                        <div class="col-md-11 col-lg-8 col-xl-7">
-                            <div class="ps-center-description">
-                                <h6 class="animate" data-animate="swoopInLeft">We Made It Simple</h6>
-                                <h4 class="animate" data-animate="swoopInRight">How It Works?</h4>
-                                <p class="animate" data-animate="fadeIn">Consectetur adipisicing eliteiuim set eiusmod tempor incididunt labore etnalom dolore magna aliqua udiminimate veniam quistan norud.</p>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="ps-howitworks__imges">
-                        <div class="ps-howitworks__imges__content">
-                            <div class="ps-howitworks__img">
-                                <figure><img src="images/howit-works/box-down_arrow.png" alt="Image Description"></figure>
-                                <div class="ps-howitworks__dashcircle">
-                                    <svg>
-                                        <circle cx="50%" cy="50%" r="50%"></circle>
-                                    </svg>
-                                </div>
-                            </div>
-                            <div class="ps-howitworks__img__description">
-                                <h5><span>Search Best Online</span> Products / Items</h5>
-                            </div>
-                        </div>                     
-                        <div class="ps-howitworks__imges__content">
-                            <div class="ps-howitworks__img">
-                                <figure><img src="images/howit-works/person.png" alt="Image Description"></figure>
-                                <div class="ps-howitworks__dashcircle">
-                                    <svg>
-                                        <circle cx="50%" cy="50%" r="50%"></circle>
-                                    </svg>
-                                </div>
-                            </div>
-                            <div class="ps-howitworks__img__description">
-                                <h5><span>Contact Direct To</span> Seller User</h5>
-                            </div>
-                        </div> 
-                        <div class="ps-howitworks__imges__content">
-                            <div class="ps-howitworks__img">
-                                <figure><img src="images/howit-works/star.png" alt="Image Description"></figure>
-                                <div class="ps-howitworks__dashcircle">
-                                    <svg>
-                                        <circle cx="50%" cy="50%" r="50%"></circle>
-                                    </svg>
-                                </div>
-                            </div>
-                            <div class="ps-howitworks__img__description">
-                                <h5><span>Leave Your</span> Feedback</h5>
-                            </div>
-                        </div> 
-                        <div class="ps-howitworks__dashline">
-                            <svg>
-                                <line x1="0" y1="5" x2="100%" y2="5" stroke="black"
-                                stroke-dasharray="4 1" />
-                            </svg>
-                        </div>  
-                        <div class="ps-howitworks__arrow1"><figure><img src="images/howit-works/arrow.png" alt="Image Description"></figure></div>
-                        <div class="ps-howitworks__arrow2"><figure><img src="images/howit-works/arrow.png" alt="Image Description"></figure></div>
-                    </div>
-                </div>
-            </div>
-        </section> --}}
-        <!-- HOW IT WORKS END -->
-        <!-- FEATURED START -->
-        {{-- <section class="ps-main-section ps-featured">
-            <div class="container">
-                <div class="ps-center-content">
-                    <div class="ps-center-description ps-featured__description">
-                        <h6 class="animate" data-animate="swoopInLeft">Start With Top Quality</h6>
-                        <h4 class="animate" data-animate="swoopInRight">Featured Ads</h4>
-                        <p class="animate" data-animate="fadeIn">Consectetur adipisicing eliteiuim set eiusmod tempor incididunt labore etnalom dolore magna aliqua udiminimate veniam quistan norud.</p>
-                    </div>
-                    <div id="owl-two" class="ps-featured--cards owl-carousel owl-theme">
-                        <div class="item">
-                            <div class="card">
-                                <figure>
-                                    <img src="images/featured/img-01.jpg" class="card-img-top" alt="Image Description">
-                                    <div></div>
-                                </figure>
-                                <span class="ps-tag">Featured</span>
-                                <span class="ps-tag--arrow"></span>
-                                <div class="card-body">
-                                    <h6>$1,149</h6>
-                                    <p class="card-text">Brand New Iphone X For Sale</p>
-                                    <span class="d-block"><i class="ti-layers"></i> <a href="javascript:void(0);">Electronics</a></span>
-                                    <span><i class="ti-time"></i> <span>Jun 27, 2019</span></span>
-                                    <figure><img src="images/user-icon/img-01.jpg" alt="Image Description"></figure>
-                                </div>
-                                <ul class="list-group">
-                                    <li class="list-group-item"><span><i class="ti-map"></i> <a href="javascript:void(0);">Manchester, UK</a></span><a href="javascript:void(0);"><i class="far fa-heart"></i></a></li>
-                                </ul>
-                            </div>
-                        </div>
-                        <div class="item">
-                            <div class="card">
-                                <figure>
-                                    <img src="images/featured/img-02.jpg" class="card-img-top" alt="Image Description">
-                                    <div></div>
-                                </figure>
-                                <span class="ps-tag">Featured</span>
-                                <span class="ps-tag--arrow"></span>
-                                <div class="card-body">
-                                    <h6>$650</h6>
-                                    <p class="card-text">Galaxy Note 8 Urgent Sale</p>
-                                    <span class="d-block"><i class="ti-layers"></i> <a href="javascript:void(0);">Electronics</a></span>
-                                    <span><i class="ti-time"></i> <span>Jun 27, 2019</span></span>
-                                    <figure><img src="images/user-icon/img-02.png" alt="Image Description"></figure>
-                                </div>
-                                <ul class="list-group">
-                                    <li class="list-group-item"><span><i class="ti-map"></i> <a href="javascript:void(0);">Manchester, UK</a></span><a href="javascript:void(0);"><i class="far fa-heart"></i></a></li>
-                                </ul>
-                            </div>
-                        </div>
-                        <div class="item">
-                            <div class="card">
-                                <figure>
-                                    <img src="images/featured/img-03.jpg" class="card-img-top" alt="Image Description">
-                                    <div></div>
-                                </figure>
-                                <span class="ps-tag">Featured</span>
-                                <span class="ps-tag--arrow"></span>
-                                <div class="card-body">
-                                    <h6>$1,200</h6>
-                                    <p class="card-text">Mac Air Book Pro, Slightly Used</p>
-                                    <span class="d-block"><i class="ti-layers"></i> <a href="javascript:void(0);">Electronics</a></span>
-                                    <span><i class="ti-time"></i> <span>Jun 27, 2019</span></span>
-                                    <figure><img src="images/user-icon/img-03.jpg" alt="Image Description"></figure>
-                                </div>
-                                <ul class="list-group">
-                                    <li class="list-group-item"><span><i class="ti-map"></i> <a href="javascript:void(0);">Manchester, UK</a></span><a href="javascript:void(0);"><i class="far fa-heart"></i></a></li>
-                                </ul>
-                            </div>
-                        </div>
-                        <div class="item">
-                            <div class="card">
-                                <figure>
-                                    <img src="images/featured/img-04.jpg" class="card-img-top" alt="Image Description">
-                                    <div></div>
-                                </figure>
-                                <span class="ps-tag">Featured</span>
-                                <span class="ps-tag--arrow"></span>
-                                <div class="card-body">
-                                    <h6>$1,149</h6>
-                                    <p class="card-text">Brand New Touch Book For Sale</p>
-                                    <span class="d-block"><i class="ti-layers"></i> <a href="javascript:void(0);">Electronics</a></span>
-                                    <span><i class="ti-time"></i> <span>Jun 27, 2019</span></span>
-                                    <figure><img src="images/user-icon/img-04.jpg" alt="Image Description"></figure>
-                                </div>
-                                <ul class="list-group">
-                                    <li class="list-group-item"><span><i class="ti-map"></i> <a href="javascript:void(0);">Manchester, UK</a></span><a href="javascript:void(0);"><i class="far fa-heart"></i></a></li>
-                                </ul>
-                            </div>
-                        </div>
-                        <div class="item">
-                            <div class="card">
-                                <figure>
-                                    <img src="images/featured/img-01.jpg" class="card-img-top" alt="Image Description">
-                                    <div></div>
-                                </figure>
-                                <span class="ps-tag">Featured</span>
-                                <span class="ps-tag--arrow"></span>
-                                <div class="card-body">
-                                    <h6>$1,149</h6>
-                                    <p class="card-text">Brand New Iphone X For Sale</p>
-                                    <span class="d-block"><i class="ti-layers"></i> <a href="javascript:void(0);">Electronics</a></span>
-                                    <span><i class="ti-time"></i> <span>Jun 27, 2019</span></span>
-                                    <figure><img src="images/user-icon/img-01.jpg" alt="Image Description"></figure>
-                                </div>
-                                <ul class="list-group">
-                                    <li class="list-group-item"><span><i class="ti-map"></i> <a href="javascript:void(0);">Manchester, UK</a></span><a href="javascript:void(0);"><i class="far fa-heart"></i></a></li>
-                                </ul>
-                            </div>
-                        </div>
-                        <div class="item">
-                            <div class="card">
-                                <figure>
-                                    <img src="images/featured/img-02.jpg" class="card-img-top" alt="Image Description">
-                                    <div></div>
-                                </figure>
-                                <span class="ps-tag">Featured</span>
-                                <span class="ps-tag--arrow"></span>
-                                <div class="card-body">
-                                    <h6>$650</h6>
-                                    <p class="card-text">Galaxy Note 8 Urgent Sale</p>
-                                    <span class="d-block"><i class="ti-layers"></i> <a href="javascript:void(0);">Electronics</a></span>
-                                    <span><i class="ti-time"></i> <span>Jun 27, 2019</span></span>
-                                    <figure><img src="images/user-icon/img-02.png" alt="Image Description"></figure>
-                                </div>
-                                <ul class="list-group">
-                                    <li class="list-group-item"><span><i class="ti-map"></i> <a href="javascript:void(0);">Manchester, UK</a></span><a href="javascript:void(0);"><i class="far fa-heart"></i></a></li>
-                                </ul>
-                            </div>
-                        </div>
-                        <div class="item">
-                            <div class="card">
-                                <figure>
-                                    <img src="images/featured/img-03.jpg" class="card-img-top" alt="Image Description">
-                                    <div></div>
-                                </figure>
-                                <span class="ps-tag">Featured</span>
-                                <span class="ps-tag--arrow"></span>
-                                <div class="card-body">
-                                    <h6>$1,200</h6>
-                                    <p class="card-text">Mac Air Book Pro, Slightly Used</p>
-                                    <span class="d-block"><i class="ti-layers"></i> <a href="javascript:void(0);">Electronics</a></span>
-                                    <span><i class="ti-time"></i> <span>Jun 27, 2019</span></span>
-                                    <figure><img src="images/user-icon/img-03.jpg" alt="Image Description"></figure>
-                                </div>
-                                <ul class="list-group">
-                                    <li class="list-group-item"><span><i class="ti-map"></i> <a href="javascript:void(0);">Manchester, UK</a></span><a href="javascript:void(0);"><i class="far fa-heart"></i></a></li>
-                                </ul>
-                            </div>
-                        </div>
-                        <div class="item">
-                            <div class="card">
-                                <figure>
-                                    <img src="images/featured/img-04.jpg" class="card-img-top" alt="Image Description">
-                                    <div></div>
-                                </figure>
-                                <span class="ps-tag">Featured</span>
-                                <span class="ps-tag--arrow"></span>
-                                <div class="card-body">
-                                    <h6>$1,149</h6>
-                                    <p class="card-text">Brand New Touch Book For Sale</p>
-                                    <span class="d-block"><i class="ti-layers"></i> <a href="javascript:void(0);">Electronics</a></span>
-                                    <span><i class="ti-time"></i> <span>Jun 27, 2019</span></span>
-                                    <figure><img src="images/user-icon/img-04.jpg" alt="Image Description"></figure>
-                                </div>
-                                <ul class="list-group">
-                                    <li class="list-group-item"><span><i class="ti-map"></i> <a href="javascript:void(0);">Manchester, UK</a></span><a href="javascript:void(0);"><i class="far fa-heart"></i></a></li>
-                                </ul>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </section> --}}
-        <!-- FEATURED END -->
-        <!-- STATUS START -->
-        {{-- <section class="ps-main-section ps-status">
-            <div class="container">
-                <div class="ps-center-content">
-                    <div class="ps-center-description">
-                        <h6 class="animate" data-animate="swoopInLeft">Why We’re Best</h6>
-                        <h4 class="animate" data-animate="swoopInRight">Stat Says It All</h4>
-                        <p class="animate" data-animate="fadeIn">Consectetur adipisicing eliteiuim set eiusmod tempor incididunt labore etnalom dolore magna aliqua udiminimate veniam quistan norud.</p>
-                    </div>
-                    <div class="ps-status__content" id="counter">
-                        <div class="ps-status__item">
-                            <div class="ps-status__img">
-                                <figure><img src="images/ps-status/img-01.png" alt="Image Description"></figure>
-                            </div>
-                            <div class="ps-status__title">
-                                <h5><span class="count" data-count="35">0</span>,<span class="count" data-count="6820"></span></h5>
-                                <h6>Active Items</h6>
-                            </div>
-                        </div>
-                        <div class="ps-status__item">
-                            <div class="ps-status__img">
-                                <figure><img src="images/ps-status/img-02.png" alt="Image Description"></figure>
-                            </div>
-                            <div class="ps-status__title">
-                                <h5><span class="count" data-count="99.56%">0</span>%</h5>
-                                <h6>User Feedback</h6>
-                            </div>
-                        </div>
-                        <div class="ps-status__item">
-                            <div class="ps-status__img">
-                                <figure><img src="images/ps-status/img-03.png" alt="Image Description"></figure>
-                            </div>
-                            <div class="ps-status__title">
-                                <h5><span class="count" data-count="45">0</span>,<span class="count" data-count="824"></span>,<span class="count" data-count="89"></span></h5>
-                                <h6>Items Sold</h6>
-                            </div>
-                        </div>
-                        <div class="ps-status__item">
-                            <div class="ps-status__img">
-                                <figure><img src="images/ps-status/img-04.png" alt="Image Description"></figure>
-                            </div>
-                            <div class="ps-status__title">
-                                <h5><span class="count" data-count="12">0</span>,<span class="count" data-count="0"></span><span class="count" data-count="68"></span></h5>
-                                <h6>Cup Of Coffee</h6>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </section> --}}
-        <!-- STATUS END -->
-        
-        <!-- CATEGORIES START -->
-        <section class="ps-main-section ps-common-categories">
-            <div class="container">
-                <div class="row">
-                    <div class="col-md-11 col-lg-8 col-xl-7">
-                        <div class="ps-center-content">
-                            <div class="ps-center-description">
-                                <h6 class="animate" data-animate="swoopInLeft">Start Exploring With Our</h6>
-                                <h4 class="animate" data-animate="swoopInRight">Common Categories</h4>
-                                <p class="animate" data-animate="fadeIn">Consectetur adipisicing eliteiuim set eiusmod tempor incididunt labore etnalom dolore magna aliqua udiminimate veniam quistan norud.</p>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="row">
-                    <div class="col-md-5 col-lg-4 col-xl-3">
-                        <div class="ps-common-categories__content">
-                            <div class="ps-common-categories__img">
-                                <figure><img src="images/common-categories/img-00.png" alt="Image Description"></figure>
-                                <div></div>
-                            </div>
-                            <div class="ps-common-categories__title">
-                                <h6>All Items</h6>
-                                <p>35523 Items</p>
-                            </div>
-                            <div class="ps-common-categories__hoverbtn">
-                                <button class="btn">Show All</button>
-                            </div>
-                            <div class="ps-common-categories__hoverimg">
-                                <figure><img src="images/common-categories/hover/img-00.png" alt="Image Description"></figure>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-md-5 col-lg-4 col-xl-3">
-                        <div class="ps-common-categories__content">
-                            <div class="ps-common-categories__img">
-                                <figure><img src="images/common-categories/img-02.png" alt="Image Description"></figure>
-                                <div></div>
-                            </div>
-                            <div class="ps-common-categories__title">
-                                <h6>Vehicles</h6>
-                                <p>122563 Items</p>
-                            </div>
-                            <div class="ps-common-categories__hoverbtn">
-                                <button class="btn">Show All</button>
-                            </div>
-                            <div class="ps-common-categories__hoverimg">
-                                <figure><img src="images/common-categories/hover/img-02.png" alt="Image Description"></figure>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-md-5 col-lg-4 col-xl-3">
-                        <div class="ps-common-categories__content">
-                            <div class="ps-common-categories__img">
-                                <figure><img src="images/common-categories/img-03.png" alt="Image Description"></figure>
-                                <div></div>
-                            </div>
-                            <div class="ps-common-categories__title">
-                                <h6>Property for Sale</h6>
-                                <p>52257 Items</p>
-                            </div>
-                            <div class="ps-common-categories__hoverbtn">
-                                <button class="btn">Show All</button>
-                            </div>
-                            <div class="ps-common-categories__hoverimg">
-                                <figure><img src="images/common-categories/hover/img-03.png" alt="Image Description"></figure>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-md-5 col-lg-4 col-xl-3">
-                        <div class="ps-common-categories__content">
-                            <div class="ps-common-categories__img">
-                                <figure><img src="images/common-categories/img-04.png" alt="Image Description"></figure>
-                                <div></div>
-                            </div>
-                            <div class="ps-common-categories__title">
-                                <h6>Property For Rent</h6>
-                                <p>15523 Items</p>
-                            </div>
-                            <div class="ps-common-categories__hoverbtn">
-                                <button class="btn">Show All</button>
-                            </div>
-                            <div class="ps-common-categories__hoverimg">
-                                <figure><img src="images/common-categories/hover/img-04.png" alt="Image Description"></figure>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-md-5 col-lg-4 col-xl-3">
-                        <div class="ps-common-categories__content">
-                            <div class="ps-common-categories__img">
-                                <figure><img src="images/common-categories/img-05.png" alt="Image Description"></figure>
-                                <div></div>
-                            </div>
-                            <div class="ps-common-categories__title">
-                                <h6>Home Electronics</h6>
-                                <p>122563 Items</p>
-                            </div>
-                            <div class="ps-common-categories__hoverbtn">
-                                <button class="btn">Show All</button>
-                            </div>
-                            <div class="ps-common-categories__hoverimg">
-                                <figure><img src="images/common-categories/hover/img-05.png" alt="Image Description"></figure>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-md-5 col-lg-4 col-xl-3">
-                        <div class="ps-common-categories__content">
-                            <div class="ps-common-categories__img">
-                                <figure><img src="images/common-categories/img-06.png" alt="Image Description"></figure>
-                                <div></div>
-                            </div>
-                            <div class="ps-common-categories__title">
-                                <h6>Bikes And Scooters</h6>
-                                <p>4593 Items</p>
-                            </div>
-                            <div class="ps-common-categories__hoverbtn">
-                                <button class="btn">Show All</button>
-                            </div>
-                            <div class="ps-common-categories__hoverimg">
-                                <figure><img src="images/common-categories/hover/img-06.png" alt="Image Description"></figure>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-md-5 col-lg-4 col-xl-3">
-                        <div class="ps-common-categories__content">
-                            <div class="ps-common-categories__img">
-                                <figure><img src="images/common-categories/img-07.png" alt="Image Description"></figure>
-                                <div></div>
-                            </div>
-                            <div class="ps-common-categories__title">
-                                <h6>Business &  Industrial</h6>
-                                <p>14525 Items</p>
-                            </div>
-                            <div class="ps-common-categories__hoverbtn">
-                                <button class="btn">Show All</button>
-                            </div>
-                            <div class="ps-common-categories__hoverimg">
-                                <figure><img src="images/common-categories/hover/img-07.png" alt="Image Description"></figure>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-md-5 col-lg-4 col-xl-3">
-                        <div class="ps-common-categories__content">
-                            <div class="ps-common-categories__img">
-                                <figure><img src="images/common-categories/img-08.png" alt="Image Description"></figure>
-                                <div></div>
-                            </div>
-                            <div class="ps-common-categories__title">
-                                <h6>Services</h6>
-                                <p>52342 Items</p>
-                            </div>
-                            <div class="ps-common-categories__hoverbtn">
-                                <button class="btn">Show All</button>
-                            </div>
-                            <div class="ps-common-categories__hoverimg">
-                                <figure><img src="images/common-categories/hover/img-08.png" alt="Image Description"></figure>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </section>
-        <!-- CATEGORIES END -->
-        <!-- MOBILE START -->
-        {{-- <section class="ps-mobile">
-            <div class="ps-dark-overlay">
-                <div class="container">
-                    <div class="row">
-                        <div class="col-lg-9 col-xl-8">
-                            <div class="ps-main-section ps-center-content">
-                                <div class="ps-center-description">
-                                    <h3 class="animate" data-animate="swoopInLeft">Introducing All New</h3>
-                                    <h2 class="animate" data-animate="swoopInRight">Our Native Mobile App</h2>
-                                    <div class="animate" data-animate="fadeIn"><p>Consectetur adipisicing eliteiuim lokat seteiusmod tempor incididunt utnae labore etnalom magnate aliqua udiminimate losiame pistu.</p></div>
-                                </div>
-                                <div class="ps-mobile__button">
-                                    <a href="javascript:void(0);"><figure><img src="images/native-mobile/img-03.png" alt="Image Description"></figure></a> 
-                                    <a href="javascript:void(0);"><figure><img src="images/native-mobile/img-04.png" alt="Image Description"></figure></a> 
-                                </div>
-                            </div>
-                        </div>
-                        <div class="ps-mobile__img">
-                            <figure><img src="images/native-mobile/img-02.png" alt="Image Description"></figure>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </section> --}}
-        <!-- MOBILE END -->
-        <!-- ARTICLES START -->
-        <section class="ps-main-section ps-articles">
-            <div class="container">
-                {{-- <div class="row">
-                    <div class="col-md-11 col-lg-8 col-xl-7">
-                        <div class="ps-center-content">
-                            <div class="ps-center-description">
-                                <h6 class="animate" data-animate="swoopInLeft">Popular Products</h6>
-                                <h4 class="animate" data-animate="swoopInRight">Recent Views</h4>
-                               
-                            </div>
-                        </div>
-                    </div>
-                </div> --}}
+{{ csrf_field() }}        
+<div id="trending_today_data" class="row">
 
-          <div class="site-section aos-init aos-animate" data-aos="fade">
+    @foreach($trending_today as $row)
+    <div class="col-md-3 col-lg-3 col-sm-6 feature-block-one wow fadeInDown animated animated" data-wow-delay="300ms" data-wow-duration="1500ms">
+        <div class="inner-box">
+        <a href="/view-post/{{$row->id}}">
+            <div class="image-box">
+                <figure class="image"><img style="height:200px;" src="/upload_image/{{$row->image}}" alt=""></figure>
+                
+                @if($row->post_type == '1')
+                <div class="shape"></div>
+                <div class="feature">Featured</div>
+                @endif
+                <!-- <div class="icon">
+                    <div class="icon-shape"></div>
+                    <i class="icon-16"></i>
+                </div> -->
+            </div>
+            <div class="lower-content">
+                <div class="category"><i class="fas fa-tags"></i><a href="javascript:void(0)">{{ \App\Http\Controllers\HomeController::viewcategoryname($row->category) }}</a></div>
+                <h3><a href="/view-post/{{$row->id}}">{{$row->title}}</a></h3>
+                <!-- <ul class="rating clearfix">
+                    <li><i class="icon-17"></i></li>
+                    <li><i class="icon-17"></i></li>
+                    <li><i class="icon-17"></i></li>
+                    <li><i class="icon-17"></i></li>
+                    <li><i class="icon-17"></i></li>
+                    <li><a href="index.html">(25)</a></li>
+                </ul> -->
+                <ul class="info clearfix">
+                    <li><i class="far fa-clock"></i>{{ \App\Http\Controllers\HomeController::humanreadtime($row->created_at) }}</li>
+                    <li style="text-transform:capitalize !important;text-overflow: ellipsis;overflow: hidden;display: -webkit-box;-webkit-line-clamp: 1;-webkit-box-orient: vertical;"><i class="fas fa-map-marker-alt"></i>{{ \App\Http\Controllers\HomeController::viewcityname($row->area,$row->city) }}</li>
+                </ul>
+                <div class="lower-box">
+                    <h5><span>Price:</span>AED {{$row->price}}</h5>
+                    <ul class="react-box">
+                        <!-- <li><a href="javascript:void(0)"><i class="icon-22"></i></a></li> -->
+                        @if(Auth::check())
+                        {{ \App\Http\Controllers\LoginController::viewfavourite1($row->id) }}
+                        @else
+                        <li><a href="/login"><i class="icon-22"></i></a></li>
+                        @endif
+                    </ul>
+                </div>
+            </div>
+        </a>
+        </div>
+    </div>
+    @endforeach
 
-<div class="site-section">
-<div class="container">
-<div class="row mb-5">
-<div class="col-md-7 text-left border-primary">
-<h2 class="font-weight-light text-primary">Trending Today</h2>
-</div>
-</div>
-<div class="row mt-5">
-<div class="col-lg-6">
-<div class="d-block d-md-flex listing">
-<a href="listings-single.html" class="img d-block" style="background-image: url('https://preview.colorlib.com/theme/classyads/images/img_2.jpg')"></a>
-<div class="lh-content">
-<span class="category">Real Estate</span>
-<a href="#" class="bookmark"><span class="icon-heart"></span></a>
-<h3><a href="listings-single.html">House with Swimming Pool</a></h3>
-<address>Don St, Brooklyn, New York</address>
-<p class="mb-0">
-<span class="icon-star text-warning"></span>
-<span class="icon-star text-warning"></span>
-<span class="icon-star text-warning"></span>
-<span class="icon-star text-warning"></span>
-<span class="icon-star text-secondary"></span>
-<span class="review">(3 Reviews)</span>
-</p>
-</div>
-</div>
-<div class="d-block d-md-flex listing">
-<a href="listings-single.html" class="img d-block" style="background-image: url('https://preview.colorlib.com/theme/classyads/images/img_3.jpg')"></a>
-<div class="lh-content">
-<span class="category">Furniture</span>
-<a href="#" class="bookmark"><span class="icon-heart"></span></a>
-<h3><a href="listings-single.html">Wooden Chair &amp; Table</a></h3>
-<address>Don St, Brooklyn, New York</address>
-<p class="mb-0">
-<span class="icon-star text-warning"></span>
-<span class="icon-star text-warning"></span>
-<span class="icon-star text-warning"></span>
-<span class="icon-star text-warning"></span>
-<span class="icon-star text-secondary"></span>
-<span class="review">(3 Reviews)</span>
-</p>
-</div>
-</div>
-<div class="d-block d-md-flex listing">
-<a href="listings-single.html" class="img d-block" style="background-image: url('https://preview.colorlib.com/theme/classyads/images/img_4.jpg')"></a>
-<div class="lh-content">
-<span class="category">Electronics</span>
-<a href="#" class="bookmark"><span class="icon-heart"></span></a>
-<h3><a href="listings-single.html">iPhone X gray</a></h3>
-<address>Don St, Brooklyn, New York</address>
-<p class="mb-0">
-<span class="icon-star text-warning"></span>
-<span class="icon-star text-warning"></span>
-<span class="icon-star text-warning"></span>
-<span class="icon-star text-warning"></span>
-<span class="icon-star text-secondary"></span>
-<span class="review">(3 Reviews)</span>
-</p>
-</div>
-</div>
-</div>
-<div class="col-lg-6">
-<div class="d-block d-md-flex listing">
-<a href="listings-single.html" class="img d-block" style="background-image: url('https://preview.colorlib.com/theme/classyads/images/img_1.jpg')"></a>
-<div class="lh-content">
-<span class="category">Cars &amp; Vehicles</span>
-<a href="#" class="bookmark"><span class="icon-heart"></span></a>
-<h3><a href="listings-single.html">Red Luxury Car</a></h3>
-<address>Don St, Brooklyn, New York</address>
-<p class="mb-0">
-<span class="icon-star text-warning"></span>
-<span class="icon-star text-warning"></span>
-<span class="icon-star text-warning"></span>
-<span class="icon-star text-warning"></span>
-<span class="icon-star text-secondary"></span>
-<span class="review">(3 Reviews)</span>
-</p>
-</div>
-</div>
-<div class="d-block d-md-flex listing">
-<a href="listings-single.html" class="img d-block" style="background-image: url('https://preview.colorlib.com/theme/classyads/images/img_2.jpg')"></a>
-<div class="lh-content">
-<span class="category">Real Estate</span>
-<a href="#" class="bookmark"><span class="icon-heart"></span></a>
-<h3><a href="listings-single.html">House with Swimming Pool</a></h3>
-<address>Don St, Brooklyn, New York</address>
-<p class="mb-0">
-<span class="icon-star text-warning"></span>
-<span class="icon-star text-warning"></span>
-<span class="icon-star text-warning"></span>
-<span class="icon-star text-warning"></span>
-<span class="icon-star text-secondary"></span>
-<span class="review">(3 Reviews)</span>
-</p>
-</div>
-</div>
-<div class="d-block d-md-flex listing">
-<a href="listings-single.html" class="img d-block" style="background-image: url('https://preview.colorlib.com/theme/classyads/images/img_3.jpg')"></a>
-<div class="lh-content">
-<span class="category">Furniture</span>
-<a href="#" class="bookmark"><span class="icon-heart"></span></a>
-<h3><a href="listings-single.html">Wooden Chair &amp; Table</a></h3>
-<address>Don St, Brooklyn, New York</address>
-<p class="mb-0">
-<span class="icon-star text-warning"></span>
-<span class="icon-star text-warning"></span>
-<span class="icon-star text-warning"></span>
-<span class="icon-star text-warning"></span>
-<span class="icon-star text-secondary"></span>
-<span class="review">(3 Reviews)</span>
-</p>
-</div>
-</div>
-</div>
-</div>
-</div>
-</div>
-        </section>
-        <!-- VIDEO START -->
-         <div id="carouselExampleControls" class="carousel slide " data-ride="carousel" data-interval="false">
-  <div class="carousel-inner">
-    <div class="carousel-item active">
-         <section class="ps-video">
-           <a class="ps-video__img" data-rel="prettyPhoto" href="https://youtu.be/XxxIEGzhIG8">
-              <figure><img src="images/ps-video/icon/img-01.png" alt="Image Description"></figure>
-           </a>
-          
-        </section>
+            <div class="text-center" style="width: 100%">
+                <div class="more-btn">
+                    <a href="/search-post/0/0/0/0/0" class="theme-btn-one">{{$language[165][session()->get('lang')]}}</a>
+                </div>
+            </div>
+
+        </div>
     </div>
-    <div class="carousel-item">
-         <section class="ps-video">
-           <a class="ps-video__img" data-rel="prettyPhoto" href="https://youtu.be/XxxIEGzhIG8">
-              <figure><img src="images/ps-video/icon/img-01.png" alt="Image Description"></figure>
-           </a>
-          
-        </section>
+</section>
+<!-- feature-section end -->
+
+
+<!-- feature-style-two -->
+<section class="feature-style-two">
+    <div class="auto-container">
+        <div style="margin-top:-70px !important;" class="sec-title centred">
+            <span>{{$language[166][session()->get('lang')]}}</span>
+            <h2>{{$language[167][session()->get('lang')]}}</h2>
+        </div>
+        <div class="row">
+            @foreach($all_user as $row)
+            <div class="col-lg-4 col-md-6 col-sm-12 stores-block">
+                <div class="stores-block-one">
+                    <div class="inner-box">
+                        <figure class="icon-box">
+                            <!-- <img src="/assets/images/icons/stores-1.png" alt=""> -->
+                            @if($row->profile_image != '')
+                            <img src="/upload_profile_image/{{$row->profile_image}}" alt="">
+                            @else
+                            <img src="/assets/images/icons/user-icon.png" alt="">
+                            @endif
+                        </figure>
+                        <h4><a href="/view-user/{{$row->id}}">{{$row->first_name}} {{$row->last_name}}</a></h4>
+                        <ul class="rating clearfix">
+                            <!-- <li><i class="icon-17"></i></li>
+                            <li><i class="icon-17"></i></li>
+                            <li><i class="icon-17"></i></li>
+                            <li><i class="icon-17"></i></li>
+                            <li><i class="icon-17"></i></li> -->
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            @endforeach
+            <div class="text-center" style="width: 100%">
+                <div class="more-btn"><a href="/view-stores" class="theme-btn-one">{{$language[168][session()->get('lang')]}}</a></div>
+            </div>
+        </div>
+        <div style="height: 30px;"></div>
+        <div class="row clearfix">
+            <div class="col-md-12">
+                <center><img src="https://via.placeholder.com/728x90"></center>
+            </div>
+        </div>
+
     </div>
-    <div class="carousel-item">
-      <section class="ps-video">
-           <a class="ps-video__img" data-rel="prettyPhoto" href="https://youtu.be/XxxIEGzhIG8">
-              <figure><img src="images/ps-video/icon/img-01.png" alt="Image Description"></figure>
-           </a>
-          
-        </section>
-    </div>
-    <div class="carousel-item">
-      <div class="carousel-video-inner embed-responsive embed-responsive-16by9">
-        <div id="video-player" data-video-id="0vrdgDdPApQ"></div>
+</section>
+<!-- feature-style-two end -->
+
+
+<!-- Popup -->
+<!-- Modal -->
+<div class="storypoup modal fade" id="storymodal" tabindex="-1" role="dialog" aria-labelledby="storymodalLabel" aria-hidden="true">
+   <div class="modal-dialog" role="document">
+      <div class="modal-content">
+         <div class="modal-body">
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+            </button>      
+            <div id="story_view" class="card">
+               {{--<div class="container-fliud">
+                  <div class="wrapper row">
+                     <div class="previewss col-md-4">
+                        <div class="preview-pic tab-content">
+                           <div class="tab-pane active" id="pic-1"><a href="browse-ads-details.html"><img src="/assets/images/story/work-1.jpg" /></a></div>
+                           <div class="tab-pane" id="pic-2"><a href="browse-ads-details.html"><img src="/assets/images/story/work-2.jpg" /></a></div>
+                           <div class="tab-pane" id="pic-3"><a href="browse-ads-details.html"><img src="/assets/images/story/work-3.jpg" /></a></div>
+                        
+                        <ul class="preview-thumbnail nav nav-tabs">
+                           <li class="active"><a data-target="#pic-1" data-toggle="tab"><img src="/assets/images/story/work-1.jpg" /></a></li>
+                           <li><a data-target="#pic-2" data-toggle="tab"><img src="/assets/images/story/work-2.jpg" /></a></li>
+                           <li><a data-target="#pic-3" data-toggle="tab"><img src="/assets/images/story/work-3.jpg" /></a></li>
+                        </ul>
+                        </div>
+                     </div>
+                     <div class="details-view col-md-8">
+                        <h3 class="product-story-title"><a href="browse-ads-details.html">House Hold Products Purchase Online</a></h3>
+                        <div class="rating">
+                           <div class="stars">
+                              <span class="fa fa-star checked"></span>
+                              <span class="fa fa-star checked"></span>
+                              <span class="fa fa-star checked"></span>
+                              <span class="fa fa-star"></span>
+                              <span class="fa fa-star"></span>
+                           </div>
+                           <span class="review-no">41 reviews</span>
+                        </div>
+                        <p class="product-story-description">Suspendisse quos? Tempus cras iure temporibus? Eu laudantium cubilia sem sem! Repudiandae et! Massa senectus enim minim sociosqu delectus posuere.</p>
+                        <h4 class="price-story">Price: <span>AED 180</span></h4>
+                        <div class="story-details-content-list">
+                           <h5 class="price-story">Features:</h5>
+                           <ul class="list-item-story clearfix">
+                              <li>256GB PCI flash storage</li>
+                              <li>2.7 GHz dual-core Intel Core i5 processor</li>
+                              <li>Turbo Boost up to 3.1GHz</li>
+                              <li>Intel Iris Graphics 6100</li>
+                              <li>8GB memory (up from 4GB in 2013 model)</li>
+                              <li>1 Year international warranty</li>
+                           </ul>
+                        </div>
+                        <div class="action-now">
+                           <div class="cat-story-list">
+                              <span class="cat-tits">Categories: </span>
+                              <span class="cat-lists"><a href="#">Furnitures</a></span>
+                              <span class="cat-lists"><a href="#">Home</a></span>
+                              <span class="cat-lists"><a href="#">Goods</a></span>
+                           </div>
+                        </div>
+                        <div class="btn-box">
+                              <a href="browse-ads-details.html" class="theme-btn-one" style="margin-top: 20px;"><i class="icon-1"></i>More Details</a>
+                           </div>
+                        <div class="profile-story-details">
+                           <img src="/assets/images/icons/user-icon.png">
+                           <h4>Naveen</h4>
+                        </div>
+                        <div class="popup-navigation">
+                           <div class="pop-next pop-nav"><i class="fas fa-chevron-left"></i></div>
+                           <div class="pop-prev pop-nav"><i class="fas fa-chevron-right"></i></div>
+                        </div>
+                     </div>
+                  </div>
+               </div>--}}
+            </div>
+         </div>
       </div>
-    </div>
-  </div>
-  <a class="carousel-control-prev" href="#carouselExampleControls" role="button" data-slide="prev">
-    <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-    <span class="sr-only">Previous</span>
-  </a>
-  <a class="carousel-control-next" href="#carouselExampleControls" role="button" data-slide="next">
-    <span class="carousel-control-next-icon" aria-hidden="true"></span>
-    <span class="sr-only">Next</span>
-  </a>
+   </div>
 </div>
-     
+<!-- End Popup -->
 
-    <!-- VIDEO END -->
-    <!-- ARTICLES END -->
-</main>
+
+@endsection
+@section('js')
+<script type="text/javascript">
+// $(document).ready(function(){
+ 
+// var _token = $('input[name="_token"]').val();
+
+//  story_data('', _token);
+
+//  function story_data(id="", _token)
+//  {
+//   $.ajax({
+//    url:"/story-load-data",
+//    method:"POST",
+//    data:{id:id, _token:_token},
+//    success:function(data)
+//    {
+//     $('#story_load_more_button').remove();
+//     $('#story_data').append(data);
+//    }
+//   })
+//  }
+
+//  trending_today_data('', _token);
+
+//  function trending_today_data(id="", _token)
+//  {
+//   $.ajax({
+//    url:"/trending-today-load-data",
+//    method:"POST",
+//    data:{id:id, _token:_token},
+//    success:function(data)
+//    {
+//     $('#trending_today_load_more_button').remove();
+//     $('#trending_today_data').append(data);
+//    }
+//   })
+//  }
+
+//  $(document).on('click', '#trending_today_load_more_button', function(){
+//   var id = $(this).data('id');
+//   $('#trending_today_load_more_button').html('<b>Loading...</b>');
+//   trending_today_data(id, _token);
+//  });
+
+//  $(document).on('click', '#story_load_more_button', function(){
+//   var id = $(this).data('id');
+//   $('#story_load_more_button').html('<b>Loading...</b>');
+//   story_data(id, _token);
+//  });
+
+// });
+
+function SearchPost(){
+    var title = $('#title').val();
+    var category = $('#category').val();
+    var city = $('#city').val();
+    var title1;
+    var category1;
+    var city1;
+
+    if(title!=""){
+        title1 = title;
+    }else{
+        title1 = '0';
+    }
+    if(category!=""){
+        category1 = category;
+    }else{
+        category1 = '0';
+    }
+    if(city!=""){
+        city1 = city;
+    }else{
+        city1 = '0';
+    }
+    window.location.href = "/search-post/"+title1+'/'+category1+'/'+city1+'/0'+'/0';
+}
+
+function viewstory(id)
+{
+    $('#storymodal').modal('hide');
+    $.ajax({
+        url : '/get-full-story/'+id,
+        type: "GET",
+        success: function(data)
+        {
+            $('#storymodal').modal('show');
+            $('#story_view').html(data);
+        }
+    });
+}
+
+function SaveFavourite(id){
+    $.ajax({
+        url : '/customer/save-favourite-post/'+id,
+        type: "get",
+        //dataType: "JSON",
+        success: function(data)
+        {                
+            Swal.fire({
+                text: 'Successfully Saved',
+                icon: "success",
+            }).then(function() {
+                location.reload();
+            });
+        },error: function (data) {
+            var errorData = data.responseJSON.errors;
+            $.each(errorData, function(i, obj) {
+                toastr.error(obj[0]);
+            });
+        }
+    });
+}
+
+function DeleteFavourite(id){
+    $.ajax({
+        url : '/customer/delete-favourite-post/'+id,
+        type: "get",
+        //dataType: "JSON",
+        success: function(data)
+        {                
+            Swal.fire({
+                text: 'Successfully Removed',
+                icon: "success",
+            }).then(function() {
+                location.reload();
+            });
+        },error: function (data) {
+            var errorData = data.responseJSON.errors;
+            $.each(errorData, function(i, obj) {
+                toastr.error(obj[0]);
+            });
+        }
+    });
+}
+</script>
 @endsection
