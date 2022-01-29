@@ -77,7 +77,7 @@
                 {!! $all_user->links('website.pagination') !!}
             </div>
             <div class="row clearfix">
-                <div class="col-md-12">
+                <div style="margin-bottom:-50px;" class="col-md-12">
                 <center><img src="https://via.placeholder.com/970x250"></center>
                 </div>
             </div>

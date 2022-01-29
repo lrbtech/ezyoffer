@@ -245,46 +245,32 @@ padding: 50px;
       </div>
     </div>
 
-    <div class="col-xl-8 xl-100 box-col-12">
-      <div class="card month-overview">
-        <div class="card-header pb-3">
-          <h5>This Month Revenue</h5>
-          <h2 class="m-t-20 f-w-800">$57k</h2><span class="badge badge-pill pill-badge-secondary f-14 f-w-600">14%</span>
-          <ul class="creative-dots">
-            <li class="bg-primary big-dot"></li>
-            <li class="bg-secondary semi-big-dot"></li>
-            <li class="bg-warning medium-dot"></li>
-            <li class="bg-info semi-medium-dot"></li>
-            <li class="bg-secondary semi-small-dot"></li>
-            <li class="bg-primary small-dot"></li>
-          </ul>
-          <div class="card-header-right">
-            <ul class="list-unstyled card-option">
-              <li><i class="icofont icofont-gear fa fa-spin font-primary"></i></li>
-              <li><i class="view-html fa fa-code font-primary"></i></li>
-              <li><i class="icofont icofont-maximize full-card font-primary"></i></li>
-              <li><i class="icofont icofont-minus minimize-card font-primary"></i></li>
-              <li><i class="icofont icofont-refresh reload-card font-primary"></i></li>
-              <li><i class="icofont icofont-error close-card font-primary"></i></li>
-            </ul>
-          </div>
+    <div class="col-sm-12 col-xl-6 box-col-12">
+      <div class="card">
+        <div class="card-header">
+          <h5>Post Analytics (Last 12 Months)</h5>
         </div>
-        <div class="card-body p-b-20 row">
-          <div class="col-6 p-b-20 ct-10 pr-0 default-chartist-container"></div>
-          <div class="col-6 p-b-20 ct-11 pl-0 default-chartist-container"> </div>
-          <div class="code-box-copy">
-            <button class="code-box-copy__btn btn-clipboard" data-clipboard-target="#example-head6" title="Copy"><i class="icofont icofont-copy-alt"></i></button>
-            <pre><code class="language-html" id="example-head6">&lt;!-- Cod Box Copy begin --&gt;
-            &lt;div class="card-body p-b-20 row"&gt;
-            &lt;div class="col-6 p-b-20 ct-10 pr-0 default-chartist-container"&gt;&lt;/div&gt;
-            &lt;div class="col-6 p-b-20 ct-11 pl-0 default-chartist-container"&gt; &lt;/div&gt;
-            &lt;/div&gt;
-            &lt;!-- Cod Box Copy end --&gt;
-            </code></pre>
+        <div class="card-body chart-block">
+          <div class="flot-chart-container">
+            <div class="flot-chart-placeholder" id="chat-view1"></div>
           </div>
         </div>
       </div>
     </div>
+
+    <div class="col-sm-12 col-xl-6 box-col-12">
+      <div class="card">
+        <div class="card-header">
+          <h5>Customer Analytics (Last 7 Days)</h5>
+        </div>
+        <div class="card-body chart-block">
+          <div class="flot-chart-container">
+            <div class="flot-chart-placeholder" id="chat-view2"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+
 
   </div>
 </div>
@@ -295,9 +281,14 @@ padding: 50px;
     
 
     <!-- Plugins JS start-->
-    <script src="/assets/app-assets/js/chart/chartist/chartist.js"></script>
-    <script src="/assets/app-assets/js/chart/chartist/chartist-plugin-tooltip.js"></script>
-    <script src="/assets/app-assets/js/dashboard/ecommerce-custom.js"></script>
+    <script src="/assets/app-assets/js/chart/flot-chart/excanvas.js"></script>
+    <script src="/assets/app-assets/js/chart/flot-chart/jquery.flot.js"></script>
+    <script src="/assets/app-assets/js/chart/flot-chart/jquery.flot.time.js"></script>
+    <script src="/assets/app-assets/js/chart/flot-chart/jquery.flot.categories.js"></script>
+    <script src="/assets/app-assets/js/chart/flot-chart/jquery.flot.stack.js"></script>
+    <script src="/assets/app-assets/js/chart/flot-chart/jquery.flot.pie.js"></script>
+    <script src="/assets/app-assets/js/chart/flot-chart/jquery.flot.symbol.js"></script>
+    <!-- <script src="/assets/app-assets/js/chart/flot-chart/flot-script.js"></script> -->
     <script src="/assets/app-assets/js/owlcarousel/owl.carousel.js"></script>
 
     <!-- Plugins JS Ends-->
@@ -349,5 +340,106 @@ var owl_carousel_custom = {
     "use strict";
     owl_carousel_custom.init();
 })(jQuery);
+
+if ($("#chat-view1").length > 0) {
+    var a = {
+        color: "#06b5dh",
+        data: [
+        <?php foreach($postdata as $row){ ?>
+          ["<?php echo $row['month'] .' - '.$row['year']; ?>",<?php echo $row['month_count']; ?>],
+        <?php } ?>
+        // ["Jan", 95],
+        // ["Feb", 8],
+        // ["Mar", 45],
+        // ["Apr", 30],
+        // ["May", 17],
+        // ["Jun", 9],
+        // ["Jul", 50],
+        // ["Aug", 11],
+        // ["Sep", 72],
+        // ["Oct", 89],
+        // ["Nov", 26],
+        // ["Dec", 60],
+        ]
+    };
+    $.plot("#chat-view1", [a], {
+        series: {
+            bars: {
+                show: !0,
+                barWidth: .8,
+                align: "center",
+                fillColor: {
+                    colors: [{
+                        opacity: 1
+                    }, {
+                        opacity: 1
+                    }]
+                }
+            }
+        },
+        xaxis: {
+            mode: "categories",
+            tickLength: 0
+        },
+        grid: {
+            borderWidth: 0
+        }
+    })
+}
+
+if ($("#chat-view2").length > 0) {
+    var a = {
+        color: "#06budd",
+        // data: [
+        // ["Jan", 100],
+        // ["Feb", 8],
+        // ["Mar", 40],
+        // ["Apr", 13],
+        // ["May", 7],
+        // ["Jun", 80],
+        // ["Jul", 5],
+        // ["Aug", 11],
+        // ["Sep", 17],
+        // ["Oct", 85],
+        // ["Nov", 26],
+        // ["Dec", 60],
+        // ]
+        data: [
+        <?php foreach($customerdata as $row){ ?>
+          ["<?php echo $row['week_day']; ?>",<?php echo $row['week_day_count']; ?>],
+        <?php } ?>
+        //["Sunday", 100],
+        // ["Monday", 80],
+        // ["Tuesday", 40],
+        // ["Wednesday", 68],
+        // ["Thursday", 75],
+        // ["Friday", 80],
+        // ["Saturday", 58],
+        ]
+    };
+    $.plot("#chat-view2", [a], {
+        series: {
+            bars: {
+                show: !0,
+                barWidth: .5,
+                align: "center",
+                fillColor: {
+                    colors: [{
+                        opacity: 1
+                    }, {
+                        opacity: 1
+                    }]
+                }
+            }
+        },
+        xaxis: {
+            mode: "categories",
+            tickLength: 0
+        },
+        grid: {
+            borderWidth: 0
+        }
+    })
+}
 </script>
 @endsection

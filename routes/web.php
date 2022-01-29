@@ -80,7 +80,6 @@ Route::get('/get-city-data/{id}', [App\Http\Controllers\PageController::class, '
 Route::get('/get-city-name/{city}/{area}', [App\Http\Controllers\PageController::class, 'getCityName']);
 
 Route::post('/save-report', [App\Http\Controllers\PageController::class, 'savereport']);
-Route::post('/update-report', [App\Http\Controllers\PageController::class, 'updatereport']);
 
 Route::post('/save-review', [App\Http\Controllers\PageController::class, 'savereview']);
 Route::post('/update-review', [App\Http\Controllers\PageController::class, 'updatereview']);

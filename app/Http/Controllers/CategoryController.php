@@ -22,6 +22,12 @@ use Mail;
 
 class CategoryController extends Controller
 {
+    public function __construct()
+    {
+        date_default_timezone_set("Asia/Dubai");
+        date_default_timezone_get();
+        session(['lang'=>'english']);
+    }
     public function category(){
         $category_all = category::where('parent_id',0)->where('status',0)->get();
         $city = city::where('parent_id',0)->where('status',0)->get();

@@ -26,6 +26,7 @@ use Carbon\Carbon;
 
 class StoryLoadMoreController extends Controller
 {
+    
     function loaddata(Request $request)
     {
         if($request->ajax())

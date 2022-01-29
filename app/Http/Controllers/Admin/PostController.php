@@ -108,8 +108,6 @@ class PostController extends Controller
             ->addColumn('post_details', function ($post_ad) {
                 return '<td>
                 <p>Title : '.$post_ad->title.'</p>
-                <p>Mobile : '.$post_ad->mobile.'</p>
-                <p>email : '.$post_ad->email.'</p>
                 <p>price : '.$post_ad->price.'</p>
                 <p>Item Condition : '.$post_ad->item_conditions.'</p>
                 </td>';
@@ -192,34 +190,43 @@ class PostController extends Controller
         
         return Datatables::of($post_ad)
             ->addColumn('customer', function ($post_ad) {
-                $user = User::find($post_ad->customer_id);
+                $user = User::find($post_ad->report_user);
                 if(!empty($user)){
                     return '<td>
                     <p>Name : '.$user->first_name.' '.$user->last_name.'</p>
                     <p>Mobile : '.$user->mobile.'</p>
                     </td>';
                 }
-                else{
-                    return '<td>
-                    <p>Created by Admin</p>
-                    </td>';
-                }
             })
 
 			->addColumn('category', function ($post_ad) {
 				$category = category::find($post_ad->category);
-				$subcategory = category::find($post_ad->subcategory);
-                return '<td>
-                <p>Category : '.$category->category.'</p>
-                <p>SubCategory : '.$subcategory->category.'</p>
-                </td>';
+                
+                if($post_ad->post_type == 0){
+                    return '<td>
+                    <p>Category : '.$category->category.'</p>
+                    <p>Post Type : Normal Ad</p>
+                    </td>';
+                }
+                elseif($post_ad->post_type == 1){
+                    return '<td>
+                    <p>Category : '.$category->category.'</p>
+                    <p>Post Type : Featured Ad</p>
+                    </td>';
+                }
+                elseif($post_ad->post_type == 2){
+                    return '<td>
+                    <p>Category : '.$category->category.'</p>
+                    <p>Post Type : Live Ad</p>
+                    </td>';
+                }
             })
 
             ->addColumn('post_details', function ($post_ad) {
                 return '<td>
                 <p>Title : '.$post_ad->title.'</p>
-                <p>Mobile : '.$post_ad->mobile.'</p>
-                <p>email : '.$post_ad->email.'</p>
+                <p>price : '.$post_ad->price.'</p>
+                <p>Item Condition : '.$post_ad->item_conditions.'</p>
                 </td>';
             })
 
@@ -327,8 +334,6 @@ class PostController extends Controller
             ->addColumn('post_details', function ($post_ad) {
                 return '<td>
                 <p>Title : '.$post_ad->title.'</p>
-                <p>Mobile : '.$post_ad->mobile.'</p>
-                <p>email : '.$post_ad->email.'</p>
                 <p>price : '.$post_ad->price.'</p>
                 <p>Item Condition : '.$post_ad->item_conditions.'</p>
                 </td>';

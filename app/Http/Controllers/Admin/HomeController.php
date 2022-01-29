@@ -15,6 +15,7 @@ use Yajra\DataTables\Facades\DataTables;
 use Auth;
 use DB;
 use Mail;
+use Carbon\Carbon;
 
 class HomeController extends Controller
 {
@@ -43,7 +44,65 @@ class HomeController extends Controller
         $total_today_visitor = post_count::where('date',$today)->count();
 
         $category = category::where('parent_id',0)->get();
+        $customerdata = [];
+        $postdata = [];
+        if (Carbon::today()->subDays(6)->day < Carbon::today()->day){
+            for ($i = Carbon::today()->subDays(6)->day; $i <= Carbon::today()->day; $i++){
+                $data[] = $i;
+                $week_day = date('Y-m-'.$i);
+                $week_day_count = User::where('date',$week_day)->count();
+                if(date("l") == date('l', strtotime($week_day))){
+                    $customerdata[] = array(
+                        'week_day_count' => $week_day_count,
+                        'week_day' => 'Today',
+                    );
+                }
+                else{
+                    $customerdata[] = array(
+                        'week_day_count' => $week_day_count,
+                        'week_day' => date('l', strtotime($week_day)),
+                    );
+                }
+            }
+        }
 
-        return view('admin.dashboard',compact('total_customers','total_posts','total_today_posts','total_today_customers','current_month_posts','current_month_customers','language','category','total_today_visitor','current_month_visitor'));
+        // if (Carbon::today()->subDays(6)->day < Carbon::today()->day){
+        //     for ($i = Carbon::today()->subDays(6)->day; $i <= Carbon::today()->day; $i++){
+        //         $data[] = $i;
+        //         $week_day = date('Y-m-'.$i);
+        //         $week_day_count = post_ad::where('date',$week_day)->count();
+        //         if(date("l") == date('l', strtotime($week_day))){
+        //             $postdata[] = array(
+        //                 'week_day_count' => $week_day_count,
+        //                 'week_day' => 'Today',
+        //             );
+        //         }
+        //         else{
+        //             $postdata[] = array(
+        //                 'week_day_count' => $week_day_count,
+        //                 'week_day' => date('l', strtotime($week_day)),
+        //             );
+        //         }
+        //     }
+        // }
+
+        $period = now()->subMonths(11)->monthsUntil(now());
+
+        //$data = [];
+        foreach ($period as $date)
+        {
+            $month = date('m', strtotime($date->shortMonthName));
+            $month_count = post_ad::whereMonth('created_at', $month)
+            ->whereYear('created_at', $date->year)->count();
+            $postdata[] = array(
+                'month_count' => $month_count,
+                'month' => $date->shortMonthName,
+                'year' => $date->year,
+            );
+        }
+
+
+
+        return view('admin.dashboard',compact('total_customers','total_posts','total_today_posts','total_today_customers','current_month_posts','current_month_customers','language','category','total_today_visitor','current_month_visitor','postdata','customerdata'));
     }
 }

@@ -384,7 +384,12 @@ $output='
                     $output.='<p class="text"> '.$row->msg.' </p>';
                 }
                 else{
-                    $output.='<a download href="/chat_files/'.$row->upload_files.'" class="buttonDownload">'.$row->file_name.'</a>';
+                    //$output.='<a download href="/chat_files/'.$row->upload_files.'" class="buttonDownload">'.$row->file_name.'</a>';
+                    $output.='<a style="text-align:center;" download href="/chat_files/'.$row->upload_files.'" class="btn-slide">
+                        <span class="circle"><i class="fa fa-download"></i></span>
+                        <span style="text-overflow:ellipsis;overflow:hidden;display: -webkit-box;-webkit-line-clamp:1;-webkit-box-orient: vertical;" class="title">'.$row->file_name.'</span>
+                        <span class="title-hover">Click here</span>
+                    </a>';
                 }
             $output.='</div>
         </div>
@@ -405,7 +410,12 @@ $output='
                 $output.='<p class="text"> '.$row->msg.' </p>';
             }
             else{
-                $output.='<a download href="/chat_files/'.$row->upload_files.'" class="buttonDownload">'.$row->file_name.'</a>';
+                //$output.='<a download href="/chat_files/'.$row->upload_files.'" class="buttonDownload">'.$row->file_name.'</a>';
+                $output.='<a style="text-align:center;" download href="/chat_files/'.$row->upload_files.'" class="btn-slide2">
+                    <span class="circle2"><i class="fa fa-download"></i></span>
+                    <span style="text-overflow:ellipsis;overflow:hidden;display: -webkit-box;-webkit-line-clamp:1;-webkit-box-orient: vertical;" class="title2">'.$row->file_name.'</span>
+                    <span class="title-hover2">Click here</span>
+                </a>';
             }
         $output.='</div>
         <p class="time"> '.$dateTime->diffForHumans().'</p>';
@@ -486,7 +496,12 @@ $("#search_text").on("keyup", function() {
                     $output.='<p class="text"> '.$row->msg.' </p>';
                 }
                 else{
-                    $output.='<a download href="/chat_files/'.$row->upload_files.'" class="buttonDownload">'.$row->file_name.'</a>';
+                    // $output.='<a download href="/chat_files/'.$row->upload_files.'" class="buttonDownload">'.$row->file_name.'</a>';
+                    $output.='<a style="text-align:center;" download href="/chat_files/'.$row->upload_files.'" class="btn-slide">
+                        <span class="circle"><i class="fa fa-download"></i></span>
+                        <span style="text-overflow:ellipsis;overflow:hidden;display: -webkit-box;-webkit-line-clamp:1;-webkit-box-orient: vertical;" class="title">'.$row->file_name.'</span>
+                        <span class="title-hover">Click here</span>
+                    </a>';
                 }
                 $output.='</div>
             </div>
@@ -507,7 +522,12 @@ $("#search_text").on("keyup", function() {
                     $output.='<p class="text"> '.$row->msg.' </p>';
                 }
                 else{
-                    $output.='<a download href="/chat_files/'.$row->upload_files.'" class="buttonDownload">'.$row->file_name.'</a>';
+                    // $output.='<a download href="/chat_files/'.$row->upload_files.'" class="buttonDownload">'.$row->file_name.'</a>';
+                    $output.='<a style="text-align:center;" download href="/chat_files/'.$row->upload_files.'" class="btn-slide2">
+                        <span class="circle2"><i class="fa fa-download"></i></span>
+                        <span style="text-overflow:ellipsis;overflow:hidden;display: -webkit-box;-webkit-line-clamp:1;-webkit-box-orient: vertical;" class="title2">'.$row->file_name.'</span>
+                        <span class="title-hover2">Click here</span>
+                    </a>';
                 }
             $output.='</div>
             <p class="time"> '.$dateTime->diffForHumans().'</p>';

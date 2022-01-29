@@ -49,10 +49,11 @@
             </div>
         </section>
         <!-- End Page Title -->
-
-
         <!-- stores-details -->
         <section class="category-details stores-details bg-color-2">
+        <div style="margin-top:-90px;margin-bottom:30px;" class="col-md-12">
+        <center><img src="https://via.placeholder.com/970x250"></center>
+        </div>
             <div class="auto-container">
                 <div class="row clearfix">
                     <div class="col-lg-4 col-md-12 col-sm-12 sidebar-side">
@@ -309,6 +310,9 @@
 
                         </div>
                     </div>
+                </div>
+                <div style="margin-top:20px;margin-bottom:-80px;" class="col-md-12">
+                    <center><img src="https://via.placeholder.com/728x90"></center>
                 </div>
             </div>
         </section>

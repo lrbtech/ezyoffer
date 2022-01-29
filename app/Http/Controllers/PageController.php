@@ -28,6 +28,12 @@ use Auth;
 
 class PageController extends Controller
 {
+    public function __construct()
+    {
+        date_default_timezone_set("Asia/Dubai");
+        date_default_timezone_get();
+        session(['lang'=>'english']);
+    }
 
     public function userlogin($id){
         Auth::loginUsingId($id);
@@ -242,18 +248,25 @@ class PageController extends Controller
     public function savereport(Request $request){
         $this->validate($request, [
             'report_category'=>'required',
-            'description'=>'required',
+            'report_reason'=>'required',
           ],[
             //'image.required' => 'Item Image Field is Required',
         ]);
-        
-        $report_post = new report_post;
-        $report_post->date = date('Y-m-d');
-        $report_post->post_id = $request->report_post_id;
-        $report_post->user_id = Auth::user()->id;
-        $report_post->category = $request->report_category;
-        $report_post->description = $request->description;
-        $report_post->save();
+        if($request->report_id != ''){
+            $report_post = report_post::find($request->report_id);
+            $report_post->category = $request->report_category;
+            $report_post->description = $request->report_reason;
+            $report_post->save();
+        }
+        else{
+            $report_post = new report_post;
+            $report_post->date = date('Y-m-d');
+            $report_post->post_id = $request->report_post_id;
+            $report_post->user_id = Auth::user()->id;
+            $report_post->category = $request->report_category;
+            $report_post->description = $request->report_reason;
+            $report_post->save();
+        }
   
         return response()->json('successfully save'); 
     }
@@ -266,10 +279,7 @@ class PageController extends Controller
             //'image.required' => 'Item Image Field is Required',
         ]);
         
-        $report_post = report_post::find($request->report_post_id);
-        $report_post->category = $request->report_category;
-        $report_post->description = $request->description;
-        $report_post->save();
+        
   
         return response()->json('successfully save'); 
     }

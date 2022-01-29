@@ -143,6 +143,15 @@
                         </ul>
                     </li> -->
                     <!-- <li><a href="browse-ad-details.html"><i class="fas fa-exclamation-triangle"></i></a></li>  -->
+                    @if(Auth::check())
+                        @if($post_ad->customer_id != Auth::user()->id)
+                        <li><a data-toggle="modal" data-target="#reportmodal" href="javascript:void(0)"><i class="fas fa-exclamation-triangle"></i></a></li>
+                        @else 
+                        <li><a href="javascript:void(0)" onclick="yourpost()"><i class="fas fa-exclamation-triangle"></i></a></li>
+                        @endif
+                    @else 
+                    <li><a onclick="viewlogin({{$post_ad->id}})" href="javascript:void(0)"><i class="fas fa-exclamation-triangle"></i></a></li>
+                    @endif
                     
                     @if(Auth::check())
                         @if(empty($favourite))
@@ -151,7 +160,7 @@
                         <li><a style="color:red;" onclick="DeleteFavourite({{$favourite->id}})" href="javascript:void(0)"><i class="icon-22"></i></a></li>
                         @endif
                     @else
-                    <li><a onclick="viewlogin({{$post_ad->id}})" href="#"><i class="icon-22"></i></a></li>
+                    <li><a onclick="viewlogin({{$post_ad->id}})" href="javascript:void(0)"><i class="icon-22"></i></a></li>
                     @endif
                 </ul>
             </div>
@@ -383,12 +392,12 @@
                               <div class="col-lg-6 col-md-12 col-sm-12 form-group">
                                     @if(Auth::check())
                                         @if($post_ad->customer_id != Auth::user()->id)
-                                        <button onclick="SaveChatOffer()" type="button" class="theme-btn-one" style="width: 100%; background-color: #091a3a; font-size: 15px;">{{$language[187][session()->get('lang')]}}</button>
+                                        <button style="padding: 12px 20px !important;" onclick="SaveChatOffer()" type="button" class="theme-btn-one" style="width: 100%; background-color: #091a3a; font-size: 15px;">{{$language[187][session()->get('lang')]}}</button>
                                         @else 
-                                        <button onclick="yourpost()" type="button" class="theme-btn-one" style="width: 100%; background-color: #091a3a; font-size: 15px;">{{$language[187][session()->get('lang')]}}</button>
+                                        <button style="padding: 12px 20px !important;" onclick="yourpost()" type="button" class="theme-btn-one" style="width: 100%; background-color: #091a3a; font-size: 15px;">{{$language[187][session()->get('lang')]}}</button>
                                         @endif
                                     @else 
-                                    <button onclick="viewlogin({{$post_ad->id}})" type="button" class="theme-btn-one" style="width: 100%; background-color: #091a3a; font-size: 15px;">{{$language[187][session()->get('lang')]}}</button>
+                                    <button style="padding: 12px 20px !important;" onclick="viewlogin({{$post_ad->id}})" type="button" class="theme-btn-one" style="width: 100%; background-color: #091a3a; font-size: 15px;">{{$language[187][session()->get('lang')]}}</button>
                                     @endif
                               </div>
                            </div>
@@ -454,6 +463,14 @@
                                     </ul>
                                 </div>
                             </div>
+                            <div class="tags-widget sidebar-widget">
+                                <div class="widget-title">
+                                    <h3>Google Ads</h3>
+                                </div>
+                                <div class="widget-content">
+                                    <img src="https://via.placeholder.com/310x200">
+                                </div>
+                            </div> 
                             <!-- <div class="price-filter sidebar-widget">
                                 <div class="widget-title">
                                     <h3>Pricing range</h3>
@@ -540,6 +557,68 @@
 
       </div>
     </div>
+  </div>
+</div>
+
+<div id="reportmodal" class="modal fade" role="dialog">
+  <div style="max-width:600px !important;" class="modal-dialog modal-sm">
+
+    <!-- Modal content-->
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal">&times;</button>
+        <h4 class="modal-title">Report Post</h4>
+      </div>
+      <div class="modal-body">
+        <div class="col-lg-12 col-md-12 col-sm-12 column">
+            <form method="POST" id="report_form" class="message-seller-pop">
+            {{csrf_field()}}
+            @if(!empty($report_post))
+                <input value="{{$report_post->id}}" type="hidden" name="report_id" id="report_id">
+                <input value="{{$post_ad->id}}" type="hidden" name="report_post_id" id="report_post_id">
+                <div class="form-group">
+                    <label>Report Category</label><br>
+                    <select name="report_category" id="report_category" class="wide">
+                        <!-- <option value="">Report Category</option> -->
+                        @foreach($report_category as $row)
+                            @if($row->id == $report_post->category)
+                            <option selected value="{{$row->id}}">{{$row->category}}</option>
+                            @else 
+                            <option value="{{$row->id}}">{{$row->category}}</option>
+                            @endif
+                        @endforeach
+                    </select>
+                </div> 
+                <div class="form-group">
+                    <label>Reason</label><br>
+                    <textarea name="report_reason" id="report_reason">{{$report_post->description}}</textarea>                     
+                </div> 
+            @else 
+                <input type="hidden" name="report_id" id="report_id">
+                <input value="{{$post_ad->id}}" type="hidden" name="report_post_id" id="report_post_id">
+                <div class="form-group">
+                    <label>Report Category</label><br>
+                    <select name="report_category" id="report_category" class="wide">
+                        <option value="">Report Category</option>
+                        @foreach($report_category as $row)
+                        <option value="{{$row->id}}">{{$row->category}}</option>
+                        @endforeach
+                    </select>
+                </div> 
+                <div class="form-group">
+                    <label>Reason</label><br>
+                    <textarea name="report_reason" id="report_reason"></textarea>                     
+                </div>
+            @endif
+            </form>
+        </div>
+      </div>
+      <div style="display:block;" class="modal-footer">
+        <button id="savereport" onclick="SaveReport()" style="float:right;" type="button" class="theme-btn-one">Report</button>
+        <button id="modal-close-btn" style="float:left;" type="button" class="theme-btn-one" data-dismiss="modal">Close</button>
+      </div>
+    </div>
+
   </div>
 </div>
 
@@ -839,9 +918,43 @@ function UpdateReview(){
     });
 }
 
+function SaveReport(){
+    $("#savereport").attr("disabled", true);
+    var formData = new FormData($('#report_form')[0]);
+    $.ajax({
+        url : '/save-report',
+        type: "POST",
+        data: formData,
+        contentType: false,
+        processData: false,
+        dataType: "JSON",
+        success: function(data)
+        {           
+            $('#modal-close-btn').click();     
+            Swal.fire({
+                text: 'Successfully Save',
+                icon: 'success',
+                }).then((result) => {
+                if (result.isConfirmed) {
+                    console.log(data);
+                    $("#report_form")[0].reset();
+                    location.reload();
+                    $("#savereport").attr("disabled", false);
+                }
+            })  
+        },error: function (data) {
+            var errorData = data.responseJSON.errors;
+            $.each(errorData, function(i, obj) {
+                toastr.error(obj[0]);
+            });
+            $("#savereport").attr("disabled", false);
+        }
+    });
+}
+
 function yourpost(){
     Swal.fire({
-        text: 'Add posted by same user can’t make an offer',
+        text: 'Add posted by same user can’t make an offer/chat/report',
         icon: "success",
     }).then(function() {
         //location.reload();

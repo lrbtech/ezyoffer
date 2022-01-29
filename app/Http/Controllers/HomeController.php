@@ -30,12 +30,12 @@ use Session;
 
 class HomeController extends Controller
 {
-    // public function __construct()
-    // {
-    //     date_default_timezone_set("Asia/Dubai");
-    //     date_default_timezone_get();
-    //     session(['lang'=>'english']);
-    // }
+    public function __construct()
+    {
+        date_default_timezone_set("Asia/Dubai");
+        date_default_timezone_get();
+        session(['lang'=>'english']);
+    }
 
     public function updatelanguage($lang){
         Session::put('lang', $lang);
@@ -325,7 +325,7 @@ class HomeController extends Controller
         $reviews=array();
         if(Auth::check()){
             $favourite = favourite_post::where('user_id',Auth::user()->id)->where('post_id',$id)->first();
-            $report_post = report_post::where('user_id',Auth::user()->id)->where('post_id',$id)->where('status',0)->get();
+            $report_post = report_post::where('user_id',Auth::user()->id)->where('post_id',$id)->where('status',0)->first();
             $reviews = reviews::where('sender_id',Auth::user()->id)->where('post_id',$id)->where('status',0)->first();
         }
 
@@ -334,7 +334,7 @@ class HomeController extends Controller
 
         $language = language::all();
         
-        return view('website.view_post',compact('user','post_ad','category_all','sub_category_all','related_ad','post_image','city','favourite','post_ad_features','chat_option','report_post','reviews','reviews_count','language'));
+        return view('website.view_post',compact('user','post_ad','category_all','sub_category_all','related_ad','post_image','city','favourite','post_ad_features','chat_option','report_post','reviews','reviews_count','language','report_category'));
     }
 
 
