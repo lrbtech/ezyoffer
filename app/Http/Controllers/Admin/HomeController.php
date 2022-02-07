@@ -46,23 +46,21 @@ class HomeController extends Controller
         $category = category::where('parent_id',0)->get();
         $customerdata = [];
         $postdata = [];
-        if (Carbon::today()->subDays(6)->day < Carbon::today()->day){
-            for ($i = Carbon::today()->subDays(6)->day; $i <= Carbon::today()->day; $i++){
-                $data[] = $i;
-                $week_day = date('Y-m-'.$i);
-                $week_day_count = User::where('date',$week_day)->count();
-                if(date("l") == date('l', strtotime($week_day))){
-                    $customerdata[] = array(
-                        'week_day_count' => $week_day_count,
-                        'week_day' => 'Today',
-                    );
-                }
-                else{
-                    $customerdata[] = array(
-                        'week_day_count' => $week_day_count,
-                        'week_day' => date('l', strtotime($week_day)),
-                    );
-                }
+        for ($i=1;$i<=7;$i++){
+            $last6days =  date('Y-m-d',strtotime('-7 days'));
+            $week_day = date('Y-m-d', strtotime('+'.$i.' day', strtotime($last6days)));
+            $week_day_count = User::where('date',$week_day)->count();
+            if(date("l") == date('l', strtotime($week_day))){
+                $customerdata[] = array(
+                    'week_day_count' => $week_day_count,
+                    'week_day' => 'Today',
+                );
+            }
+            else{
+                $customerdata[] = array(
+                    'week_day_count' => $week_day_count,
+                    'week_day' => date('l', strtotime($week_day)),
+                );
             }
         }
 

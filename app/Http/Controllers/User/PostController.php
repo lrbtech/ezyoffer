@@ -27,6 +27,7 @@ class PostController extends Controller
         $this->middleware('auth');
         date_default_timezone_set("Asia/Dubai");
         date_default_timezone_get();
+        session(['lang'=>'english']);
     }
 
     public function newpostads(){
@@ -115,15 +116,15 @@ class PostController extends Controller
             'profile_image.max' => 'Sorry! Maximum allowed size for an image is 10MB',
         ]);
 
-        if($request->profile_image!=""){
-            $filter = new ImageFilter;
-            $score = $filter->GetScore($request->file('profile_image'));      
-            if (isset($score)) {
-                if ($score >= 40) {
-                    return response()->json(['message' => 'Image scored '.$score.'%, It seems that you have uploaded a nude picture :-(','status'=>1], 200); 
-                } 
-            }
-        }
+        // if($request->profile_image!=""){
+        //     $filter = new ImageFilter;
+        //     $score = $filter->GetScore($request->file('profile_image'));      
+        //     if (isset($score)) {
+        //         if ($score >= 40) {
+        //             return response()->json(['message' => 'Image scored '.$score.'%, It seems that you have uploaded a nude picture :-(','status'=>1], 200); 
+        //         } 
+        //     }
+        // }
 
         // if(isset($_FILES['images'])){
         //     $name_array = $_FILES['images']['name'];

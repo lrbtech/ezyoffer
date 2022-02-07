@@ -11,7 +11,7 @@
                 <h1>{{$language[144][session()->get('lang')]}}</h1>
             </div>
             <ul class="bread-crumb clearfix">
-                <li><a href="/">Home</a></li>
+                <li><a class="translate" href="/">Home</a></li>
                 <li>{{$language[144][session()->get('lang')]}}</li>
             </ul>
         </div>
@@ -31,7 +31,7 @@
                 <div class="category-details-content">
                     <div class="item-shorting clearfix">
                         <div class="text pull-left">
-                            <p> Showing {{ $post_ads->firstItem() }} - {{ $post_ads->lastItem() }} of {{$post_ads->total()}} Listings</p>
+                            <p class="translate"> Showing {{ $post_ads->firstItem() }} - {{ $post_ads->lastItem() }} of {{$post_ads->total()}} Listings</p>
                         </div>
                         <div class="right-column pull-right clearfix">
                             <!-- <div class="select-box">
@@ -49,7 +49,7 @@
                             </div>
                         </div>
                     </div>
-                    <div class="category-block wrapper browse-add list">
+                    <div class="translate category-block wrapper browse-add list">
                         <div class="list-item feature-style-three pd-0">
                             @foreach($post_ads as $row)
                             <div class="feature-block-one">
@@ -70,7 +70,7 @@
                                     </div>
                                     <div class="lower-content">
                                         <div class="category"><i class="fas fa-tags"></i><a href="#">{{ \App\Http\Controllers\HomeController::viewcategoryname($row->category) }}</a></div>
-                                        <h4><a href="/view-post/{{$row->id}}">{{$row->title}}</a></h4>
+                                        <h4 style="text-transform:capitalize !important;"><a href="/view-post/{{$row->id}}">{{$row->title}}</a></h4>
                                         <!-- <ul class="rating clearfix">
                                             <li><i class="icon-17"></i></li>
                                             <li><i class="icon-17"></i></li>
@@ -151,7 +151,7 @@
                                             </div>
                                             <div class="lower-content">
                                                 <div class="category"><i class="fas fa-tags"></i><a href="#">{{ \App\Http\Controllers\HomeController::viewcategoryname($row->category) }}</a></div>
-                                                <h3><a href="/view-post/{{$row->id}}">{{$row->title}}</a></h3>
+                                                <h3 style="text-transform:capitalize !important;"><a href="/view-post/{{$row->id}}">{{$row->title}}</a></h3>
                                                 <!-- <ul class="rating clearfix">
                                                     <li><i class="icon-17"></i></li>
                                                     <li><i class="icon-17"></i></li>
@@ -224,7 +224,7 @@
                                             </div>
                                             <div class="lower-content">
                                                 <div class="category"><i class="fas fa-tags"></i><a href="#">{{ \App\Http\Controllers\HomeController::viewcategoryname($row->category) }}</a></div>
-                                                <h3><a href="/view-post/{{$row->id}}">{{$row->title}}</a></h3>
+                                                <h3 style="text-transform:capitalize !important;"><a href="/view-post/{{$row->id}}">{{$row->title}}</a></h3>
                                                 <!-- <ul class="rating clearfix">
                                                     <li><i class="icon-17"></i></li>
                                                     <li><i class="icon-17"></i></li>

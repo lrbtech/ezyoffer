@@ -12,7 +12,7 @@
                         <h1>{{$language[190][session()->get('lang')]}}</h1>
                     </div>
                     <ul class="bread-crumb clearfix">
-                        <li><a href="/">Home</a></li>
+                        <li><a class="translate" href="/">Home</a></li>
                         <li>{{$language[190][session()->get('lang')]}}</li>
                     </ul>
                 </div>
@@ -25,7 +25,7 @@
             <div style="margin-top:-90px;margin-bottom:30px;" class="col-md-12">
                 <center><img src="https://via.placeholder.com/728x90"></center>
             </div>
-            <div class="auto-container">
+            <div class="translate auto-container">
                 <div class="top-bar clearfix">
                     <div class="text pull-left">
                         <p>Showing {{ $all_user->firstItem() }} - {{ $all_user->lastItem() }} of {{$all_user->total()}} Listings</p>

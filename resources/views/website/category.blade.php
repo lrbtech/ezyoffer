@@ -20,7 +20,7 @@
                         <h1>{{$language[174][session()->get('lang')]}}</h1>
                     </div>
                     <ul class="bread-crumb clearfix">
-                        <li><a href="/">Home</a></li>
+                        <li><a class="translate" href="/">Home</a></li>
                         <li>{{$language[174][session()->get('lang')]}}</li>
                     </ul>
                 </div>
@@ -142,7 +142,7 @@ function SearchPost(){
     }else{
         city1 = '0';
     }
-    window.location.href = "/search-post/"+title1+'/'+category1+'/'+city1+'/0'+'/0';
+    window.location.href = "/search-post/"+title1+'/'+category1+'/0'+'/'+city1+'/0'+'/0';
 }
 
 </script>

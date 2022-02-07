@@ -214,7 +214,7 @@ function SaveChat(){
       {
         console.log(data);                
         // $("#chat_form")[0].reset();
-        toastr.success('Chat Send Successfully');
+        //toastr.success('Chat Send Successfully');
         $("#message").val('');
         viewchatpartial(data);
 

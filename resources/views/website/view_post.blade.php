@@ -93,13 +93,13 @@
 <section class="page-title page-title-2" style="background-image: url(/assets/images/background/page-title.jpg);">
     <div class="auto-container">
         <div class="content-box">
-            <h1>{{$post_ad->title}}</h1>
+            <h1 class="translate">{{$post_ad->title}}</h1>
             <!-- <span class="category"></span> -->
-            <ul class="bread-crumb clearfix">
-                <li><a href="/search-post/0/{{$post_ad->category}}/0/0/0">{{ \App\Http\Controllers\HomeController::viewcategoryname($post_ad->category) }}</a></li>
-                <li href="/search-post/0/0/0/0/0">UAE</li>
-                <li><a href="/search-post/0/0/{{$post_ad->city}}/0/0">{{ \App\Http\Controllers\HomeController::viewcity($post_ad->city) }}</a></li>
-                <li><a href="/search-post/0/0/0/{{$post_ad->area}}/0">{{ \App\Http\Controllers\HomeController::viewarea($post_ad->area) }}</a></li>
+            <ul class="translate bread-crumb clearfix">
+                <li><a href="/search-post/0/{{$post_ad->category}}/0/0/0/0">{{ \App\Http\Controllers\HomeController::viewcategoryname($post_ad->category) }}</a></li>
+                <li href="/search-post/0/0/0/0/0/0">UAE</li>
+                <li><a href="/search-post/0/0/0/{{$post_ad->city}}/0/0">{{ \App\Http\Controllers\HomeController::viewcity($post_ad->city) }}</a></li>
+                <li><a href="/search-post/0/0/0/0/{{$post_ad->area}}/0">{{ \App\Http\Controllers\HomeController::viewarea($post_ad->area) }}</a></li>
             </ul>
         </div>
         <div class="info-box clearfix">
@@ -111,7 +111,7 @@
                     <img src="/assets/images/icons/user-icon.png" alt="">
                     @endif
                 </div>
-                <h4>{{$user->first_name}} {{$user->last_name}}<i class="icon-18"></i></h4>
+                <h4 class="translate">{{$user->first_name}} {{$user->last_name}}<i class="icon-18"></i></h4>
                 <!-- <ul class="rating clearfix">
                     <li><i class="icon-17"></i></li>
                     <li><i class="icon-17"></i></li>
@@ -121,15 +121,15 @@
                     <li><a href="index.html">(32)</a></li>
                 </ul> -->
                 @if($post_ad->item_conditions == 'New')
-                <span class="sell">New</span>
+                <span class="translate sell">New</span>
                 @elseif($post_ad->item_conditions == 'Used (Looks New)')
-                <span class="sell">Used (Looks New)</span>
+                <span class="translate sell">Used (Looks New)</span>
                 @elseif($post_ad->item_conditions == 'Used (Good)')
-                <span class="sell">Used (Good)</span>
+                <span class="translate sell">Used (Good)</span>
                 @elseif($post_ad->item_conditions == 'Used (Some Damage)')
-                <span class="sell">Used (Some Damage)</span>
+                <span class="translate sell">Used (Some Damage)</span>
                 @endif
-                <h5><span>Price:</span>AED {{$post_ad->price}}</h5>
+                <h5 class="translate"><span>Price:</span>AED {{$post_ad->price}}</h5>
             </div>
             <div class="right-column pull-right clearfix">
                 <ul class="links-list clearfix">
@@ -225,7 +225,7 @@
         <div class="content-one single-box">
             <div class="text">
                 <h3>{{$language[179][session()->get('lang')]}}</h3>
-                <p>{{$post_ad->description}}</p>
+                <p class="translate">{{$post_ad->description}}</p>
             </div>
             <!-- <div class="text-left" style="width: 100%;margin:10px 0;">
                 <div class="more-btn"><a data-toggle="modal" data-target="#messageseller" href="javascript:void(0)" class="theme-btn-one">Make An Enquiry</a></div>
@@ -237,7 +237,7 @@
                 <h3>{{$language[189][session()->get('lang')]}}:</h3>
                 <ul class="list-item clearfix">
                     @foreach($post_ad_features as $row)
-                    <li>{{$row->features}}</li>
+                    <li class="translate">{{$row->features}}</li>
                     @endforeach
                     <!-- <li>2.7 GHz dual-core Intel Core i5 processor</li>
                     <li>Turbo Boost up to 3.1GHz</li>
@@ -258,8 +258,8 @@
             </div>
             <div class="text">
                 <h4>{{$language[181][session()->get('lang')]}}</h4>
-                <p>{{$post_ad->address}}</p>
-                <p style="text-transform:capitalize !important;">{{ \App\Http\Controllers\HomeController::viewcityname($post_ad->area,$post_ad->city) }}</p>
+                <p class="translate">{{$post_ad->address}}</p>
+                <p class="translate" style="text-transform:capitalize !important;">{{ \App\Http\Controllers\HomeController::viewcityname($post_ad->area,$post_ad->city) }}</p>
             </div>
             <!-- <ul class="info-box clearfix">
                 <li><span>Address:</span> {{$post_ad->address}}</li>
@@ -340,7 +340,7 @@
                             <img src="/assets/images/icons/user-icon.png" alt="">
                             @endif
                             <p>
-                                <strong>{{$user->first_name}} {{$user->last_name}}</strong>
+                                <strong class="translate">{{$user->first_name}} {{$user->last_name}}</strong>
                             </p>
                         </div>
 
@@ -360,20 +360,20 @@
                             @if(Auth::check())
                                 @if($post_ad->customer_id != Auth::user()->id)
                                 @foreach($chat_option as $row)
-                                <button onclick="sendchat1('{{$post_ad->id}}','{{$row->message}}')" type="button" class="theme-btn-one" style="width: 100%;background-color: #b85e83;font-size: 15px;margin-bottom: 20px;">{{$row->message}}</button>
+                                <button onclick="sendchat1('{{$post_ad->id}}','{{$row->message}}')" type="button" class="translate theme-btn-one" style="width: 100%;background-color: #b85e83;font-size: 15px;margin-bottom: 20px;">{{$row->message}}</button>
                                 @endforeach
                                 <!-- <button onclick="sendchat1('{{$post_ad->id}}','Is the Price negotiable?')" type="button" class="theme-btn-one" style="width: 100%;background-color: #b85e83;font-size: 15px;margin-bottom: 20px;">Is the Price negotiable?</button>
                                 <button onclick="sendchat1('{{$post_ad->id}}','Can i see more photos?')" type="button" class="theme-btn-one" style="width: 100%;background-color: #b85e83;font-size: 15px;margin-bottom: 20px;">Can i see more photos?</button> -->
                                 @else 
                                 @foreach($chat_option as $row)
-                                <button onclick="yourpost()" type="button" class="theme-btn-one" style="width: 100%;background-color: #b85e83;font-size: 15px;margin-bottom: 20px;">{{$row->message}}</button>
+                                <button onclick="yourpost()" type="button" class="translate theme-btn-one" style="width: 100%;background-color: #b85e83;font-size: 15px;margin-bottom: 20px;">{{$row->message}}</button>
                                 @endforeach
                                 <!-- <button onclick="yourpost()" type="button" class="theme-btn-one" style="width: 100%;background-color: #b85e83;font-size: 15px;margin-bottom: 20px;">Is the Price negotiable?</button>
                                 <button onclick="yourpost()" type="button" class="theme-btn-one" style="width: 100%;background-color: #b85e83;font-size: 15px;margin-bottom: 20px;">Can i see more photos?</button> -->
                                 @endif
                             @else 
                             @foreach($chat_option as $row)
-                            <button onclick="viewlogin({{$post_ad->id}})" type="button" class="theme-btn-one" style="width: 100%;background-color: #b85e83;font-size: 15px;margin-bottom: 20px;">{{$row->message}}</button>
+                            <button onclick="viewlogin({{$post_ad->id}})" type="button" class="translate theme-btn-one" style="width: 100%;background-color: #b85e83;font-size: 15px;margin-bottom: 20px;">{{$row->message}}</button>
                             @endforeach
                             <!-- <button onclick="viewlogin({{$post_ad->id}})" type="button" class="theme-btn-one" style="width: 100%;background-color: #b85e83;font-size: 15px;margin-bottom: 20px;">Is the Price negotiable?</button>
                             <button onclick="viewlogin({{$post_ad->id}})" type="button" class="theme-btn-one" style="width: 100%;background-color: #b85e83;font-size: 15px;margin-bottom: 20px;">Can i see more photos?</button> -->
@@ -458,7 +458,7 @@
                                 <div class="widget-content">
                                     <ul class="category-list">
                                         @foreach($category_all as $row)
-                                        <li><a href="/category-post/{{$row->id}}">{{$row->category}}</a></li>
+                                        <li><a class="translate" href="/category-post/{{$row->id}}">{{$row->category}}</a></li>
                                         @endforeach                                    
                                     </ul>
                                 </div>
@@ -564,7 +564,7 @@
   <div style="max-width:600px !important;" class="modal-dialog modal-sm">
 
     <!-- Modal content-->
-    <div class="modal-content">
+    <div class="translate modal-content">
       <div class="modal-header">
         <button type="button" class="close" data-dismiss="modal">&times;</button>
         <h4 class="modal-title">Report Post</h4>
@@ -628,12 +628,12 @@
 <section class="related-ads">
     <div class="auto-container">
         <div class="sec-title">
-            <span>Related Ads</span>
-            <h2>Related Ads</h2>
+            <span class="translate">Related Ads</span>
+            <h2 class="translate">Related Ads</h2>
         </div>
         <div class="row">
             @foreach($related_ad as $row)
-            <div class="col-md-3 feature-block-one wow fadeInDown animated animated" data-wow-delay="300ms" data-wow-duration="1500ms">
+            <div class="translate col-md-3 feature-block-one wow fadeInDown animated animated" data-wow-delay="300ms" data-wow-duration="1500ms">
                 <div class="inner-box">
                 <a href="/view-post/{{$row->id}}">
                     <div class="image-box">
@@ -649,7 +649,7 @@
                         </div> -->
                     </div>
                     <div class="lower-content">
-                        <div class="category"><i class="fas fa-tags"></i><a href="javascript:void(0)">{{ \App\Http\Controllers\HomeController::viewcategoryname($row->category) }}</a></div>
+                        <div class="category"><i class="fas fa-tags"></i><a href="/search-post/0/{{$row->category}}/0/0/0/0">{{ \App\Http\Controllers\HomeController::viewcategoryname($row->category) }}</a></div>
                         <h3><a href="/view-post/{{$row->id}}">{{$row->title}}</a></h3>
                         <!-- <ul class="rating clearfix">
                             <li><i class="icon-17"></i></li>
@@ -721,7 +721,7 @@ function SearchPost(){
     }else{
         city1 = '0';
     }
-    window.location.href = "/search-post/"+title1+'/'+category1+'/'+city1+'/0/0';
+    window.location.href = "/search-post/"+title1+'/'+category1+'/0'+'/'+city1+'/0/0';
 }
 
 function viewlogin(id){

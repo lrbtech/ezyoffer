@@ -11,7 +11,7 @@
                 <h1>About Us</h1>
             </div>
             <ul class="bread-crumb clearfix">
-                <li><a href="/">Home</a></li>
+                <li><a class="translate" href="/">Home</a></li>
                 <li>About Us</li>
             </ul>
         </div>

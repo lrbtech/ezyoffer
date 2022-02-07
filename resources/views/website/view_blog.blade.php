@@ -10,10 +10,10 @@
             <div class="auto-container">
                 <div class="content-box centred mr-0">
                     <div class="title">
-                        <h1>{{$blog->title}}</h1>
+                        <h1 class="translate">{{$blog->title}}</h1>
                     </div>
                     <ul class="bread-crumb clearfix">
-                        <li><a href="/">Home</a></li>
+                        <li><a class="translate" href="/">Home</a></li>
                         <li>{{$language[133][session()->get('lang')]}}</li>
                     </ul>
                 </div>
@@ -23,7 +23,7 @@
 
 
         <!-- sidebar-page-container -->
-        <section class="sidebar-page-container">
+        <section class="translate sidebar-page-container">
             <div class="auto-container">
                 <div class="row clearfix">
                     <div class="col-lg-12 col-md-12 col-sm-12 content-side">
@@ -233,10 +233,10 @@
 $(document).on('click','#search', function(){
     var title = $('#title').val();
     var category = $('#category').val();
-    var location = $('#location').val();
+    var city = $('#city').val();
     var title1;
     var category1;
-    var location1;
+    var city1;
 
     if(title!=""){
         title1 = title;
@@ -248,12 +248,12 @@ $(document).on('click','#search', function(){
     }else{
         category1 = '0';
     }
-    if(location!=""){
-        location1 = location;
+    if(city!=""){
+        city1 = city;
     }else{
-        location1 = '0';
+        city1 = '0';
     }
-    window.location.href = "/search-post/"+title1+'/'+category1+'/'+location1+'/0';
+    window.location.href = "/search-post/"+title1+'/'+category1+'/0'+'/'+city1+'/0'+'/0';
 });
 
 </script>

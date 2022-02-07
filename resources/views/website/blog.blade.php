@@ -12,7 +12,7 @@
                         <h1>{{$language[133][session()->get('lang')]}}</h1>
                     </div>
                     <ul class="bread-crumb clearfix">
-                        <li><a href="/">Home</a></li>
+                        <li><a class="translate" href="/">Home</a></li>
                         <li>{{$language[133][session()->get('lang')]}}</li>
                     </ul>
                 </div>
@@ -29,7 +29,7 @@
                         <div class="blog-grid-content">
                             <div class="row clearfix">
                                 @foreach($blog as $row)
-                                <div class="col-lg-4 col-md-4 col-sm-12 news-block">
+                                <div  class="translate col-lg-4 col-md-4 col-sm-12 news-block">
                                     <div class="news-block-one">
                                         <div class="inner-box">
                                             <figure class="image-box">
@@ -132,10 +132,10 @@
 $(document).on('click','#search', function(){
     var title = $('#title').val();
     var category = $('#category').val();
-    var location = $('#location').val();
+    var city = $('#city').val();
     var title1;
     var category1;
-    var location1;
+    var city1;
 
     if(title!=""){
         title1 = title;
@@ -147,12 +147,12 @@ $(document).on('click','#search', function(){
     }else{
         category1 = 'category';
     }
-    if(location!=""){
-        location1 = location;
+    if(city!=""){
+        city1 = city;
     }else{
-        location1 = 'location';
+        city1 = 'city';
     }
-    window.location.href = "/search-post/"+title1+'/'+category1+'/'+location1;
+    window.location.href = "/search-post/"+title1+'/'+category1+'/0'+'/'+city1+'/0'+'/0';
 });
 
 </script>

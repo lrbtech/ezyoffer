@@ -11,7 +11,7 @@
                         <h1>{{$language[191][session()->get('lang')]}}</h1>
                     </div>
                     <ul class="bread-crumb clearfix">
-                        <li><a href="/">Home</a></li>
+                        <li><a class="translate" href="/">Home</a></li>
                         <li>{{$language[191][session()->get('lang')]}}</li>
                     </ul>
                 </div>
@@ -68,7 +68,7 @@
                                         <img src="/assets/images/icons/user-icon.png" alt="">
                                         @endif
                                     </figure>
-                                    <h4>{{$user->first_name}} {{$user->last_name}}</h4>
+                                    <h4 class="translate">{{$user->first_name}} {{$user->last_name}}</h4>
                                     <!-- <ul class="rating clearfix">
                                         <li><i class="icon-17"></i></li>
                                         <li><i class="icon-17"></i></li>
@@ -98,7 +98,7 @@
                             <div class="about-store sidebar-widget">
                                 <div class="content-box">
                                     <h3>{{$language[195][session()->get('lang')]}}</h3>
-                                    <p>{{$user->description}}.</p>
+                                    <p class="translate">{{$user->description}}.</p>
                                     <!-- <ul class="social-links clearfix">
                                         <li><a href="stores-details.html"><i class="fab fa-facebook-f"></i></a></li>
                                         <li><a href="stores-details.html"><i class="fab fa-twitter"></i></a></li>
@@ -122,7 +122,7 @@
                             @endif
                         </div>
                     </div>
-                    <div class="col-lg-8 col-md-12 col-sm-12 content-side">
+                    <div class="translate col-lg-8 col-md-12 col-sm-12 content-side">
                         <div class="category-details-content">
                             <div class="item-shorting clearfix">
                                 <div class="text pull-left">
@@ -156,7 +156,7 @@
                                                 @endif
                                             </div>
                                             <div class="lower-content">
-                                                <div class="category"><i class="fas fa-tags"></i><a href="#">{{ \App\Http\Controllers\HomeController::viewcategoryname($row->category) }}</a></div>
+                                                <div class="category"><i class="fas fa-tags"></i><a href="/search-post/0/{{$row->category}}/0/0/0/0">{{ \App\Http\Controllers\HomeController::viewcategoryname($row->category) }}</a></div>
                                                 <h4><a href="/view-post/{{$row->id}}">{{$row->title}}</a></h4>
                                                 <!-- <ul class="rating clearfix">
                                                     <li><i class="icon-17"></i></li>
@@ -174,7 +174,7 @@
                                                     <h5><span>Price:</span>AED {{$row->price}}</h5>
                                                     <ul class="react-box">
                                                     @if(Auth::check())
-                                                    {{ \App\Http\Controllers\LoginController::viewfavourite($row->id) }}
+                                                    {{ \App\Http\Controllers\LoginController::viewfavourite1($row->id) }}
                                                     @else
                                                     <li><a href="/login"><i class="icon-22"></i></a></li>
                                                     @endif
@@ -207,7 +207,7 @@
                                                         </div> -->
                                                     </div>
                                                     <div class="lower-content">
-                                                        <div class="category"><i class="fas fa-tags"></i><a href="#">{{ \App\Http\Controllers\HomeController::viewcategoryname($row->category) }}</a></div>
+                                                        <div class="category"><i class="fas fa-tags"></i><a href="/search-post/0/{{$row->category}}/0/0/0/0">{{ \App\Http\Controllers\HomeController::viewcategoryname($row->category) }}</a></div>
                                                         <h3><a href="/view-post/{{$row->id}}">{{$row->title}}</a></h3>
                                                         <!-- <ul class="rating clearfix">
                                                             <li><i class="icon-17"></i></li>
@@ -225,7 +225,7 @@
                                                             <h5><span>Price:</span>AED {{$row->price}}</h5>
                                                             <ul class="react-box">
                                                             @if(Auth::check())
-                                                            {{ \App\Http\Controllers\LoginController::viewfavourite($row->id) }}
+                                                            {{ \App\Http\Controllers\LoginController::viewfavourite1($row->id) }}
                                                             @else
                                                             <li><a href="/login"><i class="icon-22"></i></a></li>
                                                             @endif
@@ -256,7 +256,7 @@
                                                         </div> -->
                                                     </div>
                                                     <div class="lower-content">
-                                                        <div class="category"><i class="fas fa-tags"></i><a href="#">{{ \App\Http\Controllers\HomeController::viewcategoryname($row->category) }}</a></div>
+                                                        <div class="category"><i class="fas fa-tags"></i><a href="/search-post/0/{{$row->category}}/0/0/0/0">{{ \App\Http\Controllers\HomeController::viewcategoryname($row->category) }}</a></div>
                                                         <h3><a href="/view-post/{{$row->id}}">{{$row->title}}</a></h3>
                                                         <!-- <ul class="rating clearfix">
                                                             <li><i class="icon-17"></i></li>
@@ -274,7 +274,7 @@
                                                             <h5><span>Price:</span>AED {{$row->price}}</h5>
                                                             <ul class="react-box">
                                                             @if(Auth::check())
-                                                            {{ \App\Http\Controllers\LoginController::viewfavourite($row->id) }}
+                                                            {{ \App\Http\Controllers\LoginController::viewfavourite1($row->id) }}
                                                             @else
                                                             <li><a href="/login"><i class="icon-22"></i></a></li>
                                                             @endif
@@ -347,7 +347,7 @@ $(document).on('click','#search', function(){
     }else{
         city1 = '0';
     }
-    window.location.href = "/search-post/"+title1+'/'+category1+'/'+city1+'/0/0';
+    window.location.href = "/search-post/"+title1+'/'+category1+'/0'+'/'+city1+'/0/0';
 });
 
 function SaveFavourite(id){

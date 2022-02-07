@@ -108,7 +108,7 @@ class SearchController extends Controller
             if(!$data->isEmpty())
             {
 $output.='
-<div class="category-block wrapper browse-add list">
+<div class="translate category-block wrapper browse-add list">
     <div style="margin-top:-20px;" class="list-item feature-style-three pd-0">';
         foreach($data as $row){
         $output.='<div class="feature-block-one">
@@ -120,8 +120,8 @@ $output.='
                     }
                 $output.='</div>
                 <div class="lower-content">
-                    <div class="category"><i class="fas fa-tags"></i><a href="#">'. \App\Http\Controllers\HomeController::viewcategoryname($row->category) .'</a></div>
-                    <h4><a href="/view-post/'.$row->id.'">'.$row->title.'</a></h4>
+                    <div class="category"><i class="fas fa-tags"></i><a href="/search-post/0/'.$row->category.'/0/0/0/0">'. \App\Http\Controllers\HomeController::viewcategoryname($row->category) .'</a></div>
+                    <h4 style="text-transform:capitalize !important;"><a href="/view-post/'.$row->id.'">'.$row->title.'</a></h4>
                     <!-- <ul class="rating clearfix">
                         <li><i class="icon-17"></i></li>
                         <li><i class="icon-17"></i></li>
@@ -172,8 +172,8 @@ $output.='
                             </div> -->';
                         $output.='</div>
                         <div class="lower-content">
-                            <div class="category"><i class="fas fa-tags"></i><a href="#">'. \App\Http\Controllers\HomeController::viewcategoryname($row->category) .'</a></div>
-                            <h3><a href="/view-post/'.$row->id.'">'.$row->title.'</a></h3>
+                            <div class="category"><i class="fas fa-tags"></i><a href="/search-post/0/'.$row->category.'/0/0/0/0">'. \App\Http\Controllers\HomeController::viewcategoryname($row->category) .'</a></div>
+                            <h3 style="text-transform:capitalize !important;"><a href="/view-post/'.$row->id.'">'.$row->title.'</a></h3>
                             <!-- <ul class="rating clearfix">
                                 <li><i class="icon-17"></i></li>
                                 <li><i class="icon-17"></i></li>
@@ -221,8 +221,8 @@ $output.='
                             </div> -->
                         </div>
                         <div class="lower-content">
-                            <div class="category"><i class="fas fa-tags"></i><a href="#">'. \App\Http\Controllers\HomeController::viewcategoryname($row->category) .'</a></div>
-                            <h3><a href="/view-post/'.$row->id.'">'.$row->title.'</a></h3>
+                            <div class="category"><i class="fas fa-tags"></i><a href="/search-post/0/'.$row->category.'/0/0/0/0">'. \App\Http\Controllers\HomeController::viewcategoryname($row->category) .'</a></div>
+                            <h3 style="text-transform:capitalize !important;"><a href="/view-post/'.$row->id.'">'.$row->title.'</a></h3>
                             <!-- <ul class="rating clearfix">
                                 <li><i class="icon-17"></i></li>
                                 <li><i class="icon-17"></i></li>

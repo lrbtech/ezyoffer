@@ -16,7 +16,7 @@
                         @endif
                     </div>
                     <ul class="bread-crumb clearfix">
-                        <li><a href="/">Home</a></li>
+                        <li><a class="translate" href="/">Home</a></li>
                         <li>Log in</li>
                     </ul>
                 </div>

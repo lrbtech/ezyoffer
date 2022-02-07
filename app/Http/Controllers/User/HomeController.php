@@ -24,6 +24,7 @@ class HomeController extends Controller
         $this->middleware('auth');
         date_default_timezone_set("Asia/Dubai");
         date_default_timezone_get();
+        session(['lang'=>'english']);
     }
 
     public function changelanguage($language)

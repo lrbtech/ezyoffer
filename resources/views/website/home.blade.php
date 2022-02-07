@@ -49,7 +49,7 @@
                                     <select name="city" id="city" class="wide">
                                         <option value="">{{$language[170][session()->get('lang')]}}</option>
                                         @foreach($city as $row)
-                                        <option value="{{$row->id}}">{{$row->city}}</option>
+                                        <option class="translate" value="{{$row->id}}">{{$row->city}}</option>
                                         @endforeach
                                     </select>
                                 </div>
@@ -58,7 +58,7 @@
                                     <select name="category" id="category" class="wide">
                                     <option value="">{{$language[171][session()->get('lang')]}}</option>
                                     @foreach($category_all as $row)
-                                    <option value="{{$row->id}}">{{$row->category}}</option>
+                                    <option class="translate" value="{{$row->id}}">{{$row->category}}</option>
                                     @endforeach
                                     </select>
                                 </div>
@@ -91,7 +91,7 @@
                     <h2>{{$language[160][session()->get('lang')]}}</h2>
                 </div>
             </div>
-            <div class="col-md-12">
+            <div class="translate col-md-12">
                 {{ csrf_field() }}
                 <div id="story_data" class="row featured-story">
                     @if(Auth::check())
@@ -133,7 +133,7 @@
                                 </div>
                                 <div class="text w-100">
                                     <span class="cat">{{ \App\Http\Controllers\HomeController::viewcategoryname($row->category) }}</span>
-                                    <h3><a href="#">{{$row->title}}</a></h3>
+                                    <h3><a href="/view-post/{{$row->id}}">{{$row->title}}</a></h3>
                                 </div>
                             </div>
                         </div>
@@ -153,7 +153,7 @@
                                 </div>
                                 <div class="text w-100">
                                     <span class="cat">{{ \App\Http\Controllers\HomeController::viewcategoryname($row->category) }}</span>
-                                    <h3><a href="#">{{$row->title}}</a></h3>
+                                    <h3><a href="/view-post/{{$row->id}}">{{$row->title}}</a></h3>
                                 </div>
                             </div>
                         </div>
@@ -226,7 +226,7 @@
 
                 <div class="text-center" style="width: 100%">
                     <div class="more-btn">
-                        <a href="/search-post/0/0/0/0/0" class="theme-btn-one">{{$language[162][session()->get('lang')]}}</a>
+                        <a href="/search-post/0/0/0/0/0/0" class="theme-btn-one">{{$language[162][session()->get('lang')]}}</a>
                     </div>
                 </div>
             </div>
@@ -248,7 +248,7 @@
 <div id="trending_today_data" class="row">
 
     @foreach($trending_today as $row)
-    <div class="col-md-3 col-lg-3 col-sm-6 feature-block-one wow fadeInDown animated animated" data-wow-delay="300ms" data-wow-duration="1500ms">
+    <div class="translate col-md-3 col-lg-3 col-sm-6 feature-block-one wow fadeInDown animated animated" data-wow-delay="300ms" data-wow-duration="1500ms">
         <div class="inner-box">
         <a href="/view-post/{{$row->id}}">
             <div class="image-box">
@@ -264,7 +264,7 @@
                 </div> -->
             </div>
             <div class="lower-content">
-                <div class="category"><i class="fas fa-tags"></i><a href="javascript:void(0)">{{ \App\Http\Controllers\HomeController::viewcategoryname($row->category) }}</a></div>
+                <div class="category"><i class="fas fa-tags"></i><a href="/search-post/0/{{$row->category}}/0/0/0/0">{{ \App\Http\Controllers\HomeController::viewcategoryname($row->category) }}</a></div>
                 <h3><a href="/view-post/{{$row->id}}">{{$row->title}}</a></h3>
                 <!-- <ul class="rating clearfix">
                     <li><i class="icon-17"></i></li>
@@ -297,7 +297,7 @@
 
             <div class="text-center" style="width: 100%">
                 <div class="more-btn">
-                    <a href="/search-post/0/0/0/0/0" class="theme-btn-one">{{$language[165][session()->get('lang')]}}</a>
+                    <a href="/search-post/0/0/0/0/0/0" class="theme-btn-one">{{$language[165][session()->get('lang')]}}</a>
                 </div>
             </div>
 
@@ -316,7 +316,7 @@
         </div>
         <div class="row">
             @foreach($all_user as $row)
-            <div class="col-lg-4 col-md-6 col-sm-12 stores-block">
+            <div class="translate col-lg-4 col-md-6 col-sm-12 stores-block">
                 <div class="stores-block-one">
                     <div class="inner-box">
                         <figure class="icon-box">
@@ -511,7 +511,7 @@ function SearchPost(){
     }else{
         city1 = '0';
     }
-    window.location.href = "/search-post/"+title1+'/'+category1+'/'+city1+'/0'+'/0';
+    window.location.href = "/search-post/"+title1+'/'+category1+'/0'+'/'+city1+'/0'+'/0';
 }
 
 function viewstory(id)

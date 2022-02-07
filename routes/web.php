@@ -68,7 +68,7 @@ Route::get('/category', [App\Http\Controllers\CategoryController::class, 'catego
 Route::get('/get-all-category', [App\Http\Controllers\CategoryController::class, 'getallcategory']);
 Route::get('/get-full-story/{id}', [App\Http\Controllers\CategoryController::class, 'getfullstory']);
 
-Route::get('/search-post/{search}/{category}/{city}/{area}/{sort}', [App\Http\Controllers\HomeController::class, 'searchpost']);
+Route::get('/search-post/{search}/{category}/{subcategory}/{city}/{area}/{sort}', [App\Http\Controllers\HomeController::class, 'searchpost']);
 
 Route::get('/view-user/{id}', [App\Http\Controllers\HomeController::class, 'viewuser']);
 
@@ -308,6 +308,9 @@ Route::group(['prefix' => 'customer'],function(){
 
     Route::get('/get-chat/{user_id}/{post_id}', [App\Http\Controllers\User\ChatController::class, 'getchat']);
     Route::get('/reload-chat/{user_id}/{post_id}', [App\Http\Controllers\User\ChatController::class, 'reloadchat']);
+
+    Route::get('/chat-delete/{user_id}/{post_id}', [App\Http\Controllers\User\ChatController::class, 'chatdelete']);
+    Route::get('/chat-bulk-delete', [App\Http\Controllers\User\ChatController::class, 'chatbulkdelete']);
 
     Route::get('/chat-admin', [App\Http\Controllers\User\ChatController::class, 'chatadmin']);
     Route::get('/get-new-chat-admin-count', [App\Http\Controllers\User\ChatController::class, 'getnewchatadmincount']);

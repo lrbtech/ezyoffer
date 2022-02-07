@@ -48,7 +48,7 @@ class CategoryController extends Controller
 
         $output = '';
         $output .='
-        <div class="container-fliud">
+        <div class="translate container-fliud">
             <div class="wrapper row">
                 <div class="previewss col-md-4">
                 <div class="preview-pic tab-content">
@@ -92,7 +92,7 @@ class CategoryController extends Controller
                 <div class="action-now">
                     <div class="cat-story-list">
                         <span class="cat-tits">Categories: </span>
-                        <span class="cat-lists"><a href="#">'. \App\Http\Controllers\HomeController::viewcategoryname($post_ad->category) .'</a></span>
+                        <span class="cat-lists"><a href="/search-post/0/'.$post_ad->category.'/0/0/0/0">'. \App\Http\Controllers\HomeController::viewcategoryname($post_ad->category) .'</a></span>
                     </div>
                 </div>
                 <div class="btn-box">
@@ -132,14 +132,14 @@ class CategoryController extends Controller
                 $post_count = post_ad::where('category',$value->id)->where('status',0)->where('admin_status',0)->count();
                 // if($x%4 == 0){
                 //     $output .='
-                //     <a href="/search-post/0/'.$value->id.'/0/0/0">
+                //     <a href="/search-post/0/'.$value->id.'/0/0/0/0">
                 //         <div class="col-lg-3 col-md-6 col-sm-12 category-block">
                 //             <div class="category-block-two wow fadeInDown animated animated" data-wow-delay="00ms" data-wow-duration="1500ms">
                 //                 <div class="inner-box">
                 //                     <figure class="image-box"><img src="/upload_files/'.$value->image.'" alt=""></figure>
                 //                     <div class="lower-content">
                 //                         <span>'.$post_count.'</span>
-                //                         <h4><a href="/search-post/0/'.$value->id.'/0/0/0">'.$value->category.'</a></h4>
+                //                         <h4><a href="/search-post/0/'.$value->id.'/0/0/0/0">'.$value->category.'</a></h4>
                 //                     </div>
                 //                 </div>
                 //             </div>
@@ -153,14 +153,14 @@ class CategoryController extends Controller
                 // else{
                     // if($key%2 == 0){
                         $output .='
-                        <a href="/search-post/0/'.$value->id.'/0/0/0">
+                        <a class="translate" href="/search-post/0/'.$value->id.'/0/0/0/0">
                             <div class="col-lg-3 col-md-6 col-sm-12 category-block">
                                 <div class="category-block-two wow fadeInDown animated animated" data-wow-delay="00ms" data-wow-duration="1500ms">
                                     <div class="inner-box">
                                         <figure class="image-box"><img src="/upload_files/'.$value->image.'" alt=""></figure>
                                         <div class="lower-content">
                                             <span>'.$post_count.'</span>
-                                            <h4><a href="/search-post/0/'.$value->id.'/0/0/0">'.$value->category.'</a></h4>
+                                            <h4><a class="translate" href="/search-post/0/'.$value->id.'/0/0/0/0">'.$value->category.'</a></h4>
                                         </div>
                                     </div>
                                 </div>
@@ -170,14 +170,14 @@ class CategoryController extends Controller
                     // else{
                     //     //$x = $x+1;
                     //     $output .='
-                    //     <a href="/search-post/0/'.$value->id.'/0/0/0">
+                    //     <a href="/search-post/0/'.$value->id.'/0/0/0/0">
                     //         <div class="col-lg-3 col-md-6 col-sm-12 category-block">
                     //             <div class="category-block-two wow fadeInDown animated animated" data-wow-delay="00ms" data-wow-duration="1500ms">
                     //                 <div class="inner-box">
                     //                     <figure class="image-box"><img src="/upload_files/'.$value->image.'" alt=""></figure>
                     //                     <div class="lower-content">
                     //                         <span>'.$post_count.'</span>
-                    //                         <h4><a href="/search-post/0/'.$value->id.'/0/0/0">'.$value->category.'</a></h4>
+                    //                         <h4><a href="/search-post/0/'.$value->id.'/0/0/0/0">'.$value->category.'</a></h4>
                     //                     </div>
                     //                 </div>
                     //             </div>

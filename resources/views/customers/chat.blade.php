@@ -1,6 +1,49 @@
 @extends('customers.layouts')
 @section('css')
+@if(session()->get('lang') == 'english')
 <link href="/assets/css/chat-final.css" rel="stylesheet">
+<style>
+.chat .header-chat .right1 {
+    position: absolute;
+    right: 40px;
+    padding: 3px 7px;
+    border-radius: 4px;
+}
+.attach-icon {
+    right: 50px !important;
+    font-size: 24px !important;
+}
+@media only screen and (max-width: 768px) {
+    .attach-icon {
+        right: 60px !important;
+        font-size: 24px !important;
+    }
+}
+</style>
+@elseif(session()->get('lang') == 'arabic')
+<link href="/assets/css/chat-final-rtl.css" rel="stylesheet">
+<style>
+.chat .header-chat .right1 {
+    position: absolute;
+    left: 40px !important;
+    padding: 3px 7px;
+    border-radius: 4px;
+}
+
+.attach-icon {
+    /* left: 60px !important; */
+    margin-left: 80px !important;
+    font-size: 24px !important;
+}
+@media only screen and (max-width: 768px) {
+    .attach-icon {
+        /* left: 60px !important; */
+        margin-left: 80px !important;
+        font-size: 24px !important;
+    }
+}
+</style>
+@endif
 <link href="//netdna.bootstrapcdn.com/font-awesome/3.2.1/css/font-awesome.css" rel="stylesheet">
 <style>
 .discussions {
@@ -15,14 +58,6 @@
     padding: 3px 7px;
     border-radius: 4px;
 } */
-</style>
-<style>
-@media only screen and (max-width: 768px) {
-    .attach-icon {
-        right: 65px !important;
-        font-size: 24px !important;
-    }
-}
 </style>
 <style type="text/css">
 .message-seller-pop textarea{
@@ -217,7 +252,7 @@
   .btn-slide span.title-hover, .btn-slide2 span.title2,
   .btn-slide2 span.title-hover2 {
     position: absolute;
-    /* left: 90px; */
+    left: 45px;
     text-align: center;
     margin: 0 auto;
     font-size: 16px;
@@ -229,7 +264,7 @@
 .btn-slide2 span.title2,
   .btn-slide2 span.title-hover2 {
     color: #efa666;
-    left: 80px;
+    left: 45px;
   }
 
 .btn-slide span.title-hover, .btn-slide2 span.title-hover2 {
@@ -252,7 +287,7 @@
                         <h1>{{$language[140][session()->get('lang')]}}</h1>
                     </div>
                     <ul class="bread-crumb clearfix">
-                        <li><a href="/">Home</a></li>
+                        <li><a class="translate" href="/">Home</a></li>
                         <li>{{$language[140][session()->get('lang')]}}</li>
                     </ul>
                 </div>
@@ -387,11 +422,11 @@
       </div>
       <div class="modal-body">
         <div class="col-lg-12 col-md-12 col-sm-12 column">
-            <form method="POST" id="upload_form" class="message-seller-pop">
+            <form method="POST" id="upload_form" class="message-seller-pop" enctype="multipart/form-data">
             {{csrf_field()}}
                 <div class="form-group">
                     <label>Upload Files (Support Files .jpeg,.jpg,.png,.pdf,.docx)</label><br>
-                    <input accept=".jpeg,.jpg,.png,.pdf,.docx" type="file" name="upload_files" id="upload_files">                       
+                    <input multiple accept=".jpeg,.jpg,.png,.pdf,.docx" type="file" name="upload_files[]" id="upload_files">                       
                 </div> 
             </form>
         </div>
@@ -524,8 +559,6 @@ function UploadDocument(){
                 //$('#documentmodal').modal('hide');
                 viewChat(data.user_id,data.post_id); 
             });   
-            //$("#msg").val('');
-            //viewChat(data.user_id,data.post_id); 
         },
         error: function (data, errorThrown) {
             var errorData = data.responseJSON.errors;
@@ -534,6 +567,26 @@ function UploadDocument(){
             });
         }
     });
+}
+
+function ChatDelete(user_id,post_id)
+{
+    var r = confirm("Are you sure");
+    if (r == true) {
+        $.ajax({
+            url : '/customer/chat-delete/'+user_id+'/'+post_id,
+            type: "GET",
+            success: function(data)
+            {
+                Swal.fire({
+                    title: "Chat Deleted Successfully",
+                    icon: "success",
+                }).then(function() {
+                    location.reload();
+                });
+            }
+        });
+    }
 }
 
 $("#search_text").on("keyup", function() {

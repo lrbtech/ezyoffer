@@ -1,6 +1,12 @@
 
 <!DOCTYPE html>
-<html lang="en">
+@if(session()->get('lang') == 'english')
+<html dir="ltr">
+@elseif(session()->get('lang') == 'arabic')
+<html dir="rtl">
+@else 
+<html dir="ltr">
+@endif
 <head>
 <meta charset="utf-8">
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -29,6 +35,7 @@
 <script src="/sweetalert2/sweetalert2.min.js"></script>
 <link rel="stylesheet" href="/sweetalert2/sweetalert2.min.css"> 
 <script src="/assets/js/spinner.js" type="text/javascript"></script>
+<link href="https://cdnjs.cloudflare.com/ajax/libs/flag-icon-css/3.5.0/css/flag-icon.min.css" rel="stylesheet" type="text/css" />
 @yield('css')
 <style>
 .text-danger{
@@ -45,12 +52,18 @@
 
 .jquery-spinner-wrap{position:absolute;top:0;z-index:100;width:100%;height:100%;display:none;background:rgba(0,0,0,.6)}.jquery-spinner-wrap .jquery-spinner-circle{height:100%;display:flex;justify-content:center;align-items:center}.jquery-spinner-wrap .jquery-spinner-circle .jquery-spinner-bar{width:40px;height:40px;border:4px solid #ddd;border-top-color:#a40034;border-radius:50%;animation:sp-anime .8s linear infinite}@keyframes sp-anime{to{transform:rotate(1turn)}}
 
+.goog-te-banner-frame.skiptranslate {
+    display: none !important;
+} 
+body {
+    top: 0px !important; 
+}
 </style>
 </head>
 
 
 <!-- page wrapper -->
-<body>
+<body class="notranslate">
 
     <div class="boxed_wrapper">
 
@@ -116,6 +129,13 @@
                                                 <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
                                                 @csrf
                                                 </form>
+                                            </ul>
+                                        </li>
+                                        <div id="google_translate_element" style="display: none;"></div>
+                                        <li class="dropdown"><a style="text-transform:capitalize;" href="javascript:void(0)"><i class="fas fa-globe"></i> Language</a>
+                                            <ul>
+                                                <li><a onclick="translateLanguage('English');" href="javascript:void(0)"><span class="flag-icon flag-icon-us"></span> English</a></li>
+                                                <li><a onclick="translateLanguage('Arabic');" href="javascript:void(0)"><span class="flag-icon flag-icon-ae"></span> Arabic</a></li>
                                             </ul>
                                         </li>
                                     </ul>
@@ -254,8 +274,8 @@
                                                 <img style="height:100px;" src="/upload_files/{{$row->image}}" alt="">
                                                 <a href="/view-blog/{{$row->id}}"><i class="fas fa-link"></i></a>
                                             </figure>
-                                            <h5><a href="/view-blog/{{$row->id}}">{{$row->title}}</a></h5>
-                                            <p>{{ \App\Http\Controllers\HomeController::humanreadtime($row->created_at) }}</p>
+                                            <h5><a class="translate" href="/view-blog/{{$row->id}}">{{$row->title}}</a></h5>
+                                            <p class="translate">{{ \App\Http\Controllers\HomeController::humanreadtime($row->created_at) }}</p>
                                         </div>
                                         @endforeach
                                     </div>
@@ -360,7 +380,46 @@
     // }
     </script>
     @endif
-    <script>
+<script src="//translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"></script>
+<script>
+    function googleTranslateElementInit() {
+        new google.translate.TranslateElement({ pageLanguage: 'en', layout: google.translate.TranslateElement.InlineLayout.SIMPLE, autoDisplay: false }, 'google_translate_element');
+    }
+
+    function translateLanguage(lang) {
+        // googleTranslateElementInit();
+        // if(lang == 'Arabic'){
+        //     $("html").children().css("direction","rtl");
+        // }
+        // else{
+        //     $("html").children().css("direction","ltr");
+        //     location.reload();
+        // }
+        var lang1;
+        if(lang == 'English'){
+            lang1='english';
+        }
+        else{
+            lang1='arabic';
+        }
+        $.ajax({
+            url : '/update-language/'+lang1,
+            type: "GET",
+            success: function(data)
+            {
+                googleTranslateElementInit();
+                location.reload();
+            }
+        });
+        var $frame = $('.goog-te-menu-frame:first');
+        if (!$frame.size()) {
+            alert("Error: Could not find Google translate frame.");
+            return false;
+        }
+        $frame.contents().find('.goog-te-menu2-item span.text:contains(' + lang + ')').get(0).click();
+        return false;
+    }
+
     function updateLanguage(lang) {
         $.ajax({
             url : '/update-language/'+lang,
@@ -371,6 +430,6 @@
             }
         });
     }
-    </script>
+</script>
 </body><!-- End of .page_wrapper -->
 </html>

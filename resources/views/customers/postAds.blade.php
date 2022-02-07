@@ -61,7 +61,7 @@
                      <h1>{{$language[214][session()->get('lang')]}}</h1>
                   </div>
                   <ul class="bread-crumb clearfix">
-                     <li><a href="/">Home</a></li>
+                     <li><a class="translate" href="/">Home</a></li>
                      <li>{{$language[214][session()->get('lang')]}}</li>
                   </ul>
                </div>

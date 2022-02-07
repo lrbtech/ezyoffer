@@ -24,7 +24,7 @@ img{
                         <h1>{{$language[177][session()->get('lang')]}}</h1>
                     </div>
                     <ul class="bread-crumb clearfix">
-                        <li><a href="/">Home</a></li>
+                        <li><a class="translate" href="/">Home</a></li>
                         <li>{{$language[177][session()->get('lang')]}}</li>
                     </ul>
                 </div>
@@ -89,7 +89,7 @@ img{
                                     <ul class="category-list">
                                         <!-- <li><a href="category-details.html">All</a></li> -->
                                         @foreach($category_all as $row)
-                                        <li><a href="/search-post/0/{{$row->id}}/0/0">{{$row->category}}</a></li>
+                                        <li><a class="translate" href="/search-post/0/{{$row->id}}/0/0/0/0">{{$row->category}}</a></li>
                                         @endforeach
                                         <!-- <li class="dropdown">
                                             <a href="category-details.html" class="current">Ellectronics</a>
@@ -142,7 +142,7 @@ img{
                                 </div> -->
                                 <div class="right-column pull-right clearfix">
                                     <div class="select-box">
-                                        <select name="sorting" id="sorting" onchange="SearchPost()" class="wide">
+                                        <select name="sorting" id="sorting" onchange="SearchPost()" class="translate wide">
                                             <option value="0" data-display="Sort by: Default">Sort by: Default</option>
                                             <option value="1">Short by Low to High</option>
                                             <option value="2">Short by High to Low</option>
@@ -460,7 +460,7 @@ function SearchPost(){
     // }else{
         area1 = '0';
     //}
-    window.location.href = "/search-post/"+title1+'/'+category1+'/'+city1+'/'+area1+'/'+sorting;
+    window.location.href = "/search-post/"+title1+'/'+category1+'/0'+'/'+city1+'/'+area1+'/'+sorting;
 }
 
 

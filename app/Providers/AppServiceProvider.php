@@ -36,14 +36,14 @@ class AppServiceProvider extends ServiceProvider
         Schema::defaultstringLength(191);
         view()->composer('admin.layouts', function($view) {
             $language = language::all();
-            session(['lang'=>'english']);
+            // session(['lang'=>'english']);
             $view->with(compact('language'));
         });
         view()->composer('website.layouts', function($view) {
             $settings = settings::find('1');
             $language = language::all();
             $footer_blog = blog::latest()->take(2)->get();
-            session(['lang'=>'english']);
+            // session(['lang'=>'english']);
             $view->with(compact('settings','language','footer_blog'));
         });
 
@@ -51,18 +51,18 @@ class AppServiceProvider extends ServiceProvider
             $settings = settings::find('1');
             $language = language::all();
             $footer_blog = blog::latest()->take(2)->get();
-            session(['lang'=>'english']);
+            // session(['lang'=>'english']);
             $view->with(compact('settings','language','footer_blog'));
         });
 
         view()->composer('customers.menu', function($view) {
             $language = language::all();
-            session(['lang'=>'english']);
+            // session(['lang'=>'english']);
             $view->with(compact('language'));
         });
         view()->composer('website.menu', function($view) {
             $language = language::all();
-            session(['lang'=>'english']);
+            // session(['lang'=>'english']);
             $view->with(compact('language'));
         });
     }

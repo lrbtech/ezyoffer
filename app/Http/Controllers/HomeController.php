@@ -145,7 +145,7 @@ class HomeController extends Controller
     public static function viewcityname($area,$city) {
         $area_name = city::find($area);
         $city_name = city::find($city);
-        return $area_name->city . " , " . $city_name->city;
+        return ucwords(strtolower($area_name->city)) . " , " . ucwords(strtolower($city_name->city));
     }
     public static function viewcity($city) {
         $city_name = city::find($city);
@@ -186,14 +186,7 @@ class HomeController extends Controller
         return $reviews_average.'/'.$reviews_count;  
     }
 
-    public function searchpost($title,$category,$city,$area,$sort){
-        $category1 = category::find($category);
-        if(!empty($category1)){
-            $search=$category1->category;
-        }
-        else{
-            $search='All Categories';
-        }
+    public function searchpost($title,$category,$subcategory,$city,$area,$sort){
         $category_all = category::where('parent_id',0)->where('status',0)->get();
         $sub_category_all = category::where('parent_id','!=',0)->where('status',0)->get();
 
@@ -243,11 +236,12 @@ class HomeController extends Controller
 
         $title1=$title;
         $category1=$category;
+        $subcategory1=$subcategory;
         $sort1=$sort;
 
         $language = language::all();
 
-        return view('website.search_post',compact('search','post_ads','category_all','sub_category_all','city_all','area_all','title1','city1','area1','category1','sort1','language'));
+        return view('website.search_post',compact('post_ads','category_all','sub_category_all','city_all','area_all','title1','city1','area1','category1','subcategory1','sort1','language'));
     }
 
 

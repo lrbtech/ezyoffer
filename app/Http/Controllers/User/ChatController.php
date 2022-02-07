@@ -27,6 +27,7 @@ class ChatController extends Controller
         $this->middleware('auth');
         date_default_timezone_set("Asia/Dubai");
         date_default_timezone_get();
+        session(['lang'=>'english']);
     }
 
     public function chat(){
@@ -165,9 +166,10 @@ class ChatController extends Controller
                     $output.='<p class="message">'.$post->title.'</p>';
                 }
             $output.='</div>
-            <div class="timer">'.$getnewchatcount.'</div>
+            <div onclick="ChatDelete('.$user->id.','.$post_id.')" class="timer"><i class="fas fa-trash"></i></div>
         </div>';
         echo $output;
+        // <div class="timer">'.$getnewchatcount.'</div>
     }
 
     public function viewchat($id){
@@ -218,6 +220,30 @@ class ChatController extends Controller
             $language = language::all();
             return view('customers.view_chat',compact('category','subcategory','post_sender_id','post_ad','default_post','language'));
         }
+    }
+
+    public function chatdelete($user_id,$post_id){
+        $chat = chat::where('post_id',$post_id)->where('sender_id',$user_id)->where('to_id',Auth::user()->id)->delete();
+
+        $chat1 = chat::where('post_id',$post_id)->where('sender_id',Auth::user()->id)->where('to_id',$user_id)->delete();
+
+        return response()->json(['message' => 'Chat Deleted Successfully!'], 200);
+    }
+
+    public function chatbulkdelete(Request $request)
+    {
+        $arraydata=array();
+        foreach($request->id as $row){
+            foreach(explode(',',$row) as $user1){
+            $arraydata[]=$user1;
+            }
+        }
+       
+        // $chat = chat::where('post_id',$post_id)->where('sender_id',$user_id)->where('to_id',Auth::user()->id)->delete();
+
+        // $chat1 = chat::where('post_id',$post_id)->where('sender_id',Auth::user()->id)->where('to_id',$user_id)->delete();
+
+        return response()->json(["Successfully Delete"], 200);
     }
 
     public function savechatview($id,$msg){
@@ -274,38 +300,71 @@ class ChatController extends Controller
     }
 
     public function chatuploaddocument(Request $request){
-        $this->validate($request, [
-            'upload_files'=>'required|max:1000',
-          ],[
-            //'upload_files.mimes' => 'Only jpeg,jpg,png,pdf,docx files are allowed',
-            'upload_files.required' => 'Upload File is Required',
-            'upload_files.max' => 'Sorry! Maximum allowed size for an files is 1MB',
-        ]);
-        $chat = new chat;
-        $chat->date = date('Y-m-d');
-        $chat->sender_id = Auth::user()->id;
-        $chat->to_id = $request->to_id;
-        $chat->post_id = $request->post_id;
-        $chat->chat_type = 1;
-        $chat->chat_offer = 0;
+        // $this->validate($request, [
+        //     'upload_files'=>'required|max:1000',
+        //   ],[
+        //     //'upload_files.mimes' => 'Only jpeg,jpg,png,pdf,docx files are allowed',
+        //     'upload_files.required' => 'Upload File is Required',
+        //     'upload_files.max' => 'Sorry! Maximum allowed size for an files is 1MB',
+        // ]);
+        // $chat = new chat;
+        // $chat->date = date('Y-m-d');
+        // $chat->sender_id = Auth::user()->id;
+        // $chat->to_id = $request->to_id;
+        // $chat->post_id = $request->post_id;
+        // $chat->chat_type = 1;
+        // $chat->chat_offer = 0;
         
-        if($request->upload_files!=""){            
-            $upload_files = $request->file('upload_files');
-            $input['newfilename'] = rand().time().'.'.$upload_files->getClientOriginalExtension();
+        // if($request->upload_files!=""){            
+        //     $upload_files = $request->file('upload_files');
+        //     $input['newfilename'] = rand().time().'.'.$upload_files->getClientOriginalExtension();
         
-            $destinationPath = public_path('/chat_files');
-            $img = Image::make($upload_files->getRealPath());
-            // $img->resize(1200, 600, function ($constraint) {
-            //     $constraint->aspectRatio();
-            // })->insert('images/logo.png','bottom-right', 50, 30)
-            $img->save($destinationPath.'/'.$input['newfilename']);
+        //     $destinationPath = public_path('/chat_files');
+        //     $img = Image::make($upload_files->getRealPath());
+        //     // $img->resize(1200, 600, function ($constraint) {
+        //     //     $constraint->aspectRatio();
+        //     // })->insert('images/logo.png','bottom-right', 50, 30)
+        //     $img->save($destinationPath.'/'.$input['newfilename']);
     
-            $chat->file_extension = $upload_files->getClientOriginalExtension();
-            $chat->file_name = $_FILES['upload_files']['name'];;
-            $chat->upload_files = $input['newfilename'];
-        }
+        //     $chat->file_extension = $upload_files->getClientOriginalExtension();
+        //     $chat->file_name = $_FILES['upload_files']['name'];;
+        //     $chat->upload_files = $input['newfilename'];
+        // }
 
-        $chat->save();
+        //$chat->save();
+
+        if(isset($_FILES['upload_files'])){
+            $name_array = $_FILES['upload_files']['name'];
+            $tmp_name_array = $_FILES['upload_files']['tmp_name'];
+            $type_array = $_FILES['upload_files']['type'];
+            $size_array = $_FILES['upload_files']['size'];
+            $error_array = $_FILES['upload_files']['error'];
+            for ($x=0; $x<count($name_array); $x++) 
+            {
+                if($name_array[$x] != ""){
+
+                    $image = $name_array[$x];
+                    $image_info = explode(".", $name_array[$x]); 
+                    $image_type = end($image_info);
+                    $input['newfilename'] = rand().time().'.'.$image_type;
+                    $destinationPath = public_path('/chat_files');
+                    $img = Image::make($tmp_name_array[$x]);
+                    $img->save($destinationPath.'/'.$input['newfilename']);
+
+                    $chat = new chat;
+                    $chat->date = date('Y-m-d');
+                    $chat->sender_id = Auth::user()->id;
+                    $chat->to_id = $request->to_id;
+                    $chat->post_id = $request->post_id;
+                    $chat->chat_type = 1;
+                    $chat->chat_offer = 0;
+                    $chat->file_extension = $image_type;
+                    $chat->file_name = $name_array[$x];
+                    $chat->upload_files = $input['newfilename'];
+                    $chat->save();
+                }
+    	    }
+        }
 
         return response()->json(['message' => 'Save Chat Successfully!','user_id'=>$request->to_id,'post_id'=>$request->post_id],200); 
     }
@@ -365,10 +424,10 @@ $output='
 <i class="icon fas fa-user" aria-hidden="true"></i>
 <p class="name">'.$user->first_name.' '.$user->last_name.'
 <br><span style="font-size:14px !important;">('.$post->title.')</span></p>
-
-<div style="margin-left:20px !important;" class="searchbar">
-    <b class="right">Price: '.$post->price.' AED</b>
-    <br>
+<b style="top:10px;" class="right">Price: '.$post->price.' AED</b>
+<br>
+<div style="margin-top:30px;
+padding: 3px 7px;" class="searchbar right1">
     <i class="fa fa-search" aria-hidden="true"></i>
     <input autocomplete="off" id="search_text" type="text" placeholder="Search..."></input>
 </div>
@@ -387,7 +446,7 @@ $output='
                     //$output.='<a download href="/chat_files/'.$row->upload_files.'" class="buttonDownload">'.$row->file_name.'</a>';
                     $output.='<a style="text-align:center;" download href="/chat_files/'.$row->upload_files.'" class="btn-slide">
                         <span class="circle"><i class="fa fa-download"></i></span>
-                        <span style="text-overflow:ellipsis;overflow:hidden;display: -webkit-box;-webkit-line-clamp:1;-webkit-box-orient: vertical;" class="title">'.$row->file_name.'</span>
+                        <span class="title">'.substr($row->file_name,0,20).'</span>
                         <span class="title-hover">Click here</span>
                     </a>';
                 }
@@ -413,7 +472,7 @@ $output='
                 //$output.='<a download href="/chat_files/'.$row->upload_files.'" class="buttonDownload">'.$row->file_name.'</a>';
                 $output.='<a style="text-align:center;" download href="/chat_files/'.$row->upload_files.'" class="btn-slide2">
                     <span class="circle2"><i class="fa fa-download"></i></span>
-                    <span style="text-overflow:ellipsis;overflow:hidden;display: -webkit-box;-webkit-line-clamp:1;-webkit-box-orient: vertical;" class="title2">'.$row->file_name.'</span>
+                    <span class="title2">'.substr($row->file_name,0,20).'</span>
                     <span class="title-hover2">Click here</span>
                 </a>';
             }
@@ -428,7 +487,7 @@ $output.='</div>
     <input value="'.$post_id.'" type="hidden" name="post_id" id="post_id">
     <input name="msg" id="msg" type="text" class="write-message" placeholder="Type your message here"></input>
     <i onclick="SendChat()" class="icon send fas fa-paper-plane clickable" aria-hidden="true"></i>
-    <a data-toggle="modal" data-target="#documentmodal" href="javascript:void(0)"><i style="right:45px;font-size: 24px;" class="fas fa-paperclip clickable attach-icon" aria-hidden="true"></i></a>
+    <a data-toggle="modal" data-target="#documentmodal" href="javascript:void(0)"><i class="fas fa-paperclip clickable attach-icon" aria-hidden="true"></i></a>
     <!--<i class="fas fa-cog clickable settings-icon" aria-hidden="true"></i>-->
 </div>
 <script src="/assets/js/jquery.js"></script>
@@ -499,7 +558,7 @@ $("#search_text").on("keyup", function() {
                     // $output.='<a download href="/chat_files/'.$row->upload_files.'" class="buttonDownload">'.$row->file_name.'</a>';
                     $output.='<a style="text-align:center;" download href="/chat_files/'.$row->upload_files.'" class="btn-slide">
                         <span class="circle"><i class="fa fa-download"></i></span>
-                        <span style="text-overflow:ellipsis;overflow:hidden;display: -webkit-box;-webkit-line-clamp:1;-webkit-box-orient: vertical;" class="title">'.$row->file_name.'</span>
+                        <span class="title">'.substr($row->file_name,0,20).'</span>
                         <span class="title-hover">Click here</span>
                     </a>';
                 }
@@ -525,7 +584,7 @@ $("#search_text").on("keyup", function() {
                     // $output.='<a download href="/chat_files/'.$row->upload_files.'" class="buttonDownload">'.$row->file_name.'</a>';
                     $output.='<a style="text-align:center;" download href="/chat_files/'.$row->upload_files.'" class="btn-slide2">
                         <span class="circle2"><i class="fa fa-download"></i></span>
-                        <span style="text-overflow:ellipsis;overflow:hidden;display: -webkit-box;-webkit-line-clamp:1;-webkit-box-orient: vertical;" class="title2">'.$row->file_name.'</span>
+                        <span class="title2">'.substr($row->file_name,0,20).'</span>
                         <span class="title-hover2">Click here</span>
                     </a>';
                 }
