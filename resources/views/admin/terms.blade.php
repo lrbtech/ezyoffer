@@ -28,7 +28,7 @@
     <div class="edit-profile">
       <div class="row">
         <div class="col-lg-12">
-          <form action="/admin/update-terms-and-conditions" id="form" method="POST" class="card theme-form" enctype="multipart/form-data">
+          <form target="_blank" action="/admin/preview-terms-and-conditions" id="form" method="POST" class="card theme-form" enctype="multipart/form-data">
           {{ csrf_field() }}
           <input type="hidden" name="id" id="id" value="{{$settings->id}}">
             <!-- <div class="card-header">
@@ -48,7 +48,8 @@
 
                 <div class="col-md-12 text-right">
                   <br><br><br>
-                  <button class="btn btn-primary btn-pill" type="submit">Update</button>
+                  <button class="btn btn-primary btn-pill pull-left" type="submit">Preview</button>
+                  <button class="btn btn-primary btn-pill" type="button" onclick="Update()">Update</button>
                 </div>
               </div>
             </div>
@@ -74,6 +75,8 @@
 $('.terms-and-conditions').addClass('active');
 function Update(){
   var formData = new FormData($('#form')[0]);
+  var editorData= CKEDITOR.instances['editor1'].getData();
+  formData.append('editor1', editorData);
   $.ajax({
       url : '/admin/update-terms-and-conditions',
       type: "POST",

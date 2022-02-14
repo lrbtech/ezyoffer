@@ -132,36 +132,47 @@ Route::group(['prefix' => 'admin'],function(){
 
     Route::get('/about-us', [App\Http\Controllers\Admin\SettingsController::class, 'aboutus']);
     Route::POST('/update-about-us', [App\Http\Controllers\Admin\SettingsController::class, 'updateaboutus']);
+    Route::POST('/preview-about-us', [App\Http\Controllers\Admin\SettingsController::class, 'previewaboutus']);
 
     Route::get('/how-it-works', [App\Http\Controllers\Admin\SettingsController::class, 'howitworks']);
     Route::POST('/update-how-it-works', [App\Http\Controllers\Admin\SettingsController::class, 'updatehowitworks']);
+    Route::POST('/preview-how-it-works', [App\Http\Controllers\Admin\SettingsController::class, 'previewhowitworks']);
 
     Route::get('/privacy-policy', [App\Http\Controllers\Admin\SettingsController::class, 'privacypolicy']);
     Route::POST('/update-privacy-policy', [App\Http\Controllers\Admin\SettingsController::class, 'updateprivacypolicy']);
+    Route::POST('/preview-privacy-policy', [App\Http\Controllers\Admin\SettingsController::class, 'previewprivacypolicy']);
 
     Route::get('/terms-and-conditions', [App\Http\Controllers\Admin\SettingsController::class, 'termsandconditions']);
     Route::POST('/update-terms-and-conditions', [App\Http\Controllers\Admin\SettingsController::class, 'updatetermsandconditions']);
+    Route::POST('/preview-terms-and-conditions', [App\Http\Controllers\Admin\SettingsController::class, 'previewtermsandconditions']);
 
     Route::get('/our-story', [App\Http\Controllers\Admin\SettingsController::class, 'ourstory']);
     Route::POST('/update-ourstory', [App\Http\Controllers\Admin\SettingsController::class, 'updateourstory']);
+    Route::POST('/preview-ourstory', [App\Http\Controllers\Admin\SettingsController::class, 'previewourstory']);
 
     Route::get('/careers', [App\Http\Controllers\Admin\SettingsController::class, 'careers']);
     Route::POST('/update-careers', [App\Http\Controllers\Admin\SettingsController::class, 'updatecareers']);
+    Route::POST('/preview-careers', [App\Http\Controllers\Admin\SettingsController::class, 'previewcareers']);
 
     Route::get('/auto-dealerships', [App\Http\Controllers\Admin\SettingsController::class, 'autodealerships']);
     Route::POST('/update-autodealerships', [App\Http\Controllers\Admin\SettingsController::class, 'updateautodealerships']);
+    Route::POST('/preview-autodealerships', [App\Http\Controllers\Admin\SettingsController::class, 'previewautodealerships']);
 
     Route::get('/trust-saftey', [App\Http\Controllers\Admin\SettingsController::class, 'trustsaftey']);
     Route::POST('/update-trustsaftey', [App\Http\Controllers\Admin\SettingsController::class, 'updatetrustsaftey']);
+    Route::POST('/preview-trustsaftey', [App\Http\Controllers\Admin\SettingsController::class, 'previewtrustsaftey']);
 
     Route::get('/community', [App\Http\Controllers\Admin\SettingsController::class, 'community']);
     Route::POST('/update-community', [App\Http\Controllers\Admin\SettingsController::class, 'updatecommunity']);
+    Route::POST('/preview-community', [App\Http\Controllers\Admin\SettingsController::class, 'previewcommunity']);
 
     Route::get('/press', [App\Http\Controllers\Admin\SettingsController::class, 'press']);
     Route::POST('/update-press', [App\Http\Controllers\Admin\SettingsController::class, 'updatepress']);
+    Route::POST('/preview-press', [App\Http\Controllers\Admin\SettingsController::class, 'previewpress']);
 
     Route::get('/help', [App\Http\Controllers\Admin\SettingsController::class, 'help']);
     Route::POST('/update-help', [App\Http\Controllers\Admin\SettingsController::class, 'updatehelp']);
+    Route::POST('/preview-help', [App\Http\Controllers\Admin\SettingsController::class, 'previewhelp']);
 
      //blog
 	Route::get('/blog', [App\Http\Controllers\Admin\BlogController::class, 'blog']);

@@ -241,8 +241,17 @@ class SettingsController extends Controller
         $settings->about_us = $request->editor1;
         $settings->save();
 
-        return back();
-        //return response()->json('successfully update'); 
+        //return back();
+        return response()->json('successfully update'); 
+    }
+
+    public function previewaboutus(Request $request){
+        $settings = settings::find($request->id);
+        $settings->preview_about_us = $request->editor1;
+        $settings->save();
+
+        $language = language::all();
+        return view('preview.about',compact('settings','language')); 
     }
 
     public function termsandconditions(){
@@ -256,8 +265,17 @@ class SettingsController extends Controller
         $settings->terms_and_conditions = $request->editor1;
         $settings->save();
 
-        return back();
-        //return response()->json('successfully update'); 
+        //return back();
+        return response()->json('successfully update'); 
+    }
+
+    public function previewtermsandconditions(Request $request){
+        $settings = settings::find($request->id);
+        $settings->preview_terms_and_conditions = $request->editor1;
+        $settings->save();
+
+        $language = language::all();
+        return view('preview.terms',compact('settings','language'));
     }
 
     public function howitworks(){
@@ -271,8 +289,17 @@ class SettingsController extends Controller
         $settings->how_it_works = $request->editor1;
         $settings->save();
 
-        return back();
-        //return response()->json('successfully update'); 
+        //return back();
+        return response()->json('successfully update'); 
+    }
+
+    public function previewhowitworks(Request $request){
+        $settings = settings::find($request->id);
+        $settings->preview_how_it_works = $request->editor1;
+        $settings->save();
+
+        $language = language::all();
+        return view('preview.howitworks',compact('settings','language'));
     }
 
     public function privacypolicy(){
@@ -286,8 +313,17 @@ class SettingsController extends Controller
         $settings->privacy_policy = $request->editor1;
         $settings->save();
 
-        return back();
-        //return response()->json('successfully update'); 
+        //return back();
+        return response()->json('successfully update'); 
+    }
+
+    public function previewprivacypolicy(Request $request){
+        $settings = settings::find($request->id);
+        $settings->preview_privacy_policy = $request->editor1;
+        $settings->save();
+
+        $language = language::all();
+        return view('preview.privacy',compact('settings','language')); 
     }
 
     public function ourstory(){
@@ -301,8 +337,17 @@ class SettingsController extends Controller
         $settings->ourstory = $request->editor1;
         $settings->save();
 
-        return back();
-        //return response()->json('successfully update'); 
+        //return back();
+        return response()->json('successfully update'); 
+    }
+
+    public function previewourstory(Request $request){
+        $settings = settings::find($request->id);
+        $settings->preview_ourstory = $request->editor1;
+        $settings->save();
+
+        $language = language::all();
+        return view('preview.ourstory',compact('settings','language'));
     }
 
     public function careers(){
@@ -316,8 +361,17 @@ class SettingsController extends Controller
         $settings->careers = $request->editor1;
         $settings->save();
 
-        return back();
-        //return response()->json('successfully update'); 
+        //return back();
+        return response()->json('successfully update'); 
+    }
+
+    public function previewcareers(Request $request){
+        $settings = settings::find($request->id);
+        $settings->preview_careers = $request->editor1;
+        $settings->save();
+
+        $language = language::all();
+        return view('preview.careers',compact('settings','language'));
     }
 
     public function autodealerships(){
@@ -331,8 +385,17 @@ class SettingsController extends Controller
         $settings->autodealerships = $request->editor1;
         $settings->save();
 
-        return back();
-        //return response()->json('successfully update'); 
+        //return back();
+        return response()->json('successfully update'); 
+    }
+
+    public function previewautodealerships(Request $request){
+        $settings = settings::find($request->id);
+        $settings->preview_autodealerships = $request->editor1;
+        $settings->save();
+
+        $language = language::all();
+        return view('preview.autodealerships',compact('settings','language'));
     }
 
     public function trustsaftey(){
@@ -346,8 +409,17 @@ class SettingsController extends Controller
         $settings->trustsaftey = $request->editor1;
         $settings->save();
 
-        return back();
-        //return response()->json('successfully update'); 
+        //return back();
+        return response()->json('successfully update'); 
+    }
+
+    public function previewtrustsaftey(Request $request){
+        $settings = settings::find($request->id);
+        $settings->preview_trustsaftey = $request->editor1;
+        $settings->save();
+
+        $language = language::all();
+        return view('preview.trustsaftey',compact('settings','language'));
     }
 
     public function community(){
@@ -361,8 +433,17 @@ class SettingsController extends Controller
         $settings->community = $request->editor1;
         $settings->save();
 
-        return back();
-        //return response()->json('successfully update'); 
+        //return back();
+        return response()->json('successfully update'); 
+    }
+
+    public function previewcommunity(Request $request){
+        $settings = settings::find($request->id);
+        $settings->preview_community = $request->editor1;
+        $settings->save();
+
+        $language = language::all();
+        return view('preview.community',compact('settings','language'));
     }
 
     public function press(){
@@ -376,8 +457,17 @@ class SettingsController extends Controller
         $settings->press = $request->editor1;
         $settings->save();
 
-        return back();
-        //return response()->json('successfully update'); 
+        //return back();
+        return response()->json('successfully update'); 
+    }
+
+    public function previewpress(Request $request){
+        $settings = settings::find($request->id);
+        $settings->preview_press = $request->editor1;
+        $settings->save();
+
+        $language = language::all();
+        return view('preview.press',compact('settings','language'));
     }
 
     public function help(){
@@ -391,8 +481,17 @@ class SettingsController extends Controller
         $settings->help = $request->editor1;
         $settings->save();
 
-        return back();
-        //return response()->json('successfully update'); 
+        //return back();
+        return response()->json('successfully update'); 
+    }
+
+    public function previewhelp(Request $request){
+        $settings = settings::find($request->id);
+        $settings->preview_help = $request->editor1;
+        $settings->save();
+
+        $language = language::all();
+        return view('preview.help',compact('settings','language'));
     }
 
     

@@ -27,6 +27,19 @@ class CreateSettingsTable extends Migration
             $table->text('community')->nullable();
             $table->text('press')->nullable();
             $table->text('help')->nullable();
+
+            $table->text('preview_about_us')->nullable();
+            $table->text('preview_terms_and_conditions')->nullable();
+            $table->text('preview_privacy_policy')->nullable();
+            $table->text('preview_how_it_works')->nullable();
+            $table->text('preview_ourstory')->nullable();
+            $table->text('preview_careers')->nullable();
+            $table->text('preview_autodealerships')->nullable();
+            $table->text('preview_trustsaftey')->nullable();
+            $table->text('preview_community')->nullable();
+            $table->text('preview_press')->nullable();
+            $table->text('preview_help')->nullable();
+
             $table->string('mobile')->nullable();
             $table->string('landline')->nullable();
             $table->string('email')->nullable();
