@@ -29,7 +29,7 @@
             </div>
             <div class="col-lg-8 col-md-12 col-sm-12 content-side">
                 <div class="section-single">
-                    <?php echo html_entity_decode($settings->privacy_policy); ?>
+                    <?php echo html_entity_decode($settings->preview_privacy_policy); ?>
                 </div>
             </div>
         </div>

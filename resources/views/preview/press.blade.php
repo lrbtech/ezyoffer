@@ -29,7 +29,7 @@
             </div>
             <div class="col-lg-8 col-md-12 col-sm-12 content-side">
                 <div class="section-single">
-                    <?php echo html_entity_decode($settings->press); ?>
+                    <?php echo html_entity_decode($settings->preview_press); ?>
                 </div>
             </div>
         </div>
