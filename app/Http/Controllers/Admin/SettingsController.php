@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\admin;
 use App\Models\settings;
+use App\Models\google_ads;
 use App\Models\trending_today;
 use App\Models\post_ad;
 use App\Models\ad_banner;
@@ -153,6 +154,78 @@ class SettingsController extends Controller
         }
 
         $settings->save();
+
+        return response()->json('successfully update'); 
+    }
+
+
+    public function googleads(){
+        $google_ads = google_ads::find(1);
+        $language = language::all();
+        return view('admin.google_ads',compact('google_ads','language'));
+    }
+
+    public function updategoogleads(Request $request){
+        $google_ads = google_ads::find($request->id);
+        // $google_ads->adsense_script = $request->adsense_script;
+        // $google_ads->adsense_728_90_script = $request->adsense_728_90_script;
+        // $google_ads->adsense_160_600_script = $request->adsense_160_600_script;
+        // $google_ads->adsense_300_250_script = $request->adsense_300_250_script;
+        // $google_ads->adsense_300_600_script = $request->adsense_300_600_script;
+
+        if($request->image_728_90!=""){
+            $old_image = "ads_image/".$google_ads->image_728_90;
+            if (file_exists($old_image)) {
+                @unlink($old_image);
+            }
+            if($request->file('image_728_90')!=""){
+            $image = $request->file('image_728_90');
+            $upload_image = rand() . '.' . $image->getClientOriginalExtension();
+            $image->move(public_path('ads_image/'), $upload_image);
+            $google_ads->image_728_90 = $upload_image;
+            }
+        }
+
+        if($request->image_160_600!=""){
+            $old_image = "ads_image/".$google_ads->image_160_600;
+            if (file_exists($old_image)) {
+                @unlink($old_image);
+            }
+            if($request->file('image_160_600')!=""){
+            $image = $request->file('image_160_600');
+            $upload_image = rand() . '.' . $image->getClientOriginalExtension();
+            $image->move(public_path('ads_image/'), $upload_image);
+            $google_ads->image_160_600 = $upload_image;
+            }
+        }
+
+        if($request->image_300_250!=""){
+            $old_image = "ads_image/".$google_ads->image_300_250;
+            if (file_exists($old_image)) {
+                @unlink($old_image);
+            }
+            if($request->file('image_300_250')!=""){
+            $image = $request->file('image_300_250');
+            $upload_image = rand() . '.' . $image->getClientOriginalExtension();
+            $image->move(public_path('ads_image/'), $upload_image);
+            $google_ads->image_300_250 = $upload_image;
+            }
+        }
+
+        if($request->image_300_600!=""){
+            $old_image = "ads_image/".$google_ads->image_300_600;
+            if (file_exists($old_image)) {
+                @unlink($old_image);
+            }
+            if($request->file('image_300_600')!=""){
+            $image = $request->file('image_300_600');
+            $upload_image = rand() . '.' . $image->getClientOriginalExtension();
+            $image->move(public_path('ads_image/'), $upload_image);
+            $google_ads->image_300_600 = $upload_image;
+            }
+        }
+
+        $google_ads->save();
 
         return response()->json('successfully update'); 
     }

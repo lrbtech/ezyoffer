@@ -163,9 +163,10 @@ function ChangePassword(){
                             data:{ _token: "{{csrf_token()}}"},
                             success: function()
                             {
-                                location.reload();
+                                window.location.href="/login";
                             }
                         });
+                        window.location.href="/login";
                     }
                 }) 
             }
@@ -215,9 +216,10 @@ function DeactivateAccount(){
                         data:{ _token: "{{csrf_token()}}"},
                         success: function()
                         {
-                            location.reload();
+                            window.location.href="/login";
                         }
                     });
+                    window.location.href="/login";
                 }
             })
         },

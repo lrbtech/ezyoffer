@@ -58,11 +58,9 @@
                                         <figure class="image"><img style="width:200px;height:220px;" src="/upload_image/{{$row->image}}" alt=""></figure>
                                         @if($row->status == '0')
                                         @if($row->post_type == '0')
-                                        <div class="feature-2">Normal Ad</div>
+                                        <div class="feature-2">Normal</div>
                                         @elseif($row->post_type == '1')
-                                        <div class="feature-2">Featured</div>
-                                        @elseif($row->post_type == '2')
-                                        <div class="feature-2">Live Story</div>
+                                        <div class="feature-2">Trending</div>
                                         @endif
                                         @else
                                         <div style="background-color:#ff0000 !important;"  class="feature-2">DeActivated</div>
@@ -114,13 +112,10 @@
                                                 @if($row->status == '0')
                                                 @if($row->post_type == '0')
                                                 <div class="shape"></div>
-                                                <div class="feature">Normal Ad</div>
+                                                <div class="feature">Normal</div>
                                                 @elseif($row->post_type == '1')
                                                 <div class="shape"></div>
-                                                <div class="feature">Featured</div>
-                                                @elseif($row->post_type == '2')
-                                                <div class="shape"></div>
-                                                <div class="feature">Live Story</div>
+                                                <div class="feature">Trending</div>
                                                 @endif
                                                 @else 
                                                 <div class="shape"></div>
@@ -187,13 +182,10 @@
                                                 @if($row->status == '0')
                                                 @if($row->post_type == '0')
                                                 <div class="shape"></div>
-                                                <div class="feature">Normal Ad</div>
+                                                <div class="feature">Normal</div>
                                                 @elseif($row->post_type == '1')
                                                 <div class="shape"></div>
-                                                <div class="feature">Featured</div>
-                                                @elseif($row->post_type == '2')
-                                                <div class="shape"></div>
-                                                <div class="feature">Live Story</div>
+                                                <div class="feature">Trending</div>
                                                 @endif
                                                 @else 
                                                 <div class="shape"></div>

@@ -19,6 +19,7 @@ class CreateUsersTable extends Migration
             $table->string('first_name')->nullable();
             $table->string('last_name')->nullable();
             $table->string('username')->nullable();
+            $table->string('country_code')->nullable();
             $table->string('mobile')->nullable();
             $table->string('whatsapp')->nullable();
             $table->string('user_type')->default('0');

@@ -56,9 +56,9 @@
                                 <div class="inner-box">
                                     <div class="image-box">
                                         <figure class="image"><img style="width:200px;height:220px;" src="/upload_image/{{$row->image}}" alt=""></figure>
-                                        @if($row->post_type == '1')
+                                        <!-- @if($row->post_type == '1')
                                         <div class="feature-2">Featured</div>
-                                        @endif
+                                        @endif -->
                                     </div>
                                     <div class="lower-content">
                                         <div class="category"><i class="fas fa-tags"></i><a href="#">{{ \App\Http\Controllers\HomeController::viewcategoryname($row->category) }}</a></div>
@@ -78,7 +78,7 @@
                                         <div class="lower-box">
                                             <h5><span>Price:</span>AED {{$row->price}}</h5>
                                             <ul class="react-box">
-                                                <li><a style="color:red;" onclick="Delete({{$row->favourite_id}})" href="javascript:void(0);"><i class="icon-22"></i></a></li>
+                                                <li><a style="color:red;" onclick="Delete({{$row->id}})" href="javascript:void(0);"><i class="icon-22"></i></a></li>
                                             </ul>
                                         </div>
                                     </div>
@@ -97,10 +97,10 @@
                                         <a href="#">
                                             <div class="image-box">
                                                 <figure class="image"><img style="width:370px;height:220px;" src="/upload_image/{{$row->image}}" alt=""></figure>
-                                                @if($row->post_type == '1')
+                                                <!-- @if($row->post_type == '1')
                                                 <div class="shape"></div>
                                                 <div class="feature">Featured</div>
-                                                @endif
+                                                @endif -->
                                                 <!-- <div class="icon">
                                                     <div class="icon-shape"></div>
                                                     <i class="icon-16"></i>
@@ -124,7 +124,7 @@
                                                 <div class="lower-box">
                                                     <h5><span>Price:</span>AED {{$row->price}}</h5>
                                                     <ul class="react-box">
-                                                        <li><a style="color:red;" onclick="Delete({{$row->favourite_id}})" href="javascript:void(0);"><i class="icon-22"></i></a></li>
+                                                        <li><a style="color:red;" onclick="Delete({{$row->id}})" href="javascript:void(0);"><i class="icon-22"></i></a></li>
                                                     </ul>
                                                 </div>
                                             </div>
@@ -141,10 +141,10 @@
                                         <a href="#">
                                             <div class="image-box">
                                                 <figure class="image"><img style="width:370px;height:220px;" src="/upload_image/{{$row->image}}" alt=""></figure>
-                                                @if($row->post_type == '1')
+                                                <!-- @if($row->post_type == '1')
                                                 <div class="shape"></div>
                                                 <div class="feature">Featured</div>
-                                                @endif
+                                                @endif -->
                                                 <!-- <div class="icon">
                                                     <div class="icon-shape"></div>
                                                     <i class="icon-16"></i>
@@ -168,7 +168,7 @@
                                                 <div class="lower-box">
                                                     <h5><span>Price:</span>AED {{$row->price}}</h5>
                                                     <ul class="react-box">
-                                                        <li><a style="color:red;" onclick="Delete({{$row->favourite_id}})" href="javascript:void(0);"><i class="icon-22"></i></a></li>
+                                                        <li><a style="color:red;" onclick="Delete({{$row->id}})" href="javascript:void(0);"><i class="icon-22"></i></a></li>
                                                     </ul>
                                                 </div>
                                             </div>

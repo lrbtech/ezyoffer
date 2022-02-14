@@ -22,6 +22,7 @@ use App\Models\chat_option;
 use App\Models\stores;
 use App\Models\reviews;
 use App\Models\language;
+use App\Models\google_ads;
 use Auth;
 use DB;
 use Mail;
@@ -57,19 +58,19 @@ class HomeController extends Controller
         $live_story =DB::table('post_ads as p')
         ->join('users as u', 'p.customer_id', '=', 'u.id')
         ->select('p.*','u.first_name','u.last_name','u.profile_image')
-        ->where('p.post_type',2)
+        //->where('p.post_type',2)
         ->where('p.admin_status',0)
         ->where('p.status',0)
-        ->where('p.live_ads',1)
+        //->where('p.live_ads',1)
         ->latest()
         ->take(11)
         ->get();
 
         $live_story_count =DB::table('post_ads as p')
-        ->where('p.post_type',2)
+        //->where('p.post_type',2)
         ->where('p.admin_status',0)
         ->where('p.status',0)
-        ->where('p.live_ads',1)
+        //->where('p.live_ads',1)
         ->count();
 
         $all_user =DB::table('stores as s')
@@ -83,8 +84,9 @@ class HomeController extends Controller
         $settings = settings::first();
 
         $language = language::all();
+        $google_ads = google_ads::find(1);
 
-        return view('website.home',compact('category_all','city','trending_today','live_story','live_story_count','settings','all_user','language'));
+        return view('website.home',compact('category_all','city','trending_today','live_story','live_story_count','settings','all_user','language','google_ads'));
     }
 
     public function viewstores(){
@@ -121,15 +123,16 @@ class HomeController extends Controller
 
     public function getClientIP():string
     {
-        $keys=array('HTTP_CLIENT_IP','HTTP_X_FORWARDED_FOR','HTTP_X_FORWARDED','HTTP_FORWARDED_FOR','HTTP_FORWARDED','REMOTE_ADDR');
-        foreach($keys as $k)
-        {
-            if (!empty($_SERVER[$k]) && filter_var($_SERVER[$k], FILTER_VALIDATE_IP))
-            {
-                return $_SERVER[$k];
-            }
-        }
-        return "UNKNOWN";
+        // $keys=array('HTTP_CLIENT_IP','HTTP_X_FORWARDED_FOR','HTTP_X_FORWARDED','HTTP_FORWARDED_FOR','HTTP_FORWARDED','REMOTE_ADDR');
+        // foreach($keys as $k)
+        // {
+        //     if (!empty($_SERVER[$k]) && filter_var($_SERVER[$k], FILTER_VALIDATE_IP))
+        //     {
+        //         return $_SERVER[$k];
+        //     }
+        // }
+        // return "UNKNOWN";
+        return request()->ip();
     }
 
     public static function homenoofpost($id) {

@@ -52,15 +52,15 @@ class CategoryController extends Controller
             <div class="wrapper row">
                 <div class="previewss col-md-4">
                 <div class="preview-pic tab-content">
-                    <div class="tab-pane active" id="pic-1"><a href="#"><img src="/upload_image/'.$post_ad->image.'" /></a></div>';
+                    <div class="tab-pane active" id="pic-0"><a href="#"><img src="/upload_image/'.$post_ad->image.'" /></a></div>';
                     foreach($post_ad_image as $key => $row){
-                    $output.='<div class="tab-pane" id="pic-'.$row->id.'"><a href="#"><img src="/upload_image/'.$row->image.'" /></a></div>';
+                    $output.='<div class="tab-pane" id="pic-'.($key + 1).'"><a href="#"><img src="/upload_image/'.$row->image.'" /></a></div>';
                     }
                 
                 $output.='<ul class="preview-thumbnail nav nav-tabs">
-                    <li class="active"><a data-target="#pic-1" data-toggle="tab"><img src="/upload_image/'.$post_ad->image.'" /></a></li>';
+                    <li class="active"><a data-target="#pic-0" data-toggle="tab"><img src="/upload_image/'.$post_ad->image.'" /></a></li>';
                     foreach($post_ad_image as $key => $row){
-                    $output.='<li><a data-target="#pic-'.$row->id.'" data-toggle="tab"><img src="/upload_image/'.$row->image.'" /></a></li>';
+                    $output.='<li><a data-target="#pic-'.($key + 1).'" data-toggle="tab"><img src="/upload_image/'.$row->image.'" /></a></li>';
                     }
                 $output.='</ul>
                 </div>
@@ -157,7 +157,7 @@ class CategoryController extends Controller
                             <div class="col-lg-3 col-md-6 col-sm-12 category-block">
                                 <div class="category-block-two wow fadeInDown animated animated" data-wow-delay="00ms" data-wow-duration="1500ms">
                                     <div class="inner-box">
-                                        <figure class="image-box"><img src="/upload_files/'.$value->image.'" alt=""></figure>
+                                        <figure class="image-box"><img style="width:260px !important;height:160px !important;" src="/upload_files/'.$value->image.'" alt=""></figure>
                                         <div class="lower-content">
                                             <span>'.$post_count.'</span>
                                             <h4><a class="translate" href="/search-post/0/'.$value->id.'/0/0/0/0">'.$value->category.'</a></h4>

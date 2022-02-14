@@ -38,7 +38,8 @@ class FavouriteController extends Controller
     }
 
     public function deletefavouritepost($id){
-        $favourite=favourite_post::find($id);
+        // $favourite=favourite_post::find($id);
+        $favourite = favourite_post::where('user_id',Auth::user()->id)->where('post_id',$id)->first();
         $favourite->delete();
         return response()->json(['message' => 'Removed Successfully!'], 200);
     }

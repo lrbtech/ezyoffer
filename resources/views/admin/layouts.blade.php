@@ -204,6 +204,8 @@
 
                   <li class="settings"><a class="settings" href="/admin/settings">{{$language[14][Auth::guard('admin')->user()->lang]}}</a></li>
 
+                  <li class="google-ads"><a class="google-ads" href="/admin/google-ads">Ads Image</a></li>
+
                   <li class="chat-options"><a class="chat-options" href="/admin/chat-options">{{$language[15][Auth::guard('admin')->user()->lang]}}</a></li>
 
                   <li class="homepage-seo"><a class="homepage-seo" href="/admin/homepage-seo">{{$language[16][Auth::guard('admin')->user()->lang]}}</a></li>

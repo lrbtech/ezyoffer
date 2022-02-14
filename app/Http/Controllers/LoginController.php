@@ -34,10 +34,10 @@ class LoginController extends Controller
         }
 
         if(empty($favourite)){
-            return '<li><a onclick="SaveFavourite('.$id.')" href="javascript:void(0)"><i class="icon-22"></i></a></li>';
+            return '<a onclick="SaveFavourite('.$id.')" href="javascript:void(0)"><i class="icon-22"></i></a>';
         }
         else{
-            return '<li><a style="color:red;" onclick="DeleteFavourite('.$favourite->id.')" href="javascript:void(0)"><i class="icon-22"></i></a></li>';
+            return '<a style="color:red;" onclick="DeleteFavourite('.$id.')" href="javascript:void(0)"><i class="icon-22"></i></a>';
         }
     }
 
@@ -48,10 +48,24 @@ class LoginController extends Controller
         }
 
         if(empty($favourite)){
-            echo '<li><a onclick="SaveFavourite('.$id.')" href="javascript:void(0)"><i class="icon-22"></i></a></li>';
+            echo '<a onclick="SaveFavourite('.$id.')" href="javascript:void(0)"><i class="icon-22"></i></a>';
         }
         else{
-            echo '<li><a style="color:red;" onclick="DeleteFavourite('.$favourite->id.')" href="javascript:void(0)"><i class="icon-22"></i></a></li>';
+            echo '<a style="color:red;" onclick="DeleteFavourite('.$id.')" href="javascript:void(0)"><i class="icon-22"></i></a>';
+        }
+    }
+
+    public function getfavourite($id) {
+        $favourite=array();
+        if(Auth::check()){
+            $favourite = favourite_post::where('user_id',Auth::user()->id)->where('post_id',$id)->first();
+        }
+
+        if(empty($favourite)){
+            echo '<a onclick="SaveFavourite('.$id.')" href="javascript:void(0)"><i class="icon-22"></i></a>';
+        }
+        else{
+            echo '<a style="color:red;" onclick="DeleteFavourite('.$id.')" href="javascript:void(0)"><i class="icon-22"></i></a>';
         }
     }
 

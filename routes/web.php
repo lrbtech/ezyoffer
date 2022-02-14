@@ -14,7 +14,7 @@ use Illuminate\Support\Facades\Session;
 | contains the "web" middleware group. Now create something great!
 |
 */
-
+// echo request()->ip();
 Route::get('/optimize', function() {
     $exitCode = Artisan::call('optimize');
     return 'optimize cleared';
@@ -25,6 +25,8 @@ session(['lang' => 'english']);
 Route::get('/update-language/{lang}', [App\Http\Controllers\HomeController::class, 'updatelanguage']);
 
 Route::get('/view-login-post/{id}', [App\Http\Controllers\LoginController::class, 'viewloginpost']);
+
+Route::get('/get-favourite/{id}', [App\Http\Controllers\LoginController::class, 'getfavourite']);
 
 Route::post('/trending-today-load-data', [App\Http\Controllers\TrendingTodayLoadMoreController::class, 'loaddata']);
 Route::post('/story-load-data', [App\Http\Controllers\StoryLoadMoreController::class, 'loaddata']);
@@ -124,6 +126,9 @@ Route::group(['prefix' => 'admin'],function(){
 
     Route::get('/settings', [App\Http\Controllers\Admin\SettingsController::class, 'settings']);
     Route::POST('/update-settings', [App\Http\Controllers\Admin\SettingsController::class, 'updatesettings']);
+
+    Route::get('/google-ads', [App\Http\Controllers\Admin\SettingsController::class, 'googleads']);
+    Route::POST('/update-google-ads', [App\Http\Controllers\Admin\SettingsController::class, 'updategoogleads']);
 
     Route::get('/about-us', [App\Http\Controllers\Admin\SettingsController::class, 'aboutus']);
     Route::POST('/update-about-us', [App\Http\Controllers\Admin\SettingsController::class, 'updateaboutus']);

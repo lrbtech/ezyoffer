@@ -109,7 +109,7 @@ body {
                                         <li><a href="/customer/chat"><i class="fas fa-envelope"></i> {{$language[140][session()->get('lang')]}} <span class="message-count">0</span></a></li>
                                         <li class="dropdown sign-in"><a href="#"><i class="fas fa-user"></i> {{$language[141][session()->get('lang')]}}</a>
                                             <ul>
-                                                <!-- @if(Auth::user()->package_status == '1') -->
+                                                {{-- @if(Auth::user()->package_status == '1') --}}
                                                 <li><a href="/customer/dashboard">{{$language[142][session()->get('lang')]}}</a></li>
                                                 <li><a href="/customer/profile-settings">{{$language[143][session()->get('lang')]}}</a></li>
                                                 <li><a href="/customer/my-ads">{{$language[144][session()->get('lang')]}}</a></li>
@@ -118,9 +118,9 @@ body {
                                                 <!-- <li><a href="/customer/packages">Buy/Renew Packages</a></li> -->
                                                 <li><a href="/customer/favourite">{{$language[147][session()->get('lang')]}}</a></li>
                                                 <li><a href="/customer/account-privacy">{{$language[148][session()->get('lang')]}}</a></li>
-                                                <!-- @else
+                                                {{-- @else
                                                 <li><a href="/customer/packages">Buy/Renew Packages</a></li>
-                                                @endif -->
+                                                @endif --}}
                                                 <li>
                                                 <a href="{{ route('logout') }}" onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
                                                 {{$language[149][session()->get('lang')]}}</a></a>

@@ -28,11 +28,15 @@
         </div>
     </div>
     <div class="tags-widget sidebar-widget">
-        <div class="widget-title">
+        <!-- <div class="widget-title">
             <h3>Google Ads</h3>
-        </div>
+        </div> -->
         <div class="widget-content">
-            <img src="https://via.placeholder.com/300x250">
+            @if($google_ads->image_300_600 != '')
+            <center><img src="/ads_image/{{$google_ads->image_300_600}}">
+            @else
+            <center><img src="https://via.placeholder.com/300x600"></center> 
+            @endif
         </div>
     </div> 
 

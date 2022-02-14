@@ -40,7 +40,8 @@
                                                 <figure class="admin-thumb"><img src="/assets/images/icons/user-icon.png" alt=""></figure>
                                                 <!-- <span class="category">Blog Category</span> -->
                                                 <h3><a style="text-transform:capitalize !important;text-overflow: ellipsis;overflow: hidden;display: -webkit-box;-webkit-line-clamp: 1;-webkit-box-orient: vertical;" href="/view-blog/{{$row->id}}">{{$row->title}}</a></h3>
-                                                <p style="height:80px;">{{ substr($row->description,0,100) }}</p>
+
+                                                <p style="height:80px;word-wrap:break-word;">{{ substr($row->description,0,100) }}</p>
                                                 <span class="post-info">By <a href="/view-blog/{{$row->id}}">Admin</a> - {{ \App\Http\Controllers\HomeController::humanreadtime($row->created_at) }}</span>
                                             </div>
                                         </div>

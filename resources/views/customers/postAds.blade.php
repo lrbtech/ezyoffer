@@ -138,9 +138,11 @@
                                  <label>
                                     <select name="post_type" id="post_type" class="form-control select">
                                        <option value="" selected="">{{$language[222][session()->get('lang')]}}</option>
-                                       <option value="0">Normal Ad</option>
+                                       <option value="0">Normal + Story</option>
+                                       <option value="1">Trending + Story</option>
+                                       <!-- <option value="0">Normal Ad</option>
                                        <option value="1">Feature Ad</option>
-                                       <option value="2">Live Story</option>
+                                       <option value="2">Live Story</option> -->
                                     </select>
                                  </label>
                               </div>
@@ -228,10 +230,10 @@
                         </div>
                         <div class="box-section">
                            <div class="section-single">
-                              <div class="form-group">
+                              {{--<div class="form-group">
                                  <label class="col-form-label">{{$language[230][session()->get('lang')]}}*</label>
                                  <textarea class="form-control" name="address" id="address"></textarea>
-                              </div>
+                              </div>--}}
                               <div class="form-group">
                                  <label class="col-form-label">{{$language[231][session()->get('lang')]}}*</label>
                                  <label>

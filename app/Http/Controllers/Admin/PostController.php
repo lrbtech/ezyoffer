@@ -13,6 +13,8 @@ use App\Models\report_posts;
 use App\Models\report_category;
 use App\Models\category;
 use App\Models\language;
+use App\Models\chat;
+use App\Models\favourite_post;
 use Yajra\DataTables\Facades\DataTables;
 use App\Http\Controllers\ImageFilter;
 use Auth;
@@ -106,10 +108,14 @@ class PostController extends Controller
             })
 
             ->addColumn('post_details', function ($post_ad) {
+                $favourite_post = favourite_post::where('post_id',$post_ad->id)->count();
+                $chat = chat::where('post_id',$post_ad->id)->where('sender_id','!=',$post_ad->customer_id)->groupBy('sender_id')->count();
                 return '<td>
                 <p>Title : '.$post_ad->title.'</p>
                 <p>price : '.$post_ad->price.'</p>
                 <p>Item Condition : '.$post_ad->item_conditions.'</p>
+                <p>Chat : '.$chat.'</p>
+                <p>Favourite post : '.$favourite_post.'</p>
                 </td>';
             })
 
@@ -121,13 +127,10 @@ class PostController extends Controller
 
             ->addColumn('post_type', function ($post_ad) {
                 if($post_ad->post_type == 0){
-                    return 'Normal Ad';
+                    return 'Normal + Story';
                 }
                 elseif($post_ad->post_type == 1){
-                    return 'Featured Ad';
-                }
-                elseif($post_ad->post_type == 2){
-                    return 'Live Ad';
+                    return 'Trending + Story Ad';
                 }
             })
 
@@ -205,19 +208,13 @@ class PostController extends Controller
                 if($post_ad->post_type == 0){
                     return '<td>
                     <p>Category : '.$category->category.'</p>
-                    <p>Post Type : Normal Ad</p>
+                    <p>Post Type : Normal + Story</p>
                     </td>';
                 }
                 elseif($post_ad->post_type == 1){
                     return '<td>
                     <p>Category : '.$category->category.'</p>
-                    <p>Post Type : Featured Ad</p>
-                    </td>';
-                }
-                elseif($post_ad->post_type == 2){
-                    return '<td>
-                    <p>Category : '.$category->category.'</p>
-                    <p>Post Type : Live Ad</p>
+                    <p>Post Type : Trending + Story</p>
                     </td>';
                 }
             })
@@ -229,6 +226,17 @@ class PostController extends Controller
                 <p>Item Condition : '.$post_ad->item_conditions.'</p>
                 </td>';
             })
+            // ->addColumn('post_details', function ($post_ad) {
+            //     $favourite_post = favourite_post::where('post_id',$post_ad->id)->count();
+            //     $chat = chat::where('post_id',$post_ad->id)->where('sender_id','!=',$post_ad->customer_id)->groupBy('sender_id')->count();
+            //     return '<td>
+            //     <p>Title : '.$post_ad->title.'</p>
+            //     <p>price : '.$post_ad->price.'</p>
+            //     <p>Item Condition : '.$post_ad->item_conditions.'</p>
+            //     <p>Chat : '.$chat.'</p>
+            //     <p>Favourite post : '.$favourite_post.'</p>
+            //     </td>';
+            // })
 
             ->addColumn('report_reason', function ($post_ad) {
                 $category = report_category::find($post_ad->report_category);
@@ -331,11 +339,22 @@ class PostController extends Controller
                 </td>';
             })
 
+            // ->addColumn('post_details', function ($post_ad) {
+            //     return '<td>
+            //     <p>Title : '.$post_ad->title.'</p>
+            //     <p>price : '.$post_ad->price.'</p>
+            //     <p>Item Condition : '.$post_ad->item_conditions.'</p>
+            //     </td>';
+            // })
             ->addColumn('post_details', function ($post_ad) {
+                $favourite_post = favourite_post::where('post_id',$post_ad->id)->count();
+                $chat = chat::where('post_id',$post_ad->id)->where('sender_id','!=',$post_ad->customer_id)->groupBy('sender_id')->count();
                 return '<td>
                 <p>Title : '.$post_ad->title.'</p>
                 <p>price : '.$post_ad->price.'</p>
                 <p>Item Condition : '.$post_ad->item_conditions.'</p>
+                <p>Chat : '.$chat.'</p>
+                <p>Favourite post : '.$favourite_post.'</p>
                 </td>';
             })
 
@@ -347,13 +366,10 @@ class PostController extends Controller
 
             ->addColumn('post_type', function ($post_ad) {
                 if($post_ad->post_type == 0){
-                    return 'Normal Ad';
+                    return 'Normal + Story';
                 }
                 elseif($post_ad->post_type == 1){
-                    return 'Featured Ad';
-                }
-                elseif($post_ad->post_type == 2){
-                    return 'Live Ad';
+                    return 'Trending + Story Ad';
                 }
             })
 

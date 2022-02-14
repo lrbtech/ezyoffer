@@ -101,7 +101,7 @@ class PostController extends Controller
             'price'=>'required',
             // 'mobile'=>'required|digits:9',
             // 'email'=>'required',
-            'address'=>'required',
+            //'address'=>'required',
             'description'=>'required',
             'city'=>'required',
             'area'=>'required',
@@ -205,7 +205,7 @@ class PostController extends Controller
         $post_ad->description = $request->description;
         $post_ad->city = $request->city;
         $post_ad->area = $request->area;
-        $post_ad->address = $request->address;
+        //$post_ad->address = $request->address;
         //$post_ad->latitude = $request->latitude;
         //$post_ad->longitude = $request->longitude;
         //$post_ad->receive_offer = $request->receive_offer;
@@ -290,7 +290,7 @@ class PostController extends Controller
             'price'=>'required',
             // 'mobile'=>'required|digits:9',
             // 'email'=>'required',
-            'address'=>'required',
+            //'address'=>'required',
             'description'=>'required',
             'city'=>'required',
             'area'=>'required',
@@ -300,7 +300,7 @@ class PostController extends Controller
 
 
         $post_ad = post_ad::find($request->id);
-        //$post_ad->post_type = $request->post_type;
+        $post_ad->post_type = $request->post_type;
         $post_ad->category = $request->category;
         //$post_ad->subcategory = $request->subcategory;
         $post_ad->title = $request->title;
@@ -311,7 +311,7 @@ class PostController extends Controller
         $post_ad->description = $request->description;
         $post_ad->city = $request->city;
         $post_ad->area = $request->area;
-        $post_ad->address = $request->address;
+        //$post_ad->address = $request->address;
         //$post_ad->latitude = $request->latitude;
         //$post_ad->longitude = $request->longitude;
         //$post_ad->receive_offer = $request->receive_offer;
