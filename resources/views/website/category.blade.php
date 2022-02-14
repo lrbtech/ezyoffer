@@ -60,16 +60,28 @@
         <!-- End Page Title -->
 
         <div class="left-ad" style="float:left;margin-top:400px;padding-left:20px;">
+            @if($google_ads->image_160_600 != '')
+            <img src="/ads_image/{{$google_ads->image_160_600}}">
+            @else
             <img src="https://via.placeholder.com/160x600">
+            @endif
         </div>
         <div class="right-ad" style="float:right;margin-top:400px;padding-right:20px;">
-            <img src="https://via.placeholder.com/160x600">
+            @if($google_ads->image_160_600 != '')
+            <img src="/ads_image/{{$google_ads->image_160_600}}">
+            @else
+            <img src="https://via.placeholder.com/160x600"> 
+            @endif
         </div>
 
         <!-- category-style-two -->
         <section class="category-style-two">
             <div style="margin-top:-110px;margin-bottom:30px;" class="col-md-12">
+                @if($google_ads->image_728_90 != '')
+                <center><img src="/ads_image/{{$google_ads->image_728_90}}"></center>
+                @else
                 <center><img src="https://via.placeholder.com/728x90"></center>
+                @endif
             </div>
             <div class="auto-container">
                 <div class="sec-title centred">
@@ -95,7 +107,11 @@
                 
                 <div class="row clearfix">
                     <div class="col-md-12">
-                        <center><img src="https://via.placeholder.com/728x90"></center>
+                    @if($google_ads->image_728_90 != '')
+                    <center><img src="/ads_image/{{$google_ads->image_728_90}}"></center>
+                    @else
+                    <center><img src="https://via.placeholder.com/728x90"></center>
+                    @endif
                     </div>
                 </div>
 

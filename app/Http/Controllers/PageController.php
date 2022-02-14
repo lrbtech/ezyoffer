@@ -22,6 +22,7 @@ use App\Models\news_letter_email;
 use App\Models\report_post;
 use App\Models\report_category;
 use App\Models\reviews;
+use App\Models\google_ads;
 use Hash;
 use Mail;
 use Auth;

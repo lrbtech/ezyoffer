@@ -16,6 +16,7 @@ use App\Models\favourite_post;
 use App\Models\post_count;
 use App\Models\user_count;
 use App\Models\language;
+use App\Models\google_ads;
 use Auth;
 use DB;
 use Mail;
@@ -32,7 +33,8 @@ class CategoryController extends Controller
         $category_all = category::where('parent_id',0)->where('status',0)->get();
         $city = city::where('parent_id',0)->where('status',0)->get();
         $language = language::all();
-        return view('website.category',compact('category_all','city','language'));
+        $google_ads = google_ads::find(1);
+        return view('website.category',compact('category_all','city','language','google_ads'));
     }
 
     public function getfullstory($id)

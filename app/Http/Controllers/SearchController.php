@@ -19,6 +19,7 @@ use App\Models\user_count;
 use App\Models\post_feedback;
 use App\Models\report_post;
 use App\Models\language;
+use App\Models\google_ads;
 use Auth;
 use DB;
 use Mail;

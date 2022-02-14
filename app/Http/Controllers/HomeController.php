@@ -101,7 +101,8 @@ class HomeController extends Controller
         ->paginate(21);
         $settings = settings::first();
         $language = language::all();
-        return view('website.stores',compact('category_all','city','settings','all_user','language'));
+        $google_ads = google_ads::find(1);
+        return view('website.stores',compact('category_all','city','settings','all_user','language','google_ads'));
     }
 
     public static function homestaus($id) {        
@@ -150,10 +151,12 @@ class HomeController extends Controller
         $city_name = city::find($city);
         return ucwords(strtolower($area_name->city)) . " , " . ucwords(strtolower($city_name->city));
     }
+
     public static function viewcity($city) {
         $city_name = city::find($city);
         return $city_name->city;
     }
+
     public static function viewarea($area) {
         $area_name = city::find($area);
         return $area_name->city;
@@ -243,8 +246,9 @@ class HomeController extends Controller
         $sort1=$sort;
 
         $language = language::all();
+        $google_ads = google_ads::find(1);
 
-        return view('website.search_post',compact('post_ads','category_all','sub_category_all','city_all','area_all','title1','city1','area1','category1','subcategory1','sort1','language'));
+        return view('website.search_post',compact('post_ads','category_all','sub_category_all','city_all','area_all','title1','city1','area1','category1','subcategory1','sort1','language','google_ads'));
     }
 
 
@@ -279,8 +283,9 @@ class HomeController extends Controller
         }
 
         $language = language::all();
+        $google_ads = google_ads::find(1);
 
-        return view('website.view_user',compact('search','post_ads','category_all','sub_category_all','city','user','language'));
+        return view('website.view_user',compact('search','post_ads','category_all','sub_category_all','city','user','language','google_ads'));
     }
 
 
@@ -330,8 +335,9 @@ class HomeController extends Controller
         $reviews_count = reviews::where('post_id',$id)->count();
 
         $language = language::all();
+        $google_ads = google_ads::find(1);
         
-        return view('website.view_post',compact('user','post_ad','category_all','sub_category_all','related_ad','post_image','city','favourite','post_ad_features','chat_option','report_post','reviews','reviews_count','language','report_category'));
+        return view('website.view_post',compact('user','post_ad','category_all','sub_category_all','related_ad','post_image','city','favourite','post_ad_features','chat_option','report_post','reviews','reviews_count','language','report_category','google_ads'));
     }
 
 

@@ -32,10 +32,10 @@
             <h3>Google Ads</h3>
         </div> -->
         <div class="widget-content">
-            @if($google_ads->image_300_600 != '')
-            <center><img src="/ads_image/{{$google_ads->image_300_600}}">
+            @if($google_ads->image_300_250 != '')
+            <center><img src="/ads_image/{{$google_ads->image_300_250}}"></center>
             @else
-            <center><img src="https://via.placeholder.com/300x600"></center> 
+            <center><img src="https://via.placeholder.com/300x250"></center> 
             @endif
         </div>
     </div> 

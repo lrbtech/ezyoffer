@@ -37,10 +37,18 @@ img{
         <!-- category-details -->
         <section class="category-details bg-color-2">
             <div class="left-ad" style="float:left;margin-top:0px;padding-left:20px;">
-                <img src="https://via.placeholder.com/160x600">
+                @if($google_ads->image_160_600 != '')
+                <img src="/ads_image/{{$google_ads->image_160_600}}">
+                @else
+                <img src="https://via.placeholder.com/160x600"> 
+                @endif
             </div>
             <div class="right-ad" style="float:right;margin-top:0px;padding-right:20px;">
-                <img src="https://via.placeholder.com/160x600">
+                @if($google_ads->image_160_600 != '')
+                <img src="/ads_image/{{$google_ads->image_160_600}}">
+                @else
+                <img src="https://via.placeholder.com/160x600"> 
+                @endif
             </div>
             <div class="auto-container">
                 <div class="row clearfix">
@@ -105,11 +113,15 @@ img{
                             </div>
 
                             <div class="tags-widget sidebar-widget">
-                                <div class="widget-title">
+                                <!-- <div class="widget-title">
                                     <h3>Google Ads</h3>
-                                </div>
+                                </div> -->
                                 <div class="widget-content">
-                                    <img src="https://via.placeholder.com/300x250">
+                                    @if($google_ads->image_300_250 != '')
+                                    <center><img src="/ads_image/{{$google_ads->image_300_250}}"></center>
+                                    @else
+                                    <center><img src="https://via.placeholder.com/300x250"></center>
+                                    @endif
                                 </div>
                             </div> 
 
