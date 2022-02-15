@@ -40,9 +40,7 @@
 
                 <div class="col-sm-12 col-md-12">
                 <textarea id="editor1" name="editor1" cols="30" rows="50">
-
                 <?php echo $settings->ourstory; ?>
-
                 </textarea>
                 </div>                
 
@@ -73,6 +71,15 @@
 
 <script>
 $('.ourstory').addClass('active');
+
+// CKEDITOR.editorConfig = function( config )
+// {
+//     // Define changes to default configuration here. For example:
+//     // config.language = 'fr';
+//     // config.uiColor = '#AADC6E';
+//     config.height = '800px';
+// };
+
 function Update(){
   var formData = new FormData($('#form')[0]);
   var editorData= CKEDITOR.instances['editor1'].getData();

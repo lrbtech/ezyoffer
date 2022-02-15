@@ -482,11 +482,15 @@
                                 </div>
                             </div>
                             <div class="tags-widget sidebar-widget">
-                                <div class="widget-title">
+                                <!-- <div class="widget-title">
                                     <h3>Google Ads</h3>
-                                </div>
+                                </div> -->
                                 <div class="widget-content">
-                                    <img src="https://via.placeholder.com/310x200">
+                                    @if($google_ads->image_300_260 != '')
+                                    <center><img src="/ads_image/{{$google_ads->image_300_260}}"></center>
+                                    @else
+                                    <center><img src="https://via.placeholder.com/300x260"></center>
+                                    @endif
                                 </div>
                             </div> 
                             <!-- <div class="price-filter sidebar-widget">

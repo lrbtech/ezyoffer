@@ -169,32 +169,34 @@ body {
                 display: block;
                 margin-top: 15px;
                 margin-bottom: 15px;
+                /* width:400px; */
             }
             .content-box h1 {
                 position: relative;
-                font-size: 40px;
+                font-size: 30px;
                 line-height: 50px;
-                color: #000;
+                color: #061a3a;
                 font-weight: 900;
                 margin-bottom: 6px;
+                word-wrap: break-word;
             }
             .content-box .bread-crumb li{
-            position: relative;
-            display: inline-block;
-            font-size: 18px;
-            color: #000;
-            padding-right: 12px;
-            margin-right: 1px;
+                position: relative;
+                display: inline-block;
+                font-size: 14px;
+                color: #000;
+                padding-right: 12px;
+                margin-right: 1px;
             }
 
             .content-box .bread-crumb li:last-child{
-            padding: 0px !important;
-            margin: 0px !important;
+                padding: 0px !important;
+                margin: 0px !important;
             }
 
             .content-box .bread-crumb li a{
-            display: inline-block;
-            color: #000;
+                display: inline-block;
+                color: #000;
             }
 
             .content-box .bread-crumb li a:hover{
@@ -202,16 +204,16 @@ body {
             }
 
             .content-box .bread-crumb li:before{
-            position: absolute;
-            content: "\f105";
-            font-family: 'Font Awesome 5 Pro';
-            font-size: 16px;
-            top: 1px;
-            right: 0px;
+                position: absolute;
+                content: "\f105";
+                font-family: 'Font Awesome 5 Pro';
+                font-size: 16px;
+                top: 1px;
+                right: 0px;
             }
 
             .content-box .bread-crumb li:last-child:before{
-            display: none;
+                display: none;
             }
             .form-control {
                 position: relative;
@@ -224,6 +226,46 @@ body {
                 font-weight: 500;
                 color: #848484;
                 transition: all 500ms ease;
+            }
+            .info-box .left-column {
+                position: relative;
+                padding: 18px 0px 14px 90px;
+            }
+            .info-box .left-column span.sell {
+                position: relative;
+                top: 0px;
+                right: 0px;
+                display: inline-block;
+                font-size: 11px;
+                line-height: 18px;
+                color: #fff;
+                font-weight: 700;
+                text-transform: uppercase;
+                padding: 4px 15px;
+                border-radius: 25px;
+                word-wrap: break-word;
+                /* margin-right: 55px; */
+                margin-right: 35px;
+            }
+            .info-box .left-column span.sell {
+                background-color: #091a3a;
+            }
+            .info-box .left-column h5 {
+                position: relative;
+                display: inline-block;
+                font-size: 18px;
+                line-height: 26px;
+                font-weight: 800;
+            }
+            .info-box .left-column h5 {
+                color: #789FD3;
+            }
+            .info-box .left-column h5 span {
+                font-size: 14px;
+                font-family: 'Quicksand', sans-serif;
+                color: #808080;
+                font-weight: 400;
+                margin-right: 8px;
             }
             .info-box .right-column {
                 position: relative;
@@ -258,8 +300,23 @@ body {
                         </div>
                     
                         <div class="info-box clearfix">
-                        <div class="right-column clearfix">
-                            <ul style="font-size:20px;" class="links-list clearfix">
+                        <div class="left-column pull-left clearfix">
+                            @if($post_ad->item_conditions == 'New')
+                            <span class="translate sell">New</span>
+                            @elseif($post_ad->item_conditions == 'Used (Looks New)')
+                            <span class="translate sell">Used (Looks New)</span>
+                            @elseif($post_ad->item_conditions == 'Used (Good)')
+                            <span class="translate sell">Used (Good)</span>
+                            @elseif($post_ad->item_conditions == 'Used (Some Damage)')
+                            <span class="translate sell">Used (Some Damage)</span>
+                            @endif
+                            <h5 class="translate">
+                                <span>Price:</span>
+                                AED {{$post_ad->price}}
+                            </h5>
+                        </div>
+                        <div style="padding-left:20px;" class="right-column pull-right clearfix">
+                            <ul style="font-size:18px;" class="links-list clearfix">
                                 @if(Auth::check())
                                     @if($post_ad->customer_id != Auth::user()->id)
                                     <li><a data-toggle="modal" data-target="#reportmodal" href="javascript:void(0)"><i class="fas fa-exclamation-triangle"></i></a></li>
