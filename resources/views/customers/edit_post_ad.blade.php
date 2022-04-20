@@ -147,8 +147,8 @@
                                  <label>
                                     <select name="post_type" id="post_type" class="form-control select">
                                         <option value="" selected="">{{$language[222][session()->get('lang')]}}</option>
-                                       <option {{ ($post_ad->post_type == '0' ? ' selected' : '') }} value="0">Normal + Story</option>
-                                       <option {{ ($post_ad->post_type == '1' ? ' selected' : '') }} value="1">Trending + Story</option>
+                                       <option {{ ($post_ad->post_type == '0' ? ' selected' : '') }} value="0">{{$language[250][session()->get('lang')]}}</option>
+                                       <option {{ ($post_ad->post_type == '1' ? ' selected' : '') }} value="1">{{$language[251][session()->get('lang')]}}</option>
                                        <!-- <option {{ ($post_ad->post_type == '2' ? ' selected' : '') }} value="2">Live Story</option> -->
                                     </select>
                                  </label>

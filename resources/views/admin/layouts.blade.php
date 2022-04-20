@@ -82,7 +82,7 @@
       <div class="page-main-header">
         <div class="main-header-right">
           <div class="main-header-left text-center">
-            <div class="logo-wrapper"><a href="/admin/dashboard"><img src="/images/logo.png" alt=""></a></div>
+            <div class="logo-wrapper"><a href="/admin/dashboard"><img style="height:70px;" src="/upload_files/{{$settings->logo}}" alt=""></a></div>
           </div>
           <div class="mobile-sidebar">
             <div class="media-body text-right switch-sm">

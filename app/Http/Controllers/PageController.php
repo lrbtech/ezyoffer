@@ -39,17 +39,27 @@ class PageController extends Controller
     public function userlogin($id){
         Auth::loginUsingId($id);
 
+        // $category = category::where('parent_id',0)->where('status',0)->get();
+        // $subcategory = category::where('parent_id','!=',0)->where('status',0)->get();
+        // $post_ads = post_ad::where('customer_id',$id)->where('admin_status',0)->orderBy('id','DESC')->paginate(4);
+
+        // $total_ads = post_ad::where('customer_id',$id)->count();
+        // $live_ads = post_ad::where('customer_id',$id)->where('post_type',2)->count();
+        // $featured_ads = post_ad::where('customer_id',$id)->where('post_type',1)->count();
+
+        // $language = language::all();
+
+        // return view('customers.dashboard',compact('category','subcategory','post_ads','total_ads','live_ads','featured_ads','language'));
+
         $category = category::where('parent_id',0)->where('status',0)->get();
         $subcategory = category::where('parent_id','!=',0)->where('status',0)->get();
-        $post_ads = post_ad::where('customer_id',$id)->where('admin_status',0)->orderBy('id','DESC')->paginate(4);
+        $post_ads = post_ad::where('customer_id',$id)->where('admin_status',0)->orderBy('id','DESC')->paginate(2);
 
         $total_ads = post_ad::where('customer_id',$id)->count();
-        $live_ads = post_ad::where('customer_id',$id)->where('post_type',2)->count();
-        $featured_ads = post_ad::where('customer_id',$id)->where('post_type',1)->count();
-
+        $live_ads = post_ad::where('customer_id',$id)->where('status',0)->count();
+        $delete_ads = post_ad::where('customer_id',$id)->where('status',1)->count();
         $language = language::all();
-
-        return view('customers.dashboard',compact('category','subcategory','post_ads','total_ads','live_ads','featured_ads','language'));
+        return view('customers.dashboard',compact('category','subcategory','post_ads','total_ads','live_ads','delete_ads','language'));
     }
 
     public function admineditpost($post_id){
@@ -185,7 +195,7 @@ class PageController extends Controller
 
         Mail::send('mail.verify_mail',compact('all'),function($message) use($all){
             $message->to($all->email)->subject('EZY Offer - Confirm your email');
-            $message->from('mail@wellwell.ae','EZY Offer');
+            $message->from('mail.lrbinfotech@gmail.com','EZY Offer');
         });
   
         return response()->json('successfully save'); 
@@ -203,7 +213,7 @@ class PageController extends Controller
         $all = User::find($id);
         Mail::send('mail.verify_mail',compact('all'),function($message) use($all){
             $message->to($all->email)->subject('EZY Offer - Confirm your email');
-            $message->from('mail@wellwell.ae','EZY Offer');
+            $message->from('mail.lrbinfotech@gmail.com','EZY Offer');
         });
     }
 
@@ -258,6 +268,8 @@ class PageController extends Controller
             $report_post->category = $request->report_category;
             $report_post->description = $request->report_reason;
             $report_post->save();
+
+            $post_ad = post_ad::find($report_post->post_id);
         }
         else{
             $report_post = new report_post;
@@ -267,7 +279,25 @@ class PageController extends Controller
             $report_post->category = $request->report_category;
             $report_post->description = $request->report_reason;
             $report_post->save();
+
+            $post_ad = post_ad::find($request->report_post_id);
         }
+
+        $settings = settings::first();
+        $from_name = Auth::user()->first_name .' '.Auth::user()->last_name;
+        $from_email = Auth::user()->email;
+        $report_category = report_category::all();
+        $customer = User::find($post_ad->customer_id);
+
+        Mail::send('mail.admin_report_post',compact('post_ad','report_post','report_category'),function($message) use($settings,$from_name,$from_email){
+            $message->to($settings->admin_receive_email)->subject('EZY Offer - Report Post Ad');
+            $message->from($from_email,$from_name);
+        });
+
+        Mail::send('mail.customer_report_post',compact('post_ad','report_post','report_category'),function($message) use($settings,$from_name,$from_email,$customer){
+            $message->to($customer->email)->subject('EZY Offer - Report Your Post Ad');
+            $message->from($from_email,$from_name);
+        });
   
         return response()->json('successfully save'); 
     }

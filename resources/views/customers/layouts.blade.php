@@ -1,11 +1,11 @@
 
 <!DOCTYPE html>
 @if(session()->get('lang') == 'english')
-<html dir="ltr">
+<!-- <html dir="ltr"> -->
 @elseif(session()->get('lang') == 'arabic')
-<html dir="rtl">
+<!-- <html dir="rtl"> -->
 @else 
-<html dir="ltr">
+<!-- <html dir="ltr"> -->
 @endif
 <head>
 <meta charset="utf-8">
@@ -58,6 +58,14 @@
 body {
     top: 0px !important; 
 }
+
+.img-box-design{
+    text-align: center;
+ }
+
+ .img-box-design img{
+    width: unset!important;
+ }
 </style>
 </head>
 
@@ -114,13 +122,13 @@ body {
                                                 <li><a href="/customer/profile-settings">{{$language[143][session()->get('lang')]}}</a></li>
                                                 <li><a href="/customer/my-ads">{{$language[144][session()->get('lang')]}}</a></li>
                                                 <li><a href="/customer/new-post-ads">{{$language[145][session()->get('lang')]}}</a></li>
-                                                <li><a href="/customer/chat-admin">{{$language[146][session()->get('lang')]}}</a></li>
                                                 <!-- <li><a href="/customer/packages">Buy/Renew Packages</a></li> -->
                                                 <li><a href="/customer/favourite">{{$language[147][session()->get('lang')]}}</a></li>
                                                 <li><a href="/customer/account-privacy">{{$language[148][session()->get('lang')]}}</a></li>
                                                 {{-- @else
                                                 <li><a href="/customer/packages">Buy/Renew Packages</a></li>
                                                 @endif --}}
+                                                <li><a href="/customer/chat-admin">{{$language[146][session()->get('lang')]}}</a></li>
                                                 <li>
                                                 <a href="{{ route('logout') }}" onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
                                                 {{$language[149][session()->get('lang')]}}</a></a>
@@ -154,7 +162,7 @@ body {
                 <div class="auto-container">
                     <div class="outer-box">
                         <div class="logo-box">
-                            <figure class="logo"><a href="/"><img src="/assets/images/logo.png" alt=""></a></figure>
+                            <figure class="logo"><a href="/"><img src="/upload_files/{{$settings->logo}}" alt=""></a></figure>
                         </div>
                         <div class="menu-area">
                             <nav class="main-menu clearfix">
@@ -176,8 +184,13 @@ body {
             <div class="close-btn"><i class="fas fa-times"></i></div>
             
             <nav class="menu-box">
-                <div class="nav-logo"><a href="/"><img src="/assets/images/logo.png" alt="" title=""></a></div>
-                <div class="menu-outer"><!--Here Menu Will Come Automatically Via Javascript / Same Menu as in Header--></div>
+                <div class="nav-logo"><a href="/"><img src="/upload_files/{{$settings->logo}}" alt="" title=""></a></div>
+                <div class="menu-outer">
+                    <!--Here Menu Will Come Automatically Via Javascript / Same Menu as in Header-->
+                </div>
+                <div class="btn-box">
+                    <a style="width:100%;" href="/customer/new-post-ads" class="theme-btn-one"><i class="icon-1"></i>{{$language[136][session()->get('lang')]}}</a>
+                </div>
                 <div class="social-links">
                     <ul class="clearfix">
                         <!-- <li><a href="/"><span class="fab fa-twitter"></span></a></li>
@@ -230,7 +243,7 @@ body {
                         <div class="row clearfix">
                             <div class="col-lg-3 col-md-6 col-sm-12 footer-column">
                                 <div class="footer-widget logo-widget">
-                                    <figure class="footer-logo"><a href="/"><img src="/upload_files/{{$settings->logo}}" alt=""></a></figure>
+                                    <figure class="footer-logo"><a href="/"><img src="/upload_files/{{$settings->logo_footer}}" alt=""></a></figure>
                                     <div class="text">
                                         <p>{{$settings->footer_description}}</p>
                                     </div>
@@ -359,10 +372,22 @@ body {
             type: "GET",
             success: function(data)
             {
-                if(data > 0){
-                    //getnotification();
+                // if(data > 0){
                     $('.message-count').html(data);
-                }
+                //}
+            }
+        });
+    },1000);
+
+    setInterval(function(){
+        $.ajax({
+            url : '/customer/get-new-chat-admin-count',
+            type: "GET",
+            success: function(data)
+            {
+                // if(data > 0){
+                    $('.admin-message-count').html(data);
+                //}
             }
         });
     },1000);

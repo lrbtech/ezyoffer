@@ -78,5 +78,16 @@ $(document).ready(function(){
 			// });
 			
 		});
-	});			
+	});	
+	
+	if($(window).width() <= 991){
+		$("#viewchat").hide();
+		$(".chatclass").click(function(){
+			$(".discussions").hide();
+			$("#viewchat").show();
+		});
+	
+	}
+
 });
+

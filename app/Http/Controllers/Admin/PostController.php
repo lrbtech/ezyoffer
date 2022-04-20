@@ -20,6 +20,7 @@ use App\Http\Controllers\ImageFilter;
 use Auth;
 use DB;
 use Mail;
+use App\Models\settings;
 use Image;
 
 class PostController extends Controller
@@ -126,11 +127,12 @@ class PostController extends Controller
             })
 
             ->addColumn('post_type', function ($post_ad) {
+                $language = language::all();
                 if($post_ad->post_type == 0){
-                    return 'Normal + Story';
+                    return $language[250][Auth::guard('admin')->user()->lang];
                 }
                 elseif($post_ad->post_type == 1){
-                    return 'Trending + Story Ad';
+                    return $language[251][Auth::guard('admin')->user()->lang];
                 }
             })
 
@@ -204,17 +206,17 @@ class PostController extends Controller
 
 			->addColumn('category', function ($post_ad) {
 				$category = category::find($post_ad->category);
-                
+                $language = language::all();
                 if($post_ad->post_type == 0){
                     return '<td>
                     <p>Category : '.$category->category.'</p>
-                    <p>Post Type : Normal + Story</p>
+                    <p>Post Type : '.$language[250][Auth::guard('admin')->user()->lang].'</p>
                     </td>';
                 }
                 elseif($post_ad->post_type == 1){
                     return '<td>
                     <p>Category : '.$category->category.'</p>
-                    <p>Post Type : Trending + Story</p>
+                    <p>Post Type : '.$language[251][Auth::guard('admin')->user()->lang].'</p>
                     </td>';
                 }
             })
@@ -299,7 +301,7 @@ class PostController extends Controller
                     <div class="dropdown-menu" x-placement="bottom-start" style="position: absolute; transform: translate3d(140px, 183px, 0px); top: 0px; left: 0px; will-change: transform;">
                         '.$output.'
                         '.$output1.'
-                        <a class="dropdown-item" href="/admin/edit-post-ads/'.$post_ad->id.'">Edit Post</a>
+                        <a target="_blank" class="dropdown-item" href="/admin-edit-post/'.$post_ad->id.'">Edit Post</a>
                         <a class="dropdown-item" href="/view-post/'.$post_ad->id.'">View Post</a>
                     </div>
                 </td>';
@@ -365,11 +367,12 @@ class PostController extends Controller
             })
 
             ->addColumn('post_type', function ($post_ad) {
+                $language = language::all();
                 if($post_ad->post_type == 0){
-                    return 'Normal + Story';
+                    return $language[250][Auth::guard('admin')->user()->lang];
                 }
                 elseif($post_ad->post_type == 1){
-                    return 'Trending + Story Ad';
+                    return $language[251][Auth::guard('admin')->user()->lang];
                 }
             })
 

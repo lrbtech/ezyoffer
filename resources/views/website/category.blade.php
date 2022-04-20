@@ -93,7 +93,7 @@
                         <div class="col-lg-3 col-md-6 col-sm-12 category-block">
                             <div class="category-block-two wow fadeInDown animated animated" data-wow-delay="00ms" data-wow-duration="1500ms">
                                 <div class="inner-box">
-                                    <figure class="image-box"><img src="/assets/images/resource/category-1.jpg" alt=""></figure>
+                                    <figure class="image-box img-box-design"><img src="/assets/images/resource/category-1.jpg" alt=""></figure>
                                     <div class="lower-content">
                                         <span>52</span>
                                         <div class="icon-box"><i class="icon-6"></i></div>

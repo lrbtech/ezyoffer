@@ -105,7 +105,7 @@
                 <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-6h2v6zm0-8h-2V7h2v2z"></path>
                 </svg>
             </h4>
-            <span class="hind-font caption-12 c-dashboardInfo__count">{{$featured_ads}}</span>
+            <span class="hind-font caption-12 c-dashboardInfo__count">{{$live_ads}}</span>
         </div>
     </div>
     <div class="c-dashboardInfo col-lg-4 col-md-6">
@@ -116,7 +116,7 @@
                 <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-6h2v6zm0-8h-2V7h2v2z"></path>
                 </svg>
             </h4>
-            <span class="hind-font caption-12 c-dashboardInfo__count">{{$live_ads}}</span>
+            <span class="hind-font caption-12 c-dashboardInfo__count">{{$delete_ads}}</span>
             <!-- <span class="hind-font caption-12 c-dashboardInfo__subInfo">Last month: €30</span> -->
         </div>
     </div>
@@ -135,9 +135,9 @@
 
                     </div>
                     <div class="item-shorting clearfix">
-                        <div class="text pull-left">
+                        <!-- <div class="text pull-left">
                             <p class="translate"> Showing {{ $post_ads->firstItem() }} - {{ $post_ads->lastItem() }} of {{$post_ads->total()}} Listings</p>
-                        </div>
+                        </div> -->
                         <div class="right-column pull-right clearfix">
                             <div class="menu-box">
                                 <button class="grid-view"><i class="icon-30"></i></button>
@@ -145,7 +145,10 @@
                             </div>
                         </div>
                     </div>
-                    <div class="translate category-block wrapper browse-add list">
+                    <div id="view_search_post">
+                        <input type="hidden" name="_token" id="csrf-token" value="{{csrf_token()}}" />
+                    </div>
+                    {{--<div class="translate category-block wrapper browse-add list">
                         <div class="list-item feature-style-three pd-0">
                             @foreach($post_ads as $row)
                             <div class="feature-block-one">
@@ -192,7 +195,7 @@
                                     <div class="feature-block-one">
                                         <div class="inner-box">
                                         <a href="/view-post/{{$row->id}}">
-                                            <div class="image-box">
+                                            <div class="image-box img-box-design">
                                                 <figure class="image"><img style="width:370px;height:220px;" src="/upload_image/{{$row->image}}" alt=""></figure>
                                                 @if($row->status == '0')
                                                 @if($row->post_type == '0')
@@ -200,7 +203,7 @@
                                                 <div class="feature">Normal</div>
                                                 @elseif($row->post_type == '1')
                                                 <div class="shape"></div>
-                                                <div class="feature">Trending</div>
+                                                <div class="feature notranslate">Trending</div>
                                                 @endif
                                                 @else 
                                                 <div class="shape"></div>
@@ -236,7 +239,7 @@
                                     <div class="feature-block-one">
                                         <div class="inner-box">
                                         <a href="/view-post/{{$row->id}}">
-                                            <div class="image-box">
+                                            <div class="image-box img-box-design">
                                                 <figure class="image"><img style="width:370px;height:220px;" src="/upload_image/{{$row->image}}" alt=""></figure>
                                                 @if($row->status == '0')
                                                 @if($row->post_type == '0')
@@ -244,7 +247,7 @@
                                                 <div class="feature">Normal</div>
                                                 @elseif($row->post_type == '1')
                                                 <div class="shape"></div>
-                                                <div class="feature">Trending</div>
+                                                <div class="feature notranslate">Trending</div>
                                                 @endif
                                                 @else 
                                                 <div class="shape"></div>
@@ -278,13 +281,13 @@
                             </div>
                         </div>
 
-                    </div>
+                    </div>--}}
 
                     <!-- <div class="text-center" style="width: 100%;margin-bottom:20px;">
                         <div class="more-btn"><a href="#" class="theme-btn-one">Load More</a></div>
                     </div> -->
 
-                    {!! $post_ads->links('website.pagination') !!}
+                    <!-- {!! $post_ads->links('website.pagination') !!} -->
 
                     <!-- <div class="pagination-wrapper centred">
                         <ul class="pagination clearfix">
@@ -306,6 +309,40 @@
 @section('js')
 <script type="text/javascript">
 $('.sidebar_dashboard').addClass('active');
+
+$(document).ready(function(){
+ 
+ var _token = $('input[name="_token"]').val();
+ 
+  view_search_post('', _token);
+ 
+  function view_search_post(id="", _token)
+  {
+     $.ajax({
+         url:"/customer/load-data-my-ads",
+         method:"post",
+         data:{id:id,_token:_token},
+         success:function(data)
+         {
+             $('#search_post_load_more_button').remove();
+             $('#view_search_post').append(data);
+         }
+     })
+  }
+ 
+  var id = [];
+  var search_id = [];
+  $(document).on('click', '#search_post_load_more_button', function(){
+     id = $(this).data('id');
+     for(var i=0;i<id.length;i++){
+         search_id.push(id[i]);
+     }
+     console.log(search_id);
+     $('#search_post_load_more_button').html('<b>Loading...</b>');
+     view_search_post(search_id, _token);
+  });
+ 
+ });
 
 function DeleteAd(id){
     var r = confirm("Are you sure");

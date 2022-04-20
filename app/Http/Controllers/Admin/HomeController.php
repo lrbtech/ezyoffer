@@ -11,6 +11,7 @@ use App\Models\category;
 use App\Models\language;
 use App\Models\post_count;
 use App\Models\user_count;
+use App\Models\admin_customer;
 use Yajra\DataTables\Facades\DataTables;
 use Auth;
 use DB;
@@ -99,8 +100,8 @@ class HomeController extends Controller
             );
         }
 
+        $new_message = admin_customer::where('read_status',0)->count();
 
-
-        return view('admin.dashboard',compact('total_customers','total_posts','total_today_posts','total_today_customers','current_month_posts','current_month_customers','language','category','total_today_visitor','current_month_visitor','postdata','customerdata'));
+        return view('admin.dashboard',compact('total_customers','total_posts','total_today_posts','total_today_customers','current_month_posts','current_month_customers','language','category','total_today_visitor','current_month_visitor','postdata','customerdata','new_message'));
     }
 }

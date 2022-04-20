@@ -58,7 +58,7 @@ class HomeController extends Controller
         $live_story =DB::table('post_ads as p')
         ->join('users as u', 'p.customer_id', '=', 'u.id')
         ->select('p.*','u.first_name','u.last_name','u.profile_image')
-        //->where('p.post_type',2)
+        ->where('p.post_type',0)
         ->where('p.admin_status',0)
         ->where('p.status',0)
         //->where('p.live_ads',1)
@@ -67,7 +67,7 @@ class HomeController extends Controller
         ->get();
 
         $live_story_count =DB::table('post_ads as p')
-        //->where('p.post_type',2)
+        ->where('p.post_type',0)
         ->where('p.admin_status',0)
         ->where('p.status',0)
         //->where('p.live_ads',1)

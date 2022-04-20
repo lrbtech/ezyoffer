@@ -40,6 +40,13 @@
 
                 <div class="col-sm-12 col-md-12">
                   <div class="form-group">
+                    <label class="form-label">Admin Receive Email</label>
+                    <input class="form-control" type="text" id="admin_receive_email" name="admin_receive_email" value="{{$settings->admin_receive_email}}">
+                  </div>
+                </div>
+
+                <div class="col-sm-12 col-md-12">
+                  <div class="form-group">
                     <label class="form-label">{{$language[101][Auth::guard('admin')->user()->lang]}}</label>
                     <input class="form-control" type="text" id="mobile" name="mobile" value="{{$settings->mobile}}">
                   </div>
@@ -117,9 +124,25 @@
 
                 <div class="col-sm-12 col-md-12">
                   <div class="form-group">
-                    <label class="form-label">{{$language[112][Auth::guard('admin')->user()->lang]}}</label>
+                    <label class="form-label">{{$language[112][Auth::guard('admin')->user()->lang]}} (200px * 70px)</label>
                     <input class="form-control" type="file" id="logo" name="logo">
-                    <img style="width:100px;height:100px;" src="/upload_files/{{$settings->logo}}">
+                    <img style="height:80px;" src="/upload_files/{{$settings->logo}}">
+                  </div>
+                </div>
+
+                <div class="col-sm-12 col-md-12">
+                  <div class="form-group">
+                    <label class="form-label">Logo Footer (200px * 70px)</label>
+                    <input class="form-control" type="file" id="logo_footer" name="logo_footer">
+                    <img style="height:80px;" src="/upload_files/{{$settings->logo_footer}}">
+                  </div>
+                </div>
+
+                <div class="col-sm-12 col-md-12">
+                  <div class="form-group">
+                    <label class="form-label">Logo Watermark (200px * 70px) Accept only PNG Format</label>
+                    <input accept=".png" class="form-control" type="file" id="logo_watermark" name="logo_watermark">
+                    <img style="height:80px;" src="/upload_files/{{$settings->logo_watermark}}">
                   </div>
                 </div>
 

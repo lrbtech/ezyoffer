@@ -84,6 +84,50 @@
     display:none;
   }
 }
+
+@media screen and (max-width: 768px){
+    .center-block-new{
+        text-align: center;
+    }
+
+    .center-block-new .image-box{
+        text-align: center;
+        margin: 0 auto;
+    }
+
+    .page-title-2 .info-box .center-block-new h4:before{
+        display: none!important;
+    }
+    
+    .page-title-2 .info-box .center-block-new h4{
+        text-align:center!important;
+        margin: 0 auto;
+    }
+
+    .page-title-2 .info-box  .center-block-new span.sell:before{
+        display: none!important;
+        
+    }
+
+    .page-title-2 .info-box  .center-block-new span.sell{
+         text-align:center!important;
+         margin: 6px auto;
+         display: table;
+    }
+
+    .centering-block{
+        text-align: center;
+    }
+
+    .page-title-2 .info-box{
+        padding: 10px 20px;
+    }
+
+    .page-title-2 .info-box .left-column {
+    margin-bottom: 5px;
+    }
+}
+
 </style>
 @endsection
 @section('section')
@@ -103,8 +147,8 @@
             </ul>
         </div>
         <div class="info-box clearfix">
-            <div class="left-column pull-left clearfix">
-                <div class="image-box">
+            <div class="left-column pull-left center-block-new clearfix">
+                <div class="image-box img-box-design">
                     @if($user->profile_image != '')
                     <img style="height:70px;" src="/upload_profile_image/{{$user->profile_image}}" alt="">
                     @else
@@ -131,7 +175,7 @@
                 @endif
                 <h5 class="translate"><span>Price:</span>AED {{$post_ad->price}}</h5>
             </div>
-            <div class="right-column pull-right clearfix">
+            <div class="right-column pull-right centering-block clearfix">
                 <ul class="links-list clearfix">
                     <!-- <li class="share-option">
                         <a href="browse-ad-details.html" class="share-btn"><i class="fas fa-share-alt"></i></a>
@@ -364,6 +408,7 @@
 
                             @if(Auth::check())
                                 @if($post_ad->customer_id != Auth::user()->id)
+                                <!-- onclick="sendchat({{$post_ad->id}})" -->
                                 <button onclick="sendchat({{$post_ad->id}})" class="theme-btn-one" style="width: 100%;margin-top: 10px;">{{$language[183][session()->get('lang')]}}</button>
                                 @else 
                                 <button onclick="yourpost()" class="theme-btn-one" style="width: 100%;margin-top: 10px;">{{$language[183][session()->get('lang')]}}</button>
@@ -658,12 +703,12 @@
             <div class="translate col-md-3 feature-block-one wow fadeInDown animated animated" data-wow-delay="300ms" data-wow-duration="1500ms">
                 <div class="inner-box">
                 <a href="/view-post/{{$row->id}}">
-                    <div class="image-box">
+                    <div class="image-box img-box-design">
                         <figure class="image"><img style="height:200px;" src="/upload_image/{{$row->image}}" alt=""></figure>
                         
                         @if($row->post_type == '1')
                         <div class="shape"></div>
-                        <div class="feature">Featured</div>
+                        <div class="feature notranslate">Trending</div>
                         @endif
                         <!-- <div class="icon">
                             <div class="icon-shape"></div>
@@ -765,7 +810,8 @@ function SaveChatOffer(){
                 title: "Offer Send Successfully",
                 icon: "success",
             }).then(function() {
-                //window.location.href="/customer/chat"; 
+                window.location.href="/customer/chat-from-post/<?php echo $post_ad->customer_id; ?>/<?php echo $post_ad->id; ?>";
+                location.reload(); 
                 location.reload();
             });   
         },
@@ -783,7 +829,7 @@ function SaveChatOffer(){
 function sendchat(id){
     var message = $('#chat_message').val();
     if(message == ''){
-        message = 'Hi Sir/Mam';
+        message = 'Hi Sir';
     }
     $.ajax({
         url : '/customer/save-chat-view/'+id+'/'+message,
@@ -795,7 +841,8 @@ function sendchat(id){
                 text: 'Successfully Send',
                 icon: "success",
             }).then(function() {
-                window.location.href="/customer/chat";
+                // window.location.href="/customer/chat-from-post/<?php echo $post_ad->customer_id; ?>/<?php echo $post_ad->id; ?>";
+                location.reload();
             });
         },error: function (data) {
             var errorData = data.responseJSON.errors;
@@ -816,7 +863,8 @@ function sendchat1(id,message){
                 text: 'Successfully Send',
                 icon: "success",
             }).then(function() {
-                window.location.href="/customer/chat";
+                // window.location.href="/customer/chat-from-post/<?php echo $post_ad->customer_id; ?>/<?php echo $post_ad->id; ?>";
+                location.reload();
             });
         },error: function (data) {
             var errorData = data.responseJSON.errors;
@@ -988,6 +1036,10 @@ function yourpost(){
     }).then(function() {
         //location.reload();
     });
+}
+
+function openchat(){
+    window.location.href="/customer/chat-from-post/<?php echo $post_ad->customer_id; ?>/<?php echo $post_ad->id; ?>";
 }
 
 var city = '<?php echo $post_ad->city;  ?>';

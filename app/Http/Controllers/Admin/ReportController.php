@@ -20,6 +20,7 @@ use Yajra\DataTables\Facades\DataTables;
 use Auth;
 use DB;
 use Mail;
+use App\Models\settings;
 use Image;
 
 class ReportController extends Controller

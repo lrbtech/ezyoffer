@@ -1,6 +1,9 @@
 @extends('website.layouts')
 @section('css')
 <style>
+img{
+    cursor:pointer;
+}
 @media only screen and (max-width: 1024px) {
   .left-ad {
     display:none;
@@ -153,7 +156,7 @@
                         <div class="category-details-content">
                             <div class="item-shorting clearfix">
                                 <div class="text pull-left">
-                                    <p>Showing {{ $post_ads->firstItem() }} - {{ $post_ads->lastItem() }} of {{$post_ads->total()}} Listings</p>
+                                    {{--<p>Showing {{ $post_ads->firstItem() }} - {{ $post_ads->lastItem() }} of {{$post_ads->total()}} Listings</p>--}}
                                 </div>
                                 <div class="right-column pull-right clearfix">
                                     <!-- <div class="select-box">
@@ -171,12 +174,16 @@
                                     </div>
                                 </div>
                             </div>
-                            <div class="category-block wrapper browse-add list">
+                            <div id="view_search_post">
+                            <input type="hidden" name="_token" id="csrf-token" value="{{csrf_token()}}" />
+                            <input type="hidden" name="user_id" id="user_id" id="csrf-token" value="{{$user->id}}" />
+                            </div>
+                            {{--<div class="category-block wrapper browse-add list">
                                 <div class="list-item feature-style-three pd-0">
                                     @foreach($post_ads as $row)
                                     <div class="feature-block-one">
                                         <div class="inner-box">
-                                            <div class="image-box">
+                                            <div class="image-box img-box-design">
                                                 <figure class="image"><img style="width:200px;height:220px;" src="/upload_image/{{$row->image}}" alt=""></figure>
                                                 @if($row->post_type == '1')
                                                 <div class="feature-2">Featured</div>
@@ -223,7 +230,7 @@
                                             <div class="feature-block-one">
                                                 <div class="inner-box">
                                                 <a href="/view-post/{{$row->id}}">
-                                                    <div class="image-box">
+                                                    <div class="image-box img-box-design">
                                                         <figure class="image"><img style="width:370px;height:220px;" src="/upload_image/{{$row->image}}" alt=""></figure>
                                                         
                                                         @if($row->post_type == '1')
@@ -274,7 +281,7 @@
                                             <div class="feature-block-one">
                                                 <div class="inner-box">
                                                 <a href="/view-post/{{$row->id}}">
-                                                    <div class="image-box">
+                                                    <div class="image-box img-box-design">
                                                         <figure class="image"><img style="width:370px;height:220px;" src="/upload_image/{{$row->image}}" alt=""></figure>
                                                         
                                                         @if($row->post_type == '1')
@@ -323,13 +330,13 @@
                                     </div>
                                 </div>
 
-                            </div>
+                            </div>--}}
 
                             <!-- <div class="text-center" style="width: 100%;margin-bottom:20px;">
                                 <div class="more-btn"><a href="#" class="theme-btn-one">Load More</a></div>
                             </div> -->
 
-                            {!! $post_ads->links('website.pagination') !!}
+                            {{--{!! $post_ads->links('website.pagination') !!}--}}
 
                             <!-- <div class="pagination-wrapper centred">
                                 <ul class="pagination clearfix">
@@ -387,6 +394,50 @@ $(document).on('click','#search', function(){
     window.location.href = "/search-post/"+title1+'/'+category1+'/0'+'/'+city1+'/0/0';
 });
 
+
+$(document).ready(function(){
+ 
+var _token = $('input[name="_token"]').val();
+
+ view_search_post('', _token);
+
+ function view_search_post(id="", _token)
+ {
+    var user_id = $('#user_id').val();
+
+    $.ajax({
+        url:"/load-data-user-post",
+        method:"post",
+        data:{id:id,_token:_token,user_id:user_id},
+        success:function(data)
+        {
+            $('#search_post_load_more_button').remove();
+            $('#view_search_post').append(data);
+        }
+    })
+ }
+
+ var id = [];
+ var search_id = [];
+ $(document).on('click', '#search_post_load_more_button', function(){
+    id = $(this).data('id');
+    for(var i=0;i<id.length;i++){
+        search_id.push(id[i]);
+    }
+    console.log(search_id);
+    $('#search_post_load_more_button').html('<b>Loading...</b>');
+    view_search_post(search_id, _token);
+ });
+
+});
+
+
+
+function viewpost(id)
+{
+    window.location.href="/view-post/"+id;
+}
+
 function SaveFavourite(id){
     $.ajax({
         url : '/customer/save-favourite-post/'+id,
@@ -399,8 +450,15 @@ function SaveFavourite(id){
                 icon: "success",
             }).then(function() {
                 //location.reload();
-                $('.favourite-grid'+id).load(location.href+' .favourite-grid'+id);
-                $('.favourite-list'+id).load(location.href+' .favourite-list'+id);
+                $.ajax({
+                    url: '/get-favourite/'+id,
+                    type: "GET",
+                    success: function(data)
+                    {
+                        $('.favourite-grid'+id).html(data);
+                        $('.favourite-list'+id).html(data);
+                    }
+                });
             });
         },error: function (data) {
             var errorData = data.responseJSON.errors;
@@ -423,8 +481,15 @@ function DeleteFavourite(id){
                 icon: "success",
             }).then(function() {
                 //location.reload();
-                $('.favourite-grid'+id).load(location.href+' .favourite-grid'+id);
-                $('.favourite-list'+id).load(location.href+' .favourite-list'+id);
+                $.ajax({
+                    url: '/get-favourite/'+id,
+                    type: "GET",
+                    success: function(data)
+                    {
+                        $('.favourite-grid'+id).html(data);
+                        $('.favourite-list'+id).html(data);
+                    }
+                });          
             });
         },error: function (data) {
             var errorData = data.responseJSON.errors;

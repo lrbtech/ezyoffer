@@ -138,7 +138,7 @@ class CategoryController extends Controller
                 //         <div class="col-lg-3 col-md-6 col-sm-12 category-block">
                 //             <div class="category-block-two wow fadeInDown animated animated" data-wow-delay="00ms" data-wow-duration="1500ms">
                 //                 <div class="inner-box">
-                //                     <figure class="image-box"><img src="/upload_files/'.$value->image.'" alt=""></figure>
+                //                     <figure class="image-box img-box-design"><img src="/upload_files/'.$value->image.'" alt=""></figure>
                 //                     <div class="lower-content">
                 //                         <span>'.$post_count.'</span>
                 //                         <h4><a href="/search-post/0/'.$value->id.'/0/0/0/0">'.$value->category.'</a></h4>
@@ -156,10 +156,10 @@ class CategoryController extends Controller
                     // if($key%2 == 0){
                         $output .='
                         <a class="translate" href="/search-post/0/'.$value->id.'/0/0/0/0">
-                            <div class="col-lg-3 col-md-6 col-sm-12 category-block">
+                            <div class="col-md-6 col-lg-3 col-sm-6 col-xs-6 col-6 category-block">
                                 <div class="category-block-two wow fadeInDown animated animated" data-wow-delay="00ms" data-wow-duration="1500ms">
                                     <div class="inner-box">
-                                        <figure class="image-box"><img style="width:260px !important;height:160px !important;" src="/upload_files/'.$value->image.'" alt=""></figure>
+                                        <figure class="image-box img-box-design"><img class="img-calls" src="/upload_files/'.$value->image.'" alt=""></figure>
                                         <div class="lower-content">
                                             <span>'.$post_count.'</span>
                                             <h4><a class="translate" href="/search-post/0/'.$value->id.'/0/0/0/0">'.$value->category.'</a></h4>
@@ -176,7 +176,7 @@ class CategoryController extends Controller
                     //         <div class="col-lg-3 col-md-6 col-sm-12 category-block">
                     //             <div class="category-block-two wow fadeInDown animated animated" data-wow-delay="00ms" data-wow-duration="1500ms">
                     //                 <div class="inner-box">
-                    //                     <figure class="image-box"><img src="/upload_files/'.$value->image.'" alt=""></figure>
+                    //                     <figure class="image-box img-box-design"><img src="/upload_files/'.$value->image.'" alt=""></figure>
                     //                     <div class="lower-content">
                     //                         <span>'.$post_count.'</span>
                     //                         <h4><a href="/search-post/0/'.$value->id.'/0/0/0/0">'.$value->category.'</a></h4>

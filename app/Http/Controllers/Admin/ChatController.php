@@ -51,8 +51,13 @@ class ChatController extends Controller
     }
 
     public function viewcustomerchatcount($id){
-        $chat_count = admin_customer::where('customer_id',$id)->where('read_status',0)->count();
+        $chat_count = admin_customer::where('customer_id',$id)->where('message_from',0)->where('read_status',0)->count();
         return response()->json($chat_count); 
+    }
+
+    public static function viewmsgcount($id) {        
+        $chat_count = admin_customer::where('customer_id',$id)->where('message_from',0)->where('read_status',0)->count();
+        return $chat_count; 
     }
 
     public function getcustomerchat($id){
@@ -92,9 +97,10 @@ foreach($chat as $row){
     $dateTime = new Carbon($row->created_at, new \DateTimeZone('Asia/Dubai'));
     if($row->message_from == '1'){
     $output.='<li class="clearfix">
-    <div class="message other-message pull-right">
+    <div style="background-color:#25D366;color:#000;" class="message other-message pull-right">
         <img class="rounded-circle float-right chat-user-img img-30" src="https://admin.pixelstrap.com/poco/assets/images/user/1.jpg" alt="">
-        <div class="message-data"><span class="message-data-time">'.$dateTime->diffForHumans().'</span>
+        <div class="message-data">
+            <span style="color:#000;" class="message-data-time">'.$dateTime->diffForHumans().'</span>
         </div>                                                            
         '.$row->message.' 
     </div>
@@ -102,10 +108,10 @@ foreach($chat as $row){
     }
     else{
     $output.='<li>
-    <div class="message my-message">
+    <div style="background-color:#000;color:#fff;" class="message my-message">
         <img class="rounded-circle float-left chat-user-img img-30" src="https://admin.pixelstrap.com/poco/assets/images/user/1.jpg" alt="">
         <div class="message-data text-right">
-        <span class="message-data-time">'.$dateTime->diffForHumans().'</span>
+            <span class="message-data-time">'.$dateTime->diffForHumans().'</span>
         </div>                                                            
         '.$row->message.' 
     </div>
@@ -146,7 +152,7 @@ $("#search_text").on("keyup", function() {
         $customer = User::find($id);
         $chat = admin_customer::where('customer_id',$id)->get();
 
-        $chat_count=admin_customer::where('customer_id',$id)->where('read_status',0)->get();
+        $chat_count=admin_customer::where('customer_id',$id)->where('message_from',0)->where('read_status',0)->get();
         foreach($chat_count as $row){
             $chat_up = admin_customer::find($row->id);
             $chat_up->read_status = 1;
@@ -164,9 +170,10 @@ foreach($chat as $row){
     $dateTime = new Carbon($row->created_at, new \DateTimeZone('Asia/Dubai'));
     if($row->message_from == '0'){
     $output.='<li class="clearfix">
-    <div class="message other-message pull-right">
+    <div style="background-color:#25D366;color:#000;" class="message other-message pull-right">
         <img class="rounded-circle float-right chat-user-img img-30" src="https://admin.pixelstrap.com/poco/assets/images/user/1.jpg" alt="">
-        <div class="message-data"><span class="message-data-time">'.$dateTime->diffForHumans().'</span>
+        <div class="message-data">
+            <span style="color:#000;" class="message-data-time">'.$dateTime->diffForHumans().'</span>
         </div>                                                            
         '.$row->message.' 
     </div>
@@ -174,10 +181,10 @@ foreach($chat as $row){
     }
     else{
     $output.='<li>
-    <div class="message my-message">
+    <div style="background-color:#000;color:#fff;" class="message my-message">
         <img class="rounded-circle float-left chat-user-img img-30" src="https://admin.pixelstrap.com/poco/assets/images/user/1.jpg" alt="">
         <div class="message-data text-right">
-        <span class="message-data-time">'.$dateTime->diffForHumans().'</span>
+            <span class="message-data-time">'.$dateTime->diffForHumans().'</span>
         </div>                                                            
         '.$row->message.' 
     </div>

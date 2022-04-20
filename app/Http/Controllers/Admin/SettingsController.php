@@ -16,6 +16,7 @@ use App\Models\stores;
 use App\Models\User;
 use Auth;
 use Hash;
+use Image;
 
 class SettingsController extends Controller
 {
@@ -128,6 +129,7 @@ class SettingsController extends Controller
 
     public function updatesettings(Request $request){
         $settings = settings::find($request->id);
+        $settings->admin_receive_email = $request->admin_receive_email;
         $settings->mobile = $request->mobile;
         $settings->landline = $request->landline;
         $settings->email = $request->email;
@@ -147,9 +149,43 @@ class SettingsController extends Controller
             }
             if($request->file('logo')!=""){
             $image = $request->file('logo');
-            $upload_image = rand() . '.' . $image->getClientOriginalExtension();
+            $upload_image = rand().'.'.$image->getClientOriginalExtension();
             $image->move(public_path('upload_files/'), $upload_image);
             $settings->logo = $upload_image;
+            }
+        }
+
+        if($request->logo_footer!=""){
+            $old_image = "upload_files/".$settings->logo_footer;
+            if (file_exists($old_image)) {
+                @unlink($old_image);
+            }
+            if($request->file('logo_footer')!=""){
+            $image = $request->file('logo_footer');
+            $upload_image = rand().'.'.$image->getClientOriginalExtension();
+            $image->move(public_path('upload_files/'), $upload_image);
+            $settings->logo_footer = $upload_image;
+            }
+        }
+
+        if($request->logo_watermark!=""){
+            $old_image = "upload_files/".$settings->logo_watermark;
+            if (file_exists($old_image)) {
+                @unlink($old_image);
+            }
+            if($request->file('logo_watermark')!=""){
+            
+            $image = $request->file('logo_watermark');
+            $upload_image = 'logo_watermark.'.$image->getClientOriginalExtension();
+        
+            $destinationPath = public_path('/upload_files');
+            $img = Image::make($image->getRealPath());
+            $img->resize(200, 70, function ($constraint) {
+                $constraint->aspectRatio();
+            })->save($destinationPath.'/'.$upload_image);
+    
+            $settings->logo_watermark = $upload_image;
+
             }
         }
 

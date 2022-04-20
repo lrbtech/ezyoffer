@@ -60,7 +60,7 @@
                         <div class="other-content centred">
                             <div class="text"><span>or</span></div>
                             <ul class="social-links clearfix">
-                                <li><a href="#"><i class="fab fa-facebook-f"></i>Login with Facebook</a></li>
+                                <!-- <li><a href="#"><i class="fab fa-facebook-f"></i>Login with Facebook</a></li> -->
                                 <li><a href="#"><i class="fab fa-google"></i>Login with Google</a></li>
                             </ul>
                             <div class="othre-text">
@@ -72,8 +72,6 @@
             </div>
         </section>
         <!-- login-section end -->
-
-
 @endsection
 @section('js')
 @endsection

@@ -105,7 +105,7 @@
                     <image id="profileImage" src="/assets/images/icons/user-icon.png" />
                     @endif
                 </div>
-                <input id="imageUpload" type="file" name="profile_image" placeholder="Photo" required="" capture>
+                <input id="imageUpload" type="file" name="profile_image" placeholder="Photo">
             </div>
         </div> 
       

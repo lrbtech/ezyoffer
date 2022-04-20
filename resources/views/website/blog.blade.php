@@ -32,7 +32,7 @@
                                 <div  class="translate col-lg-4 col-md-4 col-sm-12 news-block">
                                     <div class="news-block-one">
                                         <div class="inner-box">
-                                            <figure class="image-box">
+                                            <figure class="image-box img-box-design">
                                                 <img style="height:200px;" src="/upload_files/{{$row->image}}" alt="">
                                                 <a href="/view-blog/{{$row->id}}"><i class="fas fa-link"></i></a>
                                             </figure>

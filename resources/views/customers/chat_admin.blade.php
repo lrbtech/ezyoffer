@@ -47,8 +47,8 @@
         @include('customers.menu')
     </div>
     <div class="col-lg-9 col-md-12 col-sm-12 content-side">
-        <div class="row contain-chat clearfix">
-            <div id="viewchat" class="chat col-md-12">
+        <div class="contain-chat clearfix">
+            <div id="viewchat" class="admin-chat-main chat col-md-12">
                 <div class="header-chat">
                 <i class="icon fas fa-user" aria-hidden="true"></i>
                 <p class="name">Chat to Admin</p>

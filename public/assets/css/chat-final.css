@@ -272,7 +272,7 @@ margin: 6px 0 0 20px;
   height: 80px;
   display:flex;
   align-items: center;
-  position:absolute;
+  /* position:absolute; */
   bottom: 0;
   background-color: transparent;
   border-top: 2px solid #EEE;

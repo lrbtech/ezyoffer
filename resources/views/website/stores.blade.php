@@ -64,17 +64,20 @@
                 </div>
                 <div class="row clearfix">
                     @foreach($all_user as $row)
-                    <div class="col-lg-4 col-md-6 col-sm-12 stores-block">
+                    <div class="col-md-6 col-lg-4 col-sm-6 col-xs-6 col-6 stores-block">
                         <div class="stores-block-one">
-                            <div class="inner-box">
+                            <div style="padding-bottom:60px;" class="inner-box">
                                 <figure class="icon-box">
+                                    <!-- <img src="/assets/images/icons/stores-1.png" alt=""> -->
                                     @if($row->profile_image != '')
                                     <img src="/upload_profile_image/{{$row->profile_image}}" alt="">
                                     @else
                                     <img src="/assets/images/icons/user-icon.png" alt="">
                                     @endif
                                 </figure>
-                                <h4><a href="/view-user/{{$row->id}}">{{$row->first_name}} {{$row->last_name}}</a></h4>
+                                <h4>
+                                    <a style="text-transform:capitalize !important;text-overflow: ellipsis;overflow: hidden;display: -webkit-box;-webkit-line-clamp: 1;-webkit-box-orient: vertical;" href="/view-user/{{$row->id}}">{{$row->first_name}} {{$row->last_name}} {{$row->first_name}} {{$row->last_name}}</a>
+                                </h4>
                                 <ul class="rating clearfix">
                                     <!-- <li><i class="icon-17"></i></li>
                                     <li><i class="icon-17"></i></li>

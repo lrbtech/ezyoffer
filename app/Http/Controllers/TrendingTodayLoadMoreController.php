@@ -62,7 +62,7 @@ class TrendingTodayLoadMoreController extends Controller
 <div class="col-md-3 col-lg-3 col-sm-6 feature-block-one wow fadeInDown animated animated" data-wow-delay="300ms" data-wow-duration="1500ms">
     <div class="inner-box">
     <a href="/view-post/'.$row->id.'">
-        <div class="image-box">
+        <div class="image-box img-box-design">
             <figure class="image"><img style="height:200px;" src="/upload_image/'.$row->image.'" alt=""></figure>';
             
             if($row->post_type == '1'){

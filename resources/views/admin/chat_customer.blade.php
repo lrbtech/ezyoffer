@@ -1,6 +1,38 @@
 @extends('admin.layouts')
 @section('extra-css')
 <link rel="stylesheet" type="text/css" href="/assets/app-assets/css/pe7-icon.css">
+<style>
+.chat_count {
+    position: relative;
+    top: 30px;
+    left: 25px;
+    width: 25px;
+    height: 25px;
+    color:#fff;
+    background-color: #011645;
+    border-radius: 13px;
+    border: 0px solid #FAFAFA;
+    color: #fff;
+    font-size: 12px;
+    font-weight: bold;
+}
+
+.notification .badge {
+    position: absolute;
+    top: 30px;
+    left: 25px;
+    /* width: 25px;
+    height: 25px; */
+    color:#fff;
+    text-align:center !important;
+    background-color: #011645;
+    border-radius: 13px;
+    border: 0px solid #FAFAFA;
+    font-size: 10px;
+    font-weight: bold;
+}
+
+</style>
 @endsection
 @section('section')   
 <!-- Right sidebar Ends-->
@@ -36,7 +68,7 @@
                     <div class="status">Status...</div>
                     </div>
                 </div> -->
-                <div style="height:650px;" class="people-list" id="people-list">
+                <div style="height:600px !important;" class="people-list" id="people-list">
                     <div class="search">
                     <form class="theme-form">
                         <div class="form-group">
@@ -44,15 +76,22 @@
                         </div>
                     </form>
                     </div>
-                    <ul style="max-height:550px;overflow: scroll;" class="list">
+                    <ul style="max-height:520px !important;height:520px !important;overflow: scroll;" class="list">
                         @foreach($customer as $row)
                         <li class="clearfix list_customer">
-                            <a href="javascript:;" onclick="viewChat({{$row->id}})">
+                            <a class="notification" href="javascript:;" onclick="viewChat({{$row->id}})">
                             <img class="rounded-circle user-image" src="https://admin.pixelstrap.com/poco/assets/images/user/1.jpg" alt="">
-                            <!-- <div class="status-circle away"></div> -->
+                            <!-- <div class="status-circle online chat_count">
+                                1000000
+                            </div> -->
+                            <span class="badge">
+                                <center>{{ \App\Http\Controllers\Admin\ChatController::viewmsgcount($row->id) }}</center>
+                            </span>
+                            
                             <div class="about">
-                            <div class="name">{{$row->first_name}} {{$row->last_name}}</div>
-                            <div class="status">{{$row->mobile}}</div>
+                                <div class="name">{{$row->first_name}} {{$row->last_name}}</div>
+                                <div class="status">{{$row->mobile}}</div>
+                                <!-- <div class="status">New Message : 100</div> -->
                             </div>
                             </a>
                         </li>

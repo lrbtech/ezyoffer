@@ -195,6 +195,21 @@ padding: 50px;
         </div>
       </div>
     </div>
+
+    <div class="col-sm-6 col-xl-3 col-lg-6 box-col-6">
+      <div class="card gradient-info o-hidden">
+        <div class="b-r-4 card-body">
+          <div class="media static-top-widget">
+            <div class="align-self-center text-center">
+              <div class="text-white i" data-feather="message-circle"></div>
+            </div>
+            <div class="media-body"><span class="m-0 text-white">New Message</span>
+              <h4 class="mb-0 counter text-white">{{$new_message}}</h4><i class="icon-bg" data-feather="message-circle"></i>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
     
     
     <div class="col-xl-11">

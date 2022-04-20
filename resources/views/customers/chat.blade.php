@@ -1,6 +1,6 @@
 @extends('customers.layouts')
 @section('css')
-@if(session()->get('lang') == 'english')
+{{--@if(session()->get('lang') == 'english')--}}
 <link href="/assets/css/chat-final.css" rel="stylesheet">
 <style>
 .chat .header-chat .right1 {
@@ -10,17 +10,62 @@
     border-radius: 4px;
 }
 .attach-icon {
-    right: 50px !important;
+    right: 50px;
     font-size: 24px !important;
 }
-@media only screen and (max-width: 768px) {
+@media screen and (max-width: 991px) {
     .attach-icon {
-        right: 60px !important;
+        right: 80px !important;
         font-size: 24px !important;
     }
 }
+.chat_count {
+    position: relative;
+    top: 30px;
+    left: 25px;
+    width: 25px;
+    height: 25px;
+    color:#fff;
+    background-color: #011645;
+    border-radius: 13px;
+    border: 0px solid #FAFAFA;
+    color: #fff;
+    font-size: 12px;
+    font-weight: bold;
+}
+.progress {
+    height: 20px;
+    margin-bottom: 20px;
+    overflow: hidden;
+    background-color: #f5f5f5;
+    border-radius: 4px;
+    -webkit-box-shadow: inset 0 1px 2px rgb(0 0 0 / 10%);
+    box-shadow: inset 0 1px 2px rgb(0 0 0 / 10%);
+}
+.progress-bar {
+    display: -ms-flexbox;
+    display: flex;
+    -ms-flex-direction: column;
+    flex-direction: column;
+    -ms-flex-pack: center;
+    justify-content: center;
+    overflow: hidden;
+    color: #fff;
+    text-align: center;
+    white-space: nowrap;
+    background-color: #28a745;
+    transition: width .6s ease;
+    font-size: 16px;
+    text-align: center;
+}
+#uploadStatus {
+    padding: 10px 20px;
+    margin-top: 10px;
+    font-size: 18px;
+    text-align: center;
+}
 </style>
-@elseif(session()->get('lang') == 'arabic')
+{{--@elseif(session()->get('lang') == 'arabic')
 <link href="/assets/css/chat-final-rtl.css" rel="stylesheet">
 <style>
 .chat .header-chat .right1 {
@@ -43,7 +88,7 @@
     }
 }
 </style>
-@endif
+@endif--}}
 <link href="//netdna.bootstrapcdn.com/font-awesome/3.2.1/css/font-awesome.css" rel="stylesheet">
 <style>
 .discussions {
@@ -304,7 +349,7 @@
         @include('customers.menu')
     </div>
     <div class="col-lg-9 col-md-12 col-sm-12 content-side">
-        <div class="row contain-chat clearfix">
+        <div class="rowss contain-chat clearfix">
             <div class="discussions col-md-5">
                 <div class="discussion search">
                     <div class="searchbar">
@@ -323,11 +368,7 @@
                     </div>
                     <div class="timer">12 sec</div>
                 </div> -->
-                @if(count($datas) > 0)
-                @foreach($datas as $row)
-                    {{ \App\Http\Controllers\User\ChatController::chatuserslist($row['id'],$row['post_id']) }}
-                @endforeach
-                @endif
+                {{ \App\Http\Controllers\User\ChatController::getallchatusers() }} 
 
                 <!-- </div> -->
             </div>
@@ -411,7 +452,7 @@
     </div>
 </section>
 
-<div id="documentmodal" class="modal fade" role="dialog">
+<div id="documentmodal"  class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
   <div style="max-width:500px !important;" class="modal-dialog modal-sm">
 
     <!-- Modal content-->
@@ -426,8 +467,12 @@
             {{csrf_field()}}
                 <div class="form-group">
                     <label>Upload Files (Support Files .jpeg,.jpg,.png,.pdf,.docx)</label><br>
-                    <input multiple accept=".jpeg,.jpg,.png,.pdf,.docx" type="file" name="upload_files[]" id="upload_files">                       
+                    <input multiple accept=".jpeg,.jpg,.png,.pdf,.docx" type="file" name="upload_files[]" id="upload_files">
                 </div> 
+                <div class="progress">
+                    <div class="progress-bar"></div>
+                </div>
+                <div id="uploadStatus"></div>
             </form>
         </div>
       </div>
@@ -447,7 +492,7 @@
 
 <script type="text/javascript">
 $('.sidebar_chat').addClass('active');
-
+viewChat('<?php echo $chat_user_id; ?>','<?php echo $chat_post_id; ?>');
 var user=0;
 var post=0;
 function viewChat(user_id,post_id)
@@ -535,35 +580,99 @@ function SendChat(){
     });
 }
 
-function UploadDocument(){
+// function UploadDocument(){
+//     var formData = new FormData($('#upload_form')[0]);
+//     var to_id = $('#to_id').val();
+//     var post_id = $('#post_id').val();
+//     formData.append('to_id', to_id);
+//     formData.append('post_id', post_id);
+//     $.ajax({
+//         url : '/customer/chat-upload-document',
+//         type: "POST",
+//         // data: {'upload_files':$('#upload_files').val(),'to_id':$('#to_id').val(),'post_id':$('#post_id').val(), '_token': $('input[name=_token]').val()},
+//         data: formData,
+//         contentType: false,
+//         processData: false,
+//         dataType: "JSON",
+//         success: function(data)
+//         {
+//             $('#modal-close-btn').click();
+//             Swal.fire({
+//                 title: "Upload File Successfully",
+//                 icon: "success",
+//             }).then(function() {
+//                 //$('#documentmodal').modal('hide');
+//                 $("#upload_form")[0].reset();
+//                 viewChat(data.user_id,data.post_id); 
+//             });   
+//         },
+//         error: function (data, errorThrown) {
+//             var errorData = data.responseJSON.errors;
+//             $.each(errorData, function(i, obj) {
+//                 toastr.error(obj[0]);
+//             });
+//         }
+//     });
+// }
+
+function DocumentClearHistory() {  
+    //$('#documentmodal').modal('show');
+    $(".progress-bar").width('0%');
+    $("#upload_form")[0].reset();
+    $('#uploadStatus').html('');
+}
+
+function closepopup(){
+    $('#modal-close-btn').click();
+}
+
+
+function UploadDocument()
+{
+    // e.preventDefault();
     var formData = new FormData($('#upload_form')[0]);
     var to_id = $('#to_id').val();
     var post_id = $('#post_id').val();
     formData.append('to_id', to_id);
     formData.append('post_id', post_id);
     $.ajax({
-        url : '/customer/chat-upload-document',
-        type: "POST",
-        // data: {'upload_files':$('#upload_files').val(),'to_id':$('#to_id').val(),'post_id':$('#post_id').val(), '_token': $('input[name=_token]').val()},
+        xhr: function() {
+            var xhr = new window.XMLHttpRequest();
+            xhr.upload.addEventListener("progress", function(evt) {
+                if (evt.lengthComputable) {
+                    var percentComplete = ((evt.loaded / evt.total) * 100);
+                    $(".progress-bar").width(percentComplete + '%');
+                    $(".progress-bar").html(percentComplete+'%');
+                }
+            }, false);
+            return xhr;
+        },
+        type: 'POST',
+        url: '/customer/chat-upload-document',
         data: formData,
         contentType: false,
-        processData: false,
-        dataType: "JSON",
+        cache: false,
+        processData:false,
+        dataType:'JSON',
+        beforeSend: function(){
+            $(".progress-bar").width('0%');
+            $('#uploadStatus').html('<img style="width:60px;" src="/images/loading.gif"/>');
+        },
+        // error:function(){
+        //     $('#uploadStatus').html('<p style="color:#EA4335;">File upload failed, please try again.</p>');
+        // },
         success: function(data)
         {
-            $('#modal-close-btn').click();
-            Swal.fire({
-                title: "Upload File Successfully",
-                icon: "success",
-            }).then(function() {
-                //$('#documentmodal').modal('hide');
-                viewChat(data.user_id,data.post_id); 
-            });   
+            $('#upload_form')[0].reset();
+            $('#uploadStatus').html('<p style="color:#28A74B;">File has uploaded successfully!</p>');
+            viewChat(data.user_id,data.post_id); 
+            setTimeout(closepopup, 3000);
         },
         error: function (data, errorThrown) {
             var errorData = data.responseJSON.errors;
             $.each(errorData, function(i, obj) {
-                toastr.error(obj[0]);
+                // $('#uploadStatus').html(obj[0]);
+                $('#uploadStatus').html('<p style="color:#EA4335;">'+obj[0]+'</p>');
             });
         }
     });

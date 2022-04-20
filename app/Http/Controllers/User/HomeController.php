@@ -41,10 +41,10 @@ class HomeController extends Controller
       $post_ads = post_ad::where('customer_id',Auth::user()->id)->where('admin_status',0)->orderBy('id','DESC')->paginate(2);
 
       $total_ads = post_ad::where('customer_id',Auth::user()->id)->count();
-      $live_ads = post_ad::where('customer_id',Auth::user()->id)->where('post_type',2)->count();
-      $featured_ads = post_ad::where('customer_id',Auth::user()->id)->where('post_type',1)->count();
+      $live_ads = post_ad::where('customer_id',Auth::user()->id)->where('status',0)->count();
+      $delete_ads = post_ad::where('customer_id',Auth::user()->id)->where('status',1)->count();
       $language = language::all();
-      return view('customers.dashboard',compact('category','subcategory','post_ads','total_ads','live_ads','featured_ads','language'));
+      return view('customers.dashboard',compact('category','subcategory','post_ads','total_ads','live_ads','delete_ads','language'));
     }
 
     public function choosepackage(){
@@ -104,9 +104,10 @@ class HomeController extends Controller
         ->where('c.to_id',Auth::user()->id)
         //->where('c.chat_offer',0)
         ->where('c.read_status',0)
-        ->select(DB::raw("c.sender_id as sender_id") , DB::raw("c.post_id as post_id"))
-        ->groupBy('c.sender_id','c.post_id')
+        // ->select(DB::raw("c.sender_id as sender_id") , DB::raw("c.post_id as post_id"))
+        // ->groupBy('c.sender_id','c.post_id')
         ->count();
+
       // $offers_count =DB::table('chats as c')
       //   ->where('c.to_id',Auth::user()->id)
       //   ->where('c.chat_offer',1)
@@ -114,8 +115,8 @@ class HomeController extends Controller
       //   ->select(DB::raw("c.sender_id as sender_id") , DB::raw("c.post_id as post_id") , DB::raw("c.chat_offer as chat_offer"))
       //   ->groupBy('c.sender_id','c.post_id','c.chat_offer')
       //   ->count();
-        $notification_count = $chat_count ;
-      return response()->json($chat_count); 
+      $notification_count = $chat_count ;
+      return response()->json($notification_count); 
     }
 
     public function getnotification() {        

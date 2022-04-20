@@ -104,7 +104,7 @@
                 {{ csrf_field() }}
                 <div id="story_data" class="row featured-story">
                     @if(Auth::check())
-                    <div style="margin: 30px 0;" class="col-md-6 col-lg-3">
+                    <div style="margin: 30px 0;" class="col-md-6 col-lg-3 col-sm-6 col-xs-6 col-6">
                         <div class="work add-stroy">
                             <div class="img d-flex align-items-end justify-content-center" style="background-color: #091a3a">
                                 <a class="create-story" href="/customer/new-post-ads">
@@ -115,7 +115,7 @@
                         </div>
                     </div>
                     @else 
-                    <div style="margin: 30px 0;" class="col-md-6 col-lg-3">
+                    <div style="margin: 30px 0;" class="col-md-6 col-lg-3 col-sm-6 col-xs-6 col-6">
                         <div class="work add-stroy">
                             <div class="img d-flex align-items-end justify-content-center" style="background-color: #091a3a">
                                 <a class="create-story" href="/login">
@@ -129,7 +129,7 @@
                     <?php //$x=0; ?>
                     @foreach($live_story as $row)
                     <?php //if($x < 3) { ?>
-                    <div style="margin: 30px 0;" class="col-md-3">
+                    <div style="margin: 30px 0;" class="col-md-6 col-lg-3 col-sm-6 col-xs-6 col-6">
                         <div class="work" onclick="viewstory({{$row->id}})">
                             <div class="img d-flex align-items-end justify-content-center" style="background-image: url(/upload_image/{{$row->image}});">
                                 <div class="profile-story">
@@ -257,15 +257,15 @@
 <div id="trending_today_data" class="row">
 
     @foreach($trending_today as $row)
-    <div class="translate col-md-3 col-lg-3 col-sm-6 feature-block-one wow fadeInDown animated animated" data-wow-delay="300ms" data-wow-duration="1500ms">
+    <div class="translate col-md-6 col-lg-3 col-sm-6 col-xs-6 col-6 feature-block-one wow fadeInDown animated animated" data-wow-delay="300ms" data-wow-duration="1500ms">
         <div class="inner-box">
         <a href="/view-post/{{$row->id}}">
-            <div class="image-box">
+            <div class="image-box img-box-design">
                 <figure class="image"><img style="height:200px;" src="/upload_image/{{$row->image}}" alt=""></figure>
                 
                 @if($row->post_type == '1')
                 <div class="shape"></div>
-                <div class="feature">Trending</div>
+                <div class="feature notranslate">Trending</div>
                 @endif
                 <!-- <div class="icon">
                     <div class="icon-shape"></div>
@@ -327,9 +327,9 @@
         </div>
         <div class="row">
             @foreach($all_user as $row)
-            <div class="translate col-lg-4 col-md-6 col-sm-12 stores-block">
+            <div class="translate col-md-6 col-lg-4 col-sm-6 col-xs-6 col-6 stores-block">
                 <div class="stores-block-one">
-                    <div class="inner-box">
+                    <div style="padding-bottom:60px;" class="inner-box">
                         <figure class="icon-box">
                             <!-- <img src="/assets/images/icons/stores-1.png" alt=""> -->
                             @if($row->profile_image != '')
@@ -338,14 +338,16 @@
                             <img src="/assets/images/icons/user-icon.png" alt="">
                             @endif
                         </figure>
-                        <h4><a href="/view-user/{{$row->id}}">{{$row->first_name}} {{$row->last_name}}</a></h4>
-                        <ul class="rating clearfix">
-                            <!-- <li><i class="icon-17"></i></li>
+                        <h4>
+                            <a style="text-transform:capitalize !important;text-overflow: ellipsis;overflow: hidden;display: -webkit-box;-webkit-line-clamp: 1;-webkit-box-orient: vertical;" href="/view-user/{{$row->id}}">{{$row->first_name}} {{$row->last_name}} {{$row->first_name}} {{$row->last_name}}</a>
+                        </h4>
+                        <!-- <ul class="rating clearfix">
                             <li><i class="icon-17"></i></li>
                             <li><i class="icon-17"></i></li>
                             <li><i class="icon-17"></i></li>
-                            <li><i class="icon-17"></i></li> -->
-                        </ul>
+                            <li><i class="icon-17"></i></li>
+                            <li><i class="icon-17"></i></li>
+                        </ul> -->
                     </div>
                 </div>
             </div>

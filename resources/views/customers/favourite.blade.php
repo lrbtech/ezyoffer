@@ -95,7 +95,7 @@
                                     <div class="feature-block-one">
                                         <div class="inner-box">
                                         <a href="#">
-                                            <div class="image-box">
+                                            <div class="image-box img-box-design">
                                                 <figure class="image"><img style="width:370px;height:220px;" src="/upload_image/{{$row->image}}" alt=""></figure>
                                                 <!-- @if($row->post_type == '1')
                                                 <div class="shape"></div>
@@ -139,7 +139,7 @@
                                     <div class="feature-block-one">
                                         <div class="inner-box">
                                         <a href="#">
-                                            <div class="image-box">
+                                            <div class="image-box img-box-design">
                                                 <figure class="image"><img style="width:370px;height:220px;" src="/upload_image/{{$row->image}}" alt=""></figure>
                                                 <!-- @if($row->post_type == '1')
                                                 <div class="shape"></div>

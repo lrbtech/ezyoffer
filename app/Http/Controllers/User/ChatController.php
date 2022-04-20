@@ -12,6 +12,7 @@ use App\Models\favourite_post;
 use App\Models\admin_customer;
 use App\Models\chat;
 use App\Models\language;
+use App\Models\settings;
 use Auth;
 use DB;
 use Mail;
@@ -30,49 +31,125 @@ class ChatController extends Controller
         session(['lang'=>'english']);
     }
 
+    public function chatfrompost($user_id,$post_id){        
+        $category = category::where('parent_id',0)->where('status',0)->get();
+    	$subcategory = category::where('parent_id','!=',0)->where('status',0)->get();
+        $language = language::all();
+        $chat_user_id=$user_id;
+        $chat_post_id=$post_id;
+
+        return view('customers.chat',compact('category','subcategory','language','chat_user_id','chat_post_id'));
+    }
+
     public function chat(){
+        $category = category::where('parent_id',0)->where('status',0)->get();
+    	$subcategory = category::where('parent_id','!=',0)->where('status',0)->get();
+        $language = language::all();
+        $chat_user_id=0;
+        $chat_post_id=0;
+
+        return view('customers.chat',compact('category','subcategory','language','chat_user_id','chat_post_id'));
+    }
+
+
+    public static function getallchatusers(){
         $chat_from =DB::table('chats as c')
         ->where('c.to_id',Auth::user()->id)
+        ->join('post_ads as p', 'p.id', '=', 'c.post_id')
+        ->where('p.customer_id',Auth::user()->id)
         // ->where('c.chat_offer',0)
-        ->select(DB::raw("c.sender_id as sender_id") , DB::raw("c.post_id as post_id"))
+        ->select(DB::raw("c.sender_id as sender_id") , DB::raw("c.post_id as post_id") )
+        //->select(DB::raw("c.sender_id as sender_id") , DB::raw("c.post_id as post_id") , DB::raw("c.id as order_id") )
+        ->orderBy('c.id','DESC')
         ->groupBy('c.sender_id','c.post_id')
+        //->groupBy('c.sender_id','c.post_id','c.id')
         ->get();
 
         $chat_to =DB::table('chats as c')
         ->where('c.sender_id',Auth::user()->id)
+        ->join('post_ads as p', 'p.id', '=', 'c.post_id')
+        ->where('p.customer_id','!=',Auth::user()->id)
         // ->where('c.chat_offer',0)
-        ->select(DB::raw("c.to_id as to_id") , DB::raw("c.post_id as post_id") )
+        ->select(DB::raw("c.to_id as to_id") , DB::raw("c.post_id as post_id")  )
+        //->select(DB::raw("c.to_id as to_id") , DB::raw("c.post_id as post_id") , DB::raw("c.id as order_id")  )
+        ->orderBy('c.id','DESC')
         ->groupBy('c.to_id','c.post_id')
+        //->groupBy('c.to_id','c.post_id','c.id')
         ->get();
 
-        $arraydata=array();
         $datas=array();
-        foreach($chat_to as $key => $value){
-            $arraydata[]=$value->post_id;
+        foreach($chat_from as $key => $value){
             $data = array(
+                //'order_id' => $value->order_id,
+                'id' => $value->sender_id,
+                'post_id' => $value->post_id,
+            );
+            $datas[] = $data;
+        }
+        foreach($chat_to as $key => $value){
+            $data = array(
+                //'order_id' => $value->order_id,
                 'id' => $value->to_id,
                 'post_id' => $value->post_id,
             );
             $datas[] = $data;
         }
-        foreach ($chat_from as $key => $value) {
-            if(in_array($value->post_id , $arraydata))
-            {
-            }else{
-                $arraydata[] = $value->sender_id;
-                $data = array(
-                    'id' => $value->sender_id,
-                    'post_id' => $value->post_id,
-                );
-                $datas[] = $data;
-            }
-        } 
-        
-        $category = category::where('parent_id',0)->where('status',0)->get();
-    	$subcategory = category::where('parent_id','!=',0)->where('status',0)->get();
-        $language = language::all();
 
-        return view('customers.chat',compact('category','subcategory','datas','language'));
+        // array_multisort(array_column($datas, 'order_id'), SORT_DESC, $datas);
+        // $result = collect($datas)
+        // ->groupBy('post_id')
+        // ->map(function ($item) {
+        //     return array_merge(...$item->toArray());
+        // })
+        // ->values()
+        // ->toArray();
+
+        // $result = collect($datas)->groupBy('post_id');
+
+        // return response()->json($result); 
+
+        //print_r($result);
+
+        
+
+        $output='';
+        foreach($datas as $row){
+            $getnewchatcount = DB::table('chats')
+            ->where([
+                ['sender_id',$row['id']],
+                ['to_id',Auth::user()->id],
+                ['post_id',$row['post_id']],
+                //['chat_offer',0],
+                ['read_status',0],
+            ])
+            ->count();
+            if($getnewchatcount > 0){
+                $output.=\App\Http\Controllers\User\ChatController::chatuserslist($row['id'],$row['post_id']);
+            }
+        }
+        foreach($datas as $row){
+            $getnewchatcount = DB::table('chats')
+            ->where([
+                ['sender_id',$row['id']],
+                ['to_id',Auth::user()->id],
+                ['post_id',$row['post_id']],
+                //['chat_offer',0],
+                ['read_status',0],
+            ])
+            ->count();
+            if($getnewchatcount == 0){
+                $output.=\App\Http\Controllers\User\ChatController::chatuserslist($row['id'],$row['post_id']);
+            }
+        }
+        
+
+        // $output='';
+        // foreach($result as $row){
+        //     $output.=\App\Http\Controllers\User\ChatController::chatuserslist($row->id,$row['post_id']);
+        // }
+        
+        echo $output;
+
     }
 
     public function chatnotification($user_id,$post_id){
@@ -153,12 +230,22 @@ class ChatController extends Controller
         $output='
         <div class="chatclass discussion" id="'.$user->id.''.$post_id.'" value="'.$user->id.''.$post_id.'" onclick="viewChat('.$user->id.','.$post_id.')">';
             if($user->profile_image != ''){
-            $output.='<div class="photo" style="background-image: url(/upload_profile_image/'.$user->profile_image.');">
-            </div>';
+            $output.='<div class="photo" style="background-image: url(/upload_profile_image/'.$user->profile_image.');">';
+            if($getnewchatcount > 0){
+                $output.='<div class="chat_count">
+                <center>'.$getnewchatcount.'</center>
+                </div>';
+            }
+            $output.='</div>';
             }
             else{
-            $output.='<div class="photo" style="background-image: url(/assets/images/icons/user-icon.png);">
-            </div>';
+            $output.='<div class="photo" style="background-image: url(/assets/images/icons/user-icon.png);">';
+            if($getnewchatcount > 0){
+                $output.='<div class="chat_count">
+                <center>'.$getnewchatcount.'</center>
+                </div>';
+            }
+            $output.='</div>';
             }
             $output.='<div class="desc-contact">
                 <p class="name">'.$user->first_name.' '.$user->last_name.'</p>';
@@ -257,6 +344,16 @@ class ChatController extends Controller
         $chat->to_id = $post->customer_id;
         $chat->save();
 
+        $settings = settings::first();
+        $from_name = Auth::user()->first_name .' '.Auth::user()->last_name;
+        $from_email = Auth::user()->email;
+        $customer = User::find($post->customer_id);
+
+        Mail::send('mail.customer_chat',compact('chat','from_name','settings'),function($message) use($customer,$from_name,$from_email){
+            $message->to($customer->email)->subject('EZY Offer - New Chat');
+            $message->from($from_email,$from_name);
+        });
+
         return response()->json(['message' => 'Save Chat Successfully!'], 200);
     }
 
@@ -277,6 +374,16 @@ class ChatController extends Controller
         $chat->to_id = $post->customer_id;
         $chat->save();
 
+        $settings = settings::first();
+        $from_name = Auth::user()->first_name .' '.Auth::user()->last_name;
+        $from_email = Auth::user()->email;
+        $customer = User::find($post->customer_id);
+
+        Mail::send('mail.customer_chat',compact('chat','from_name','settings'),function($message) use($customer,$from_name,$from_email){
+            $message->to($customer->email)->subject('EZY Offer - New Chat');
+            $message->from($from_email,$from_name);
+        });
+
         return response()->json(['message' => 'Save Chat Successfully!'], 200);
     }
 
@@ -296,74 +403,86 @@ class ChatController extends Controller
         $chat->chat_offer = 0;
         $chat->save();
 
+        $post = post_ad::find($request->post_id);
+
+        $settings = settings::first();
+        $from_name = Auth::user()->first_name .' '.Auth::user()->last_name;
+        $from_email = Auth::user()->email;
+        $customer = User::find($post->customer_id);
+
+        Mail::send('mail.customer_chat',compact('chat','from_name','settings'),function($message) use($customer,$from_name,$from_email){
+            $message->to($customer->email)->subject('EZY Offer - New Chat');
+            $message->from($from_email,$from_name);
+        });
+
         return response()->json(['message' => 'Save Chat Successfully!','user_id'=>$request->to_id,'post_id'=>$request->post_id],200); 
     }
 
     public function chatuploaddocument(Request $request){
-        // $this->validate($request, [
-        //     'upload_files'=>'required|max:1000',
-        //   ],[
-        //     //'upload_files.mimes' => 'Only jpeg,jpg,png,pdf,docx files are allowed',
-        //     'upload_files.required' => 'Upload File is Required',
-        //     'upload_files.max' => 'Sorry! Maximum allowed size for an files is 1MB',
-        // ]);
-        // $chat = new chat;
-        // $chat->date = date('Y-m-d');
-        // $chat->sender_id = Auth::user()->id;
-        // $chat->to_id = $request->to_id;
-        // $chat->post_id = $request->post_id;
-        // $chat->chat_type = 1;
-        // $chat->chat_offer = 0;
-        
-        // if($request->upload_files!=""){            
-        //     $upload_files = $request->file('upload_files');
-        //     $input['newfilename'] = rand().time().'.'.$upload_files->getClientOriginalExtension();
-        
-        //     $destinationPath = public_path('/chat_files');
-        //     $img = Image::make($upload_files->getRealPath());
-        //     // $img->resize(1200, 600, function ($constraint) {
-        //     //     $constraint->aspectRatio();
-        //     // })->insert('images/logo.png','bottom-right', 50, 30)
-        //     $img->save($destinationPath.'/'.$input['newfilename']);
-    
-        //     $chat->file_extension = $upload_files->getClientOriginalExtension();
-        //     $chat->file_name = $_FILES['upload_files']['name'];;
-        //     $chat->upload_files = $input['newfilename'];
+        $this->validate($request, [
+            //'upload_files'=>'required|max:1000',
+            'upload_files' => 'required',
+            'upload_files.*' => 'required'
+          ],[
+            //'upload_files.mimes' => 'Only jpeg,jpg,png,pdf,docx files are allowed',
+            'upload_files.required' => 'Upload File is Required',
+            //'upload_files.max' => 'Sorry! Maximum allowed size for an files is 1MB',
+        ]);
+
+        // if(isset($_FILES['upload_files'])){
+        //     $name_array = $_FILES['upload_files']['name'];
+        //     $tmp_name_array = $_FILES['upload_files']['tmp_name'];
+        //     $type_array = $_FILES['upload_files']['type'];
+        //     $size_array = $_FILES['upload_files']['size'];
+        //     $error_array = $_FILES['upload_files']['error'];
+        //     for ($x=0; $x<count($name_array); $x++) 
+        //     {
+        //         if($name_array[$x] != ""){
+
+        //             $image = $name_array[$x];
+        //             $image_info = explode(".", $name_array[$x]); 
+        //             $image_type = end($image_info);
+        //             $input['newfilename'] = rand().time().'.'.$image_type;
+        //             //$destinationPath = public_path('/chat_files');
+        //             // $img = Image::make($tmp_name_array[$x]);
+        //             //$img->save($destinationPath.'/'.$input['newfilename']);
+        //             $image->move(public_path('chat_files/'), $input['newfilename']);
+
+        //             $chat = new chat;
+        //             $chat->date = date('Y-m-d');
+        //             $chat->sender_id = Auth::user()->id;
+        //             $chat->to_id = $request->to_id;
+        //             $chat->post_id = $request->post_id;
+        //             $chat->chat_type = 1;
+        //             $chat->chat_offer = 0;
+        //             $chat->file_extension = $image_type;
+        //             $chat->file_name = $name_array[$x];
+        //             $chat->upload_files = $input['newfilename'];
+        //             $chat->save();
+        //         }
+    	//     }
         // }
 
-        //$chat->save();
+        if ($request->hasFile('upload_files')) {
+            $files = $request->file('upload_files'); // will get all files
+        
+            foreach ($files as $file) {
+                $original_file_name = $file->getClientOriginalName();
+                $new_file_name = rand().time().'.'.$file->getClientOriginalExtension();
+                $file->move(public_path('chat_files/'), $new_file_name);
 
-        if(isset($_FILES['upload_files'])){
-            $name_array = $_FILES['upload_files']['name'];
-            $tmp_name_array = $_FILES['upload_files']['tmp_name'];
-            $type_array = $_FILES['upload_files']['type'];
-            $size_array = $_FILES['upload_files']['size'];
-            $error_array = $_FILES['upload_files']['error'];
-            for ($x=0; $x<count($name_array); $x++) 
-            {
-                if($name_array[$x] != ""){
-
-                    $image = $name_array[$x];
-                    $image_info = explode(".", $name_array[$x]); 
-                    $image_type = end($image_info);
-                    $input['newfilename'] = rand().time().'.'.$image_type;
-                    $destinationPath = public_path('/chat_files');
-                    $img = Image::make($tmp_name_array[$x]);
-                    $img->save($destinationPath.'/'.$input['newfilename']);
-
-                    $chat = new chat;
-                    $chat->date = date('Y-m-d');
-                    $chat->sender_id = Auth::user()->id;
-                    $chat->to_id = $request->to_id;
-                    $chat->post_id = $request->post_id;
-                    $chat->chat_type = 1;
-                    $chat->chat_offer = 0;
-                    $chat->file_extension = $image_type;
-                    $chat->file_name = $name_array[$x];
-                    $chat->upload_files = $input['newfilename'];
-                    $chat->save();
-                }
-    	    }
+                $chat = new chat;
+                $chat->date = date('Y-m-d');
+                $chat->sender_id = Auth::user()->id;
+                $chat->to_id = $request->to_id;
+                $chat->post_id = $request->post_id;
+                $chat->chat_type = 1;
+                $chat->chat_offer = 0;
+                $chat->file_extension = $file->getClientOriginalExtension();
+                $chat->file_name = $original_file_name;
+                $chat->upload_files = $new_file_name;
+                $chat->save();
+            }
         }
 
         return response()->json(['message' => 'Save Chat Successfully!','user_id'=>$request->to_id,'post_id'=>$request->post_id],200); 
@@ -421,10 +540,11 @@ class ChatController extends Controller
         date_default_timezone_get();
 $output='
 <div class="header-chat">
+<span><i class="icon fas fa-arrow-left arrow-click" aria-hidden="true" onclick="goback();"></i></span>
 <i class="icon fas fa-user" aria-hidden="true"></i>
 <p class="name">'.$user->first_name.' '.$user->last_name.'
 <br><span style="font-size:14px !important;">('.$post->title.')</span></p>
-<b style="top:10px;" class="right">Price: '.$post->price.' AED</b>
+<b style="top:10px;" class="right pricing-tag-new">Price: '.$post->price.' AED</b>
 <br>
 <div style="margin-top:30px;
 padding: 3px 7px;" class="searchbar right1">
@@ -444,11 +564,20 @@ padding: 3px 7px;" class="searchbar right1">
                 }
                 else{
                     //$output.='<a download href="/chat_files/'.$row->upload_files.'" class="buttonDownload">'.$row->file_name.'</a>';
-                    $output.='<a style="text-align:center;" download href="/chat_files/'.$row->upload_files.'" class="btn-slide">
+                    if($row->file_extension == 'jpeg' || $row->file_extension == 'jpg' || $row->file_extension == 'png'){
+                        $output.='<div class="card">
+                            <a download href="/chat_files/'.$row->upload_files.'">
+                            <img download class="card-img-top img-fluid" src="/chat_files/'.$row->upload_files.'" style="height: 5rem;" />
+                            </a>
+                        </div>';
+                    }else{
+                        $output.='<a style="text-align:center;" download href="/chat_files/'.$row->upload_files.'" class="btn-slide">
                         <span class="circle"><i class="fa fa-download"></i></span>
                         <span class="title">'.substr($row->file_name,0,20).'</span>
                         <span class="title-hover">Click here</span>
                     </a>';
+                    }
+                 
                 }
             $output.='</div>
         </div>
@@ -470,11 +599,19 @@ padding: 3px 7px;" class="searchbar right1">
             }
             else{
                 //$output.='<a download href="/chat_files/'.$row->upload_files.'" class="buttonDownload">'.$row->file_name.'</a>';
+                if($row->file_extension == 'jpeg' || $row->file_extension == 'jpg' || $row->file_extension == 'png'){
+                    $output.='<div class="card">
+                        <a download href="/chat_files/'.$row->upload_files.'">
+                        <img download class="card-img-top img-fluid" src="/chat_files/'.$row->upload_files.'" style="height: 5rem;" />
+                        </a>
+                    </div>';
+                }else{
                 $output.='<a style="text-align:center;" download href="/chat_files/'.$row->upload_files.'" class="btn-slide2">
                     <span class="circle2"><i class="fa fa-download"></i></span>
                     <span class="title2">'.substr($row->file_name,0,20).'</span>
                     <span class="title-hover2">Click here</span>
                 </a>';
+                }
             }
         $output.='</div>
         <p class="time"> '.$dateTime->diffForHumans().'</p>';
@@ -487,7 +624,7 @@ $output.='</div>
     <input value="'.$post_id.'" type="hidden" name="post_id" id="post_id">
     <input name="msg" id="msg" type="text" class="write-message" placeholder="Type your message here"></input>
     <i onclick="SendChat()" class="icon send fas fa-paper-plane clickable" aria-hidden="true"></i>
-    <a data-toggle="modal" data-target="#documentmodal" href="javascript:void(0)"><i class="fas fa-paperclip clickable attach-icon" aria-hidden="true"></i></a>
+    <a id="upload_icon" onclick="DocumentClearHistory()" data-toggle="modal" data-target="#documentmodal" href="javascript:void(0)"><i class="fas fa-paperclip clickable attach-icon" aria-hidden="true"></i></a>
     <!--<i class="fas fa-cog clickable settings-icon" aria-hidden="true"></i>-->
 </div>
 <script src="/assets/js/jquery.js"></script>
@@ -501,6 +638,14 @@ $("#search_text").on("keyup", function() {
         $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
     });
 });
+</script>
+<script>
+function goback(){
+    // $(".arrow-click").click(function(){
+        $(".discussions").show();
+        $("#viewchat").hide();
+    // });
+}
 </script>
 ';
           
@@ -556,11 +701,19 @@ $("#search_text").on("keyup", function() {
                 }
                 else{
                     // $output.='<a download href="/chat_files/'.$row->upload_files.'" class="buttonDownload">'.$row->file_name.'</a>';
-                    $output.='<a style="text-align:center;" download href="/chat_files/'.$row->upload_files.'" class="btn-slide">
-                        <span class="circle"><i class="fa fa-download"></i></span>
-                        <span class="title">'.substr($row->file_name,0,20).'</span>
-                        <span class="title-hover">Click here</span>
-                    </a>';
+                    if($row->file_extension == 'jpeg' || $row->file_extension == 'jpg' || $row->file_extension == 'png'){
+                        $output.='<div class="card">
+                            <a download href="/chat_files/'.$row->upload_files.'">
+                            <img download class="card-img-top img-fluid" src="/chat_files/'.$row->upload_files.'" style="height: 5rem;" />
+                            </a>
+                        </div>';
+                    }else{
+                        $output.='<a style="text-align:center;" download href="/chat_files/'.$row->upload_files.'" class="btn-slide">
+                            <span class="circle"><i class="fa fa-download"></i></span>
+                            <span class="title">'.substr($row->file_name,0,20).'</span>
+                            <span class="title-hover">Click here</span>
+                        </a>';
+                    }
                 }
                 $output.='</div>
             </div>
@@ -582,11 +735,19 @@ $("#search_text").on("keyup", function() {
                 }
                 else{
                     // $output.='<a download href="/chat_files/'.$row->upload_files.'" class="buttonDownload">'.$row->file_name.'</a>';
-                    $output.='<a style="text-align:center;" download href="/chat_files/'.$row->upload_files.'" class="btn-slide2">
-                        <span class="circle2"><i class="fa fa-download"></i></span>
-                        <span class="title2">'.substr($row->file_name,0,20).'</span>
-                        <span class="title-hover2">Click here</span>
-                    </a>';
+                    if($row->file_extension == 'jpeg' || $row->file_extension == 'jpg' || $row->file_extension == 'png'){
+                        $output.='<div class="card">
+                            <a download href="/chat_files/'.$row->upload_files.'">
+                            <img download class="card-img-top img-fluid" src="/chat_files/'.$row->upload_files.'" style="height: 5rem;" />
+                            </a>
+                        </div>';
+                    }else{
+                        $output.='<a style="text-align:center;" download href="/chat_files/'.$row->upload_files.'" class="btn-slide2">
+                            <span class="circle2"><i class="fa fa-download"></i></span>
+                            <span class="title2">'.substr($row->file_name,0,20).'</span>
+                            <span class="title-hover2">Click here</span>
+                        </a>';
+                    }
                 }
             $output.='</div>
             <p class="time"> '.$dateTime->diffForHumans().'</p>';
@@ -620,6 +781,15 @@ $("#search_text").on("keyup", function() {
         $admin_customer->message_from = 0;
         $admin_customer->save();
         $dateTime = new Carbon($admin_customer->created_at, new \DateTimeZone('Asia/Dubai'));
+
+        $settings = settings::first();
+        $from_name = Auth::user()->first_name .' '.Auth::user()->last_name;
+        $from_email = Auth::user()->email;
+
+        Mail::send('mail.admin_chat',compact('admin_customer','settings','from_name'),function($message) use($settings,$from_name,$from_email){
+            $message->to($settings->admin_receive_email)->subject('EZY Offer - Message From Customer');
+            $message->from($from_email,$from_name);
+        });
   
         return response()->json(Auth::user()->id); 
     }
@@ -629,6 +799,7 @@ $("#search_text").on("keyup", function() {
         ->where([
             ['customer_id',Auth::user()->id],
             ['read_status',0],
+            ['message_from',1],
         ])
         ->count();
         return response()->json($getnewchatcount); 
@@ -639,6 +810,7 @@ $("#search_text").on("keyup", function() {
         ->where([
             ['customer_id',Auth::user()->id],
             ['read_status',0],
+            ['message_from',1],
         ])
         ->get();
 

@@ -30,7 +30,7 @@
                         <div class="blog-details-content">
                             <div class="news-block-one">
                                 <div class="inner-box">
-                                    <figure class="image-box">
+                                    <figure class="image-box img-box-design">
                                         <img src="/upload_files/{{$blog->image}}" alt="">
                                     </figure>
                                     <div class="lower-content">
@@ -60,7 +60,7 @@
                                                     </div>
                                                 </div>
                                                 <div class="col-lg-6 col-md-6 col-sm-12 image-column">
-                                                    <figure class="image-box"><img src="/assets/images/news/news-16.jpg" alt=""></figure>
+                                                    <figure class="image-box img-box-design"><img src="/assets/images/news/news-16.jpg" alt=""></figure>
                                                 </div>
                                             </div>
                                         </div>

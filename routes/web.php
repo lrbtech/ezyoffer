@@ -33,6 +33,8 @@ Route::post('/story-load-data', [App\Http\Controllers\StoryLoadMoreController::c
 
 Route::post('/load-data-search-post', [App\Http\Controllers\SearchController::class, 'loaddata']);
 
+Route::post('/load-data-user-post', [App\Http\Controllers\UserPostController::class, 'loaddata']);
+
 Route::get('/about', [App\Http\Controllers\PageController::class, 'about']);
 Route::get('/how-it-works', [App\Http\Controllers\PageController::class, 'howitworks']);
 Route::get('/our-story', [App\Http\Controllers\PageController::class, 'ourstory']);
@@ -291,6 +293,8 @@ Route::group(['prefix' => 'customer'],function(){
 
 	Route::get('/my-ads', [App\Http\Controllers\User\PostController::class, 'myads']);
 
+    Route::post('/load-data-my-ads', [App\Http\Controllers\User\MyAdsController::class, 'loaddata']);
+
     //post-ads
     Route::get('/new-post-ads', [App\Http\Controllers\User\PostController::class, 'newpostads']);
     Route::POST('/save-post-ads', [App\Http\Controllers\User\PostController::class, 'savepostads']);
@@ -312,11 +316,14 @@ Route::group(['prefix' => 'customer'],function(){
 
     Route::get('/favourite', [App\Http\Controllers\User\FavouriteController::class, 'getfavourite']);
 
+    Route::get('/get-all-chat-users', [App\Http\Controllers\User\ChatController::class, 'getallchatusers']);
+
     Route::get('/save-chat-view/{id}/{msg}', [App\Http\Controllers\User\ChatController::class, 'savechatview']);
     Route::POST('/save-chat-customer', [App\Http\Controllers\User\ChatController::class, 'savechatcustomer']);
     Route::POST('/chat-upload-document', [App\Http\Controllers\User\ChatController::class, 'chatuploaddocument']);
     Route::POST('/save-offer', [App\Http\Controllers\User\ChatController::class, 'saveoffer']);
 
+    Route::get('/chat-from-post/{user_id}/{post_id}', [App\Http\Controllers\User\ChatController::class, 'chatfrompost']);
     Route::get('/chat', [App\Http\Controllers\User\ChatController::class, 'chat']);
     Route::get('/chat-notification/{id}/{id1}', [App\Http\Controllers\User\ChatController::class, 'chatnotification']);
     Route::get('/view-chat/{id}', [App\Http\Controllers\User\ChatController::class, 'viewchat']);

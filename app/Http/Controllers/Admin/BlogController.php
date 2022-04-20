@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\language;
 use App\Models\blog;
+use App\Models\settings;
 use Image;
 use Auth;
 class BlogController extends Controller
@@ -28,6 +29,8 @@ class BlogController extends Controller
             'image.required' => 'blog Image Field is Required',
         ]);
 
+        $settings = settings::first();
+
         $blog = new blog;
         $blog->date = date('Y-m-d');
         $blog->title = $request->title;
@@ -41,7 +44,7 @@ class BlogController extends Controller
             $img = Image::make($image->getRealPath());
             $img->resize(1200, 600, function ($constraint) {
                 $constraint->aspectRatio();
-            })->insert('images/logo.png','bottom-right', 50, 30)->save($destinationPath.'/'.$input['imagename']);
+            })->insert('upload_files/logo_watermark.png','bottom-right', 50, 30)->save($destinationPath.'/'.$input['imagename']);
     
             $blog->image = $input['imagename'];
         }
@@ -59,6 +62,8 @@ class BlogController extends Controller
             'image.mimes' => 'Only jpeg, png and jpg images are allowed',
             'image.max' => 'Sorry! Maximum allowed size for an image is 1MB',
         ]);
+
+        $settings = settings::first();
         
         $blog = blog::find($request->id);
         $blog->title = $request->title;
@@ -77,7 +82,7 @@ class BlogController extends Controller
             $img = Image::make($image->getRealPath());
             $img->resize(1200, 600, function ($constraint) {
                 $constraint->aspectRatio();
-            })->insert('images/logo.png','bottom-right', 50, 30)->save($destinationPath.'/'.$input['imagename']);
+            })->insert('upload_files/logo_watermark.png','bottom-right', 50, 30)->save($destinationPath.'/'.$input['imagename']);
     
             $blog->image = $input['imagename'];
         }

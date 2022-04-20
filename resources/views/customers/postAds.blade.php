@@ -138,8 +138,8 @@
                                  <label>
                                     <select name="post_type" id="post_type" class="form-control select">
                                        <option value="" selected="">{{$language[222][session()->get('lang')]}}</option>
-                                       <option value="0">Normal + Story</option>
-                                       <option value="1">Trending + Story</option>
+                                       <option value="0">{{$language[250][session()->get('lang')]}}</option>
+                                       <option value="1">{{$language[251][session()->get('lang')]}}</option>
                                        <!-- <option value="0">Normal Ad</option>
                                        <option value="1">Feature Ad</option>
                                        <option value="2">Live Story</option> -->

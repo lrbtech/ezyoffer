@@ -174,7 +174,7 @@ img{
                                     @foreach($post_ads as $row)
                                     <div class="feature-block-one">
                                         <div class="inner-box">
-                                            <div class="image-box">
+                                            <div class="image-box img-box-design">
                                                 <figure class="image"><img onclick="viewpost({{$row->id}})" style="width:200px;height:220px;" src="/upload_image/{{$row->image}}" alt=""></figure>
                                                 @if($row->post_type == '1')
                                                 <div class="feature-2">Featured</div>
@@ -221,7 +221,7 @@ img{
                                             <div class="feature-block-one">
                                                 <div class="inner-box">
                                                 <a href="/view-post/{{$row->id}}">
-                                                    <div class="image-box">
+                                                    <div class="image-box img-box-design">
                                                         <figure class="image"><img onclick="viewpost({{$row->id}})" style="width:370px;height:220px;" src="/upload_image/{{$row->image}}" alt=""></figure>
                                                         
                                                         @if($row->post_type == '1')
@@ -272,7 +272,7 @@ img{
                                             <div class="feature-block-one">
                                                 <div class="inner-box">
                                                 <a href="/view-post/{{$row->id}}">
-                                                    <div class="image-box">
+                                                    <div class="image-box img-box-design">
                                                         <figure class="image"><img onclick="viewpost({{$row->id}})" style="width:370px;height:220px;" src="/upload_image/{{$row->image}}" alt=""></figure>
                                                         
                                                         @if($row->post_type == '1')

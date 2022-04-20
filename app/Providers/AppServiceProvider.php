@@ -38,7 +38,8 @@ class AppServiceProvider extends ServiceProvider
         view()->composer('admin.layouts', function($view) {
             $language = language::all();
             // session(['lang'=>'english']);
-            $view->with(compact('language'));
+            $settings = settings::find('1');
+            $view->with(compact('language','settings'));
         });
         view()->composer('website.layouts', function($view) {
             $settings = settings::find('1');

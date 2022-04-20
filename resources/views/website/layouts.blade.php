@@ -1,16 +1,19 @@
 
 <!DOCTYPE html>
+
+<html> 
 @if(session()->get('lang') == 'english')
-<html dir="ltr">
+<!-- <html dir="ltr"> -->
 @elseif(session()->get('lang') == 'arabic')
-<html dir="rtl">
+<!-- <html dir="ltr"> -->
 @else 
-<html dir="ltr">
+<!-- <html dir="ltr"> -->
 @endif
 <head>
 <meta charset="utf-8">
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
+<!-- <meta name="viewport" content="width=device-width, initial-scale=0.1"> -->
 <title>{{$settings->metatag_title}}</title>
 
 <meta name="title" content="{{$settings->metatag_title}}"/>
@@ -26,6 +29,67 @@
 <!-- Google Fonts -->
 <link href="https://fonts.googleapis.com/css2?family=Nunito:ital,wght@0,300;0,400;0,600;0,700;0,800;0,900;1,300;1,400;1,600;1,700;1,800;1,900&display=swap" rel="stylesheet">
 <link href="https://fonts.googleapis.com/css2?family=Quicksand:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+
+@if(session()->get('lang') == 'english')
+<!-- Stylesheets -->
+<link href="/assets/css/font-awesome-all.css" rel="stylesheet">
+<link href="/assets/css/flaticon.css" rel="stylesheet">
+<link href="/assets/css/owl.css" rel="stylesheet">
+<link href="/assets/css/bootstrap.css" rel="stylesheet">
+<link href="/assets/css/jquery.fancybox.min.css" rel="stylesheet">
+<link href="/assets/css/animate.css" rel="stylesheet">
+<link href="/assets/css/nice-select.css" rel="stylesheet">
+<link href="/assets/css/color.css" rel="stylesheet">
+<link href="/assets/css/style.css" rel="stylesheet">
+<link href="/assets/css/responsive.css" rel="stylesheet">
+<script src="/sweetalert2/sweetalert2.min.js"></script>
+<link rel="stylesheet" href="/sweetalert2/sweetalert2.min.css"> 
+<script src="/assets/js/spinner.js" type="text/javascript"></script>
+@elseif(session()->get('lang') == 'arabic')
+<!-- Stylesheets -->
+<!-- <link href="/assets/css/font-awesome-all.css" rel="stylesheet">
+<link href="/assets/css/flaticon.css" rel="stylesheet">
+<link href="/assets/css/owl.css" rel="stylesheet">
+<link href="/assets/css/bootstrap.css" rel="stylesheet">
+<link href="/assets/css/jquery.fancybox.min.css" rel="stylesheet">
+<link href="/assets/css/animate.css" rel="stylesheet">
+<link href="/assets/css/nice-select.css" rel="stylesheet">
+<link href="/assets/css/color.css" rel="stylesheet">
+<link href="/assets/css/style-rtl.css" rel="stylesheet">
+<link href="/assets/css/responsive.css" rel="stylesheet">
+<script src="/sweetalert2/sweetalert2.min.js"></script>
+<link rel="stylesheet" href="/sweetalert2/sweetalert2.min.css"> 
+<script src="/assets/js/spinner.js" type="text/javascript"></script> -->
+
+<link href="/assets/css/font-awesome-all.css" rel="stylesheet">
+<link href="/assets/css/flaticon.css" rel="stylesheet">
+<link href="/assets/css/owl.css" rel="stylesheet">
+<link href="/assets/css/bootstrap.css" rel="stylesheet">
+<link href="/assets/css/jquery.fancybox.min.css" rel="stylesheet">
+<link href="/assets/css/animate.css" rel="stylesheet">
+<link href="/assets/css/nice-select.css" rel="stylesheet">
+<link href="/assets/css/color.css" rel="stylesheet">
+<link href="/assets/css/style.css" rel="stylesheet">
+<link href="/assets/css/responsive.css" rel="stylesheet">
+<script src="/sweetalert2/sweetalert2.min.js"></script>
+<link rel="stylesheet" href="/sweetalert2/sweetalert2.min.css"> 
+<script src="/assets/js/spinner.js" type="text/javascript"></script>
+@else 
+<!-- Stylesheets -->
+<link href="/assets/css/font-awesome-all.css" rel="stylesheet">
+<link href="/assets/css/flaticon.css" rel="stylesheet">
+<link href="/assets/css/owl.css" rel="stylesheet">
+<link href="/assets/css/bootstrap.css" rel="stylesheet">
+<link href="/assets/css/jquery.fancybox.min.css" rel="stylesheet">
+<link href="/assets/css/animate.css" rel="stylesheet">
+<link href="/assets/css/nice-select.css" rel="stylesheet">
+<link href="/assets/css/color.css" rel="stylesheet">
+<link href="/assets/css/style.css" rel="stylesheet">
+<link href="/assets/css/responsive.css" rel="stylesheet">
+<script src="/sweetalert2/sweetalert2.min.js"></script>
+<link rel="stylesheet" href="/sweetalert2/sweetalert2.min.css"> 
+<script src="/assets/js/spinner.js" type="text/javascript"></script>
+@endif
 
 <!-- Stylesheets -->
 <link href="/assets/css/font-awesome-all.css" rel="stylesheet">
@@ -68,6 +132,14 @@ h3 a{
 body {
     top: 0px !important; 
 }
+
+.img-box-design{
+    text-align: center;
+ }
+
+ .img-box-design img{
+    width: unset!important;
+ }
 </style>
 </head>
 
@@ -123,13 +195,13 @@ body {
                                                 <li><a href="/customer/profile-settings">{{$language[143][session()->get('lang')]}}</a></li>
                                                 <li><a href="/customer/my-ads">{{$language[144][session()->get('lang')]}}</a></li>
                                                 <li><a href="/customer/new-post-ads">{{$language[145][session()->get('lang')]}}</a></li>
-                                                <li><a href="/customer/chat-admin">{{$language[146][session()->get('lang')]}}</a></li>
                                                 <!-- <li><a href="/customer/packages">Buy/Renew Packages</a></li> -->
                                                 <li><a href="/customer/favourite">{{$language[147][session()->get('lang')]}}</a></li>
                                                 <li><a href="/customer/account-privacy">{{$language[148][session()->get('lang')]}}</a></li>
                                                 {{-- @else
                                                 <li><a href="/customer/packages">Buy/Renew Packages</a></li>
                                                 @endif --}}
+                                                <li><a href="/customer/chat-admin">{{$language[146][session()->get('lang')]}}</a></li>
                                                 <li>
                                                 <a href="{{ route('logout') }}" onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
                                                 {{$language[149][session()->get('lang')]}}</a></a>
@@ -366,7 +438,8 @@ body {
                         <div class="btn-box">
                         @if(Auth::check())
                             @if($post_ad->customer_id != Auth::user()->id)
-                            <button onclick="sendchat({{$post_ad->id}})" class="theme-btn-one">{{$language[183][session()->get('lang')]}}</button>
+                            <!-- onclick="sendchat({{$post_ad->id}})" -->
+                            <button onclick="openchat()" class="theme-btn-one">{{$language[183][session()->get('lang')]}}</button>
                             @else 
                             <button onclick="yourpost()" class="theme-btn-one">{{$language[183][session()->get('lang')]}}</button>
                             @endif
@@ -383,7 +456,7 @@ body {
                 <div class="auto-container">
                     <div class="outer-box">
                         <div class="logo-box">
-                            <figure class="logo"><a href="/"><img src="/assets/images/logo.png" alt=""></a></figure>
+                            <figure class="logo"><a href="/"><img src="/upload_files/{{$settings->logo}}" alt=""></a></figure>
                         </div>
                         <div class="menu-area">
                             <nav class="main-menu clearfix">
@@ -406,9 +479,12 @@ body {
             <div class="close-btn"><i class="fas fa-times"></i></div>
             
             <nav class="menu-box">
-                <div class="nav-logo"><a href="/"><img src="/assets/images/logo.png" alt="" title=""></a></div>
+                <div class="nav-logo"><a href="/"><img src="/upload_files/{{$settings->logo}}" alt="" title=""></a></div>
                 <div class="menu-outer">
                     <!--Here Menu Will Come Automatically Via Javascript / Same Menu as in Header-->
+                </div>
+                <div class="btn-box">
+                    <a style="width:100%;" href="/customer/new-post-ads" class="theme-btn-one"><i class="icon-1"></i>{{$language[136][session()->get('lang')]}}</a>
                 </div>
                 <div class="social-links">
                     <ul class="clearfix">
@@ -467,7 +543,7 @@ body {
                         <div class="row clearfix">
                             <div class="col-lg-3 col-md-6 col-sm-12 footer-column">
                                 <div class="footer-widget logo-widget">
-                                    <figure class="footer-logo"><a href="/"><img src="/upload_files/{{$settings->logo}}" alt=""></a></figure>
+                                    <figure class="footer-logo"><a href="/"><img src="/upload_files/{{$settings->logo_footer}}" alt=""></a></figure>
                                     <div class="text">
                                         <p>{{$settings->footer_description}}</p>
                                     </div>
@@ -652,13 +728,6 @@ function SaveNewsLetter(){
         }
     });
 }
-
-$('input').keydown( function(e) {
-    var key = e.charCode ? e.charCode : e.keyCode ? e.keyCode : 0;
-    if(key == 13) {
-        e.preventDefault();
-    }
-});
 </script>
 <script src="//translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"></script>
 <script>
@@ -711,5 +780,15 @@ $('input').keydown( function(e) {
         });
     }
 </script>
+@if(Request::segment(1) != 'login')
+<script>
+$('input').keydown( function(e) {
+    var key = e.charCode ? e.charCode : e.keyCode ? e.keyCode : 0;
+    if(key == 13) {
+        e.preventDefault();
+    }
+});
+</script>
+@endif
 </body><!-- End of .page_wrapper -->
 </html>

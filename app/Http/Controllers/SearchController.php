@@ -58,8 +58,8 @@ class SearchController extends Controller
                 //$i->where('p.id', '<', $request->id);
                 $i->whereNotIn('p.id',$request->id);
                 if ( $request->sort == '0' ){
-                    $i->orderBy('p.id','DESC');
-                    //$i->orderByRaw('FIELD(p.post_type,1,2,0)');
+                    //$i->orderBy('p.id','DESC');
+                    $i->orderByRaw('FIELD(p.post_type,1,0)');
                 }
                 elseif ( $request->sort == '1' ){
                     $i->orderBy('p.price','ASC');
@@ -67,7 +67,8 @@ class SearchController extends Controller
                 elseif ( $request->sort == '2' ){
                     $i->orderBy('p.price','DESC');
                 }
-                $data = $i->limit(3)->get();
+                //$data = $i->limit(3)->get();
+                $data = $i->limit(21)->get();
             }
             else
             {
@@ -92,8 +93,8 @@ class SearchController extends Controller
                 $i->where('p.admin_status',0);
                 $i->where('p.status',0);
                 if ( $request->sort == '0' ){
-                    $i->orderBy('p.id','DESC');
-                    //$i->orderByRaw('FIELD(p.post_type,1,2,0)');
+                    //$i->orderBy('p.id','DESC');
+                    $i->orderByRaw('FIELD(p.post_type,1,0)');
                 }
                 elseif ( $request->sort == '1' ){
                     $i->orderBy('p.price','ASC');
@@ -101,7 +102,8 @@ class SearchController extends Controller
                 elseif ( $request->sort == '2' ){
                     $i->orderBy('p.price','DESC');
                 }
-                $data = $i->limit(9)->get();
+                //$data = $i->limit(9)->get();
+                $data = $i->limit(21)->get();
             }
             $output = '';
             
@@ -157,13 +159,13 @@ $output.='
     $output.='</div>
     <div style="margin-top:-20px;" class="grid-item feature-style-two four-column pd-0">
         <div class="row clearfix">';
-            if(count($data) > 1){
+            if(count($data) == 1){
             foreach($data as $row){
-            $output.='<div class="col-lg-4 col-md-4 col-sm-12 feature-block">
+            $output.='<div class="col-lg-6 col-md-6 col-sm-6 col-xs-6 col-6 feature-block">
                 <div class="feature-block-one">
                     <div class="inner-box">
                     <a href="/view-post/'.$row->id.'">
-                        <div class="image-box">
+                        <div class="image-box img-box-design">
                             <figure class="image"><img onclick="viewpost('.$row->id.')" style="width:370px;height:200px;" src="/upload_image/'.$row->image.'" alt=""></figure>';
                             
                             // if($row->post_type == '1'){
@@ -210,13 +212,68 @@ $output.='
                 </div>
             </div>';
             }
-            }else{ 
+            }
+            elseif(count($data) == 2){
             foreach($data as $row){
-            $output.='<div class="col-lg-12 col-md-12 col-sm-12 feature-block">
+            $output.='<div class="col-lg-6 col-md-6 col-sm-6 col-xs-6 col-6 feature-block">
                 <div class="feature-block-one">
                     <div class="inner-box">
                     <a href="/view-post/'.$row->id.'">
-                        <div class="image-box">
+                        <div class="image-box img-box-design">
+                            <figure class="image"><img onclick="viewpost('.$row->id.')" style="width:370px;height:200px;" src="/upload_image/'.$row->image.'" alt=""></figure>';
+                            
+                            // if($row->post_type == '1'){
+                            // $output.='<div class="shape"></div>
+                            // <div class="feature">Trending Ad</div>';
+                            // }
+                            $output.='<!-- <div class="icon">
+                                <div class="icon-shape"></div>
+                                <i class="icon-16"></i>
+                            </div> -->';
+                        $output.='</div>
+                        <div class="lower-content">
+                            <div class="category"><i class="fas fa-tags"></i><a href="/search-post/0/'.$row->category.'/0/0/0/0">'. \App\Http\Controllers\HomeController::viewcategoryname($row->category) .'</a></div>
+                            <h3 style="text-transform:capitalize !important;"><a href="/view-post/'.$row->id.'">'.$row->title.'</a></h3>
+                            <!-- <ul class="rating clearfix">
+                                <li><i class="icon-17"></i></li>
+                                <li><i class="icon-17"></i></li>
+                                <li><i class="icon-17"></i></li>
+                                <li><i class="icon-17"></i></li>
+                                <li><i class="icon-17"></i></li>
+                                <li><a href="index.html">(25)</a></li>
+                            </ul> -->
+                            <ul class="info clearfix">
+                                <!-- <li><i class="far fa-clock"></i>'. \App\Http\Controllers\HomeController::humanreadtime($row->created_at) .'</li>-->
+                                <li><i class="far fa-check"></i>'. $row->item_conditions .'</li>
+                                <li style="text-transform:capitalize !important;text-overflow: ellipsis;overflow: hidden;display: -webkit-box;-webkit-line-clamp: 1;-webkit-box-orient: vertical;"><i class="fas fa-map-marker-alt"></i>'. \App\Http\Controllers\HomeController::viewcityname($row->area,$row->city) .'</li>
+                            </ul>
+                            <div class="lower-box">
+                                <h5><span>Price:</span>AED '.$row->price.'</h5>
+                                <ul class="react-box">
+                                <li class="favourite-grid'.$row->id.'">';
+                                if(Auth::check()){
+                                $output.=\App\Http\Controllers\LoginController::viewfavourite($row->id);
+                                }else{
+                                $output.='<a href="/login"><i class="icon-22"></i></a>';
+                                }
+                                $output.='
+                                </li>
+                                </ul>
+                            </div>
+                        </div>
+                    </a>
+                    </div>
+                </div>
+            </div>';
+            }
+            }
+            else{ 
+            foreach($data as $row){
+            $output.='<div class="col-lg-4 col-md-4 col-sm-6 col-xs-6 col-6 feature-block">
+                <div class="feature-block-one">
+                    <div class="inner-box">
+                    <a href="/view-post/'.$row->id.'">
+                        <div class="image-box img-box-design">
                             <figure class="image"><img onclick="viewpost('.$row->id.')" style="width:370px;height:200px;" src="/upload_image/'.$row->image.'" alt=""></figure>';
                             
                             // if($row->post_type == '1'){

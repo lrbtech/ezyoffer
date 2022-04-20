@@ -13,6 +13,7 @@ use App\Models\used_package;
 use App\Models\package;
 use App\Models\chat;
 use App\Models\language;
+use App\Models\settings;
 use Auth;
 use DB;
 use Mail;
@@ -61,22 +62,22 @@ class PostController extends Controller
 
     public function deletepostads($id){
         $post_ad = post_ad::find($id);
-        $old_image = "upload_image/".$post_ad->image;
-        if (file_exists($old_image)) {
-            @unlink($old_image);
-        }
-        //$post_ad->status = $status;
-        $post_ad->delete();
+        // $old_image = "upload_image/".$post_ad->image;
+        // if (file_exists($old_image)) {
+        //     @unlink($old_image);
+        // }
+        $post_ad->status = 1;
+        $post_ad->save();
 
-        $post_ad_image = post_ad_image::where('post_id',$id)->get();
-        foreach($post_ad_image as $row){
-            $post_ad_image1 = post_ad_image::find($row->id);
-            $old_image = "upload_image/".$post_ad_image1->image;
-            if (file_exists($old_image)) {
-                @unlink($old_image);
-            }
-            $post_ad_image1->delete();
-        }
+        // $post_ad_image = post_ad_image::where('post_id',$id)->get();
+        // foreach($post_ad_image as $row){
+        //     $post_ad_image1 = post_ad_image::find($row->id);
+        //     $old_image = "upload_image/".$post_ad_image1->image;
+        //     if (file_exists($old_image)) {
+        //         @unlink($old_image);
+        //     }
+        //     $post_ad_image1->delete();
+        // }
 
         $chat = chat::where('post_id',$id)->delete();
 
@@ -115,6 +116,8 @@ class PostController extends Controller
             'profile_image.required' => '1st Image Field is Must Required',
             'profile_image.max' => 'Sorry! Maximum allowed size for an image is 10MB',
         ]);
+
+        $settings = settings::first();
 
         // if($request->profile_image!=""){
         //     $filter = new ImageFilter;
@@ -232,7 +235,7 @@ class PostController extends Controller
             $img = Image::make($image->getRealPath());
             $img->resize(1200, 600, function ($constraint) {
                 $constraint->aspectRatio();
-            })->insert('images/logo.png','bottom-right', 50, 30)->save($destinationPath.'/'.$input['imagename']);
+            })->insert('upload_files/logo_watermark.png','bottom-right', 50, 30)->save($destinationPath.'/'.$input['imagename']);
     
             $post_ad->image = $input['imagename'];
         }
@@ -258,7 +261,7 @@ class PostController extends Controller
                     $img = Image::make($tmp_name_array[$x]);
                     $img->resize(1200, 600, function ($constraint) {
                         $constraint->aspectRatio();
-                    })->insert('images/logo.png','bottom-right', 50, 30)->save($destinationPath.'/'.$input['imagename']);
+                    })->insert('upload_files/logo_watermark.png','bottom-right', 50, 30)->save($destinationPath.'/'.$input['imagename']);
 
                     $post_ad_image->post_id = $post_ad->id;
                     $post_ad_image->image = $input['imagename'];
@@ -277,6 +280,13 @@ class PostController extends Controller
 	        	$post_ad_features->save();
 	    	}
     	}
+
+        $from_name = Auth::user()->first_name .' '.Auth::user()->last_name;
+        $from_email = Auth::user()->email;
+        Mail::send('mail.admin_post',compact('post_ad'),function($message) use($settings,$from_name,$from_email){
+            $message->to($settings->admin_receive_email)->subject('EZY Offer - New Post Ad');
+            $message->from($from_email,$from_name);
+        });
 
         return response()->json(['message'=>'Your ad is Posted Successfully','status'=>0], 200); 
     }
@@ -298,6 +308,7 @@ class PostController extends Controller
             //'post_type.required' => 'Ad Type Field is Required',
         ]);
 
+        $settings = settings::first();
 
         $post_ad = post_ad::find($request->id);
         $post_ad->post_type = $request->post_type;
@@ -331,6 +342,13 @@ class PostController extends Controller
 	    	}
     	}
 
+        $from_name = Auth::user()->first_name .' '.Auth::user()->last_name;
+        $from_email = Auth::user()->email;
+        Mail::send('mail.admin_post',compact('post_ad'),function($message) use($settings,$from_name,$from_email){
+            $message->to($settings->admin_receive_email)->subject('EZY Offer - Edit Post Ad');
+            $message->from($from_email,$from_name);
+        });
+
         return response()->json(['message' => 'Your ad is Updated Successfully','status'=>0], 200);
     }
 
@@ -344,6 +362,7 @@ class PostController extends Controller
             'profile_image.max' => 'Sorry! Maximum allowed size for an image is 10MB',
         ]);
 
+        $settings = settings::first();
         // if($request->profile_image!=""){
         //     $filter = new ImageFilter;
         //     $score = $filter->GetScore($request->file('profile_image'));      
@@ -399,7 +418,7 @@ class PostController extends Controller
             $img = Image::make($image->getRealPath());
             $img->resize(1200, 600, function ($constraint) {
                 $constraint->aspectRatio();
-            })->insert('images/logo.png','bottom-right', 50, 30)->save($destinationPath.'/'.$input['imagename']);
+            })->insert('upload_files/logo_watermark.png','bottom-right', 50, 30)->save($destinationPath.'/'.$input['imagename']);
             $post_ad->image = $input['imagename'];
         }
         $post_ad->save();
@@ -427,7 +446,7 @@ class PostController extends Controller
                     $img = Image::make($tmp_name_array[$x]);
                     $img->resize(1200, 600, function ($constraint) {
                         $constraint->aspectRatio();
-                    })->insert('images/logo.png','bottom-right', 50, 30)->save($destinationPath.'/'.$input['imagename']);
+                    })->insert('upload_files/logo_watermark.png','bottom-right', 50, 30)->save($destinationPath.'/'.$input['imagename']);
                     $post_ad_image->image = $input['imagename'];
                 }
 	        	$post_ad_image->save();
@@ -444,7 +463,7 @@ class PostController extends Controller
                     $img = Image::make($tmp_name_array[$x]);
                     $img->resize(1200, 600, function ($constraint) {
                         $constraint->aspectRatio();
-                    })->insert('images/logo.png','bottom-right', 50, 30)->save($destinationPath.'/'.$input['imagename']);
+                    })->insert('upload_files/logo_watermark.png','bottom-right', 50, 30)->save($destinationPath.'/'.$input['imagename']);
 
                     $post_ad_image->post_id = $post_ad->id;
                     $post_ad_image->image = $input['imagename'];

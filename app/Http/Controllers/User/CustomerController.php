@@ -14,6 +14,7 @@ use App\Models\language;
 use Auth;
 use DB;
 use Mail;
+use App\Models\settings;
 use Image;
 
 class CustomerController extends Controller
@@ -52,6 +53,8 @@ class CustomerController extends Controller
             'profile_image.max' => 'Sorry! Maximum allowed size for an image is 1MB',
         ]);
 
+        $settings = settings::first();
+
         $user = User::find($request->id);
         //$user->username = $request->username;
         $user->first_name = $request->first_name;
@@ -77,7 +80,7 @@ class CustomerController extends Controller
             $img = Image::make($image->getRealPath());
             $img->resize(500, 500, function ($constraint) {
                 $constraint->aspectRatio();
-            })->insert('images/logo.png','bottom-right', 50, 30)->save($destinationPath.'/'.$input['imagename']);
+            })->insert('upload_files/logo_watermark.png','bottom-right', 50, 30)->save($destinationPath.'/'.$input['imagename']);
     
             $user->profile_image = $input['imagename'];
         }
@@ -95,7 +98,7 @@ class CustomerController extends Controller
         //     $img = Image::make($image->getRealPath());
         //     $img->resize(500, 500, function ($constraint) {
         //         $constraint->aspectRatio();
-        //     })->insert('images/logo.png','bottom-right', 50, 30)->save($destinationPath.'/'.$input['imagename']);
+        //     })->insert('upload_files/logo_watermark.png','bottom-right', 50, 30)->save($destinationPath.'/'.$input['imagename']);
     
         //     $user->banner_image = $input['imagename'];
         // }
